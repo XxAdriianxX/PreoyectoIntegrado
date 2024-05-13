@@ -81,7 +81,7 @@
             <ul>
                 <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
                 <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
-                <li><a href="./Assets/html/Contacto.php">Contacto</a></li>
+                <li><a href="Contacto.php">Contacto</a></li>
                 <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
             </ul>
         </div>
