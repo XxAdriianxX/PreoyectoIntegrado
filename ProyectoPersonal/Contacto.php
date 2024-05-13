@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Contacto - ECOBUDDY</title>
-    <link rel="stylesheet" href="/css/Contacto.css">
+    <link rel="stylesheet" href="/Assets/css/Contacto.css">
 </head>
 <body>
     <header>
