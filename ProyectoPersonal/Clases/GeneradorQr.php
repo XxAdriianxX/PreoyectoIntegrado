@@ -2,7 +2,7 @@
 require 'phpqrcode/qrlib.php';
 require_once 'conexion.php';
 
-class GeneradorQR extends Conexion{
+class GeneradorQR{
     public function generarQR($datos, $nombreArchivo) {
         // Tamaño del código QR
         $tamaño = 10; // Tamaño del código QR (1-10)
