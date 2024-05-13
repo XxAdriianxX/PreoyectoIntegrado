@@ -22,6 +22,8 @@
         <ul class="menu">
             <!-- Botón de alertas -->
             <li><a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a></li>
+            <!-- Botón para generar código QR -->
+            <li><button class="nav-link" onclick="generarQR()"><i class='bx bx-qrcode bx-sm bx-tada-hover text-primary'></i></button></li>
             <!-- Botón para cambiar entre temas claro y oscuro -->
             <li><button class="tema-btn" onclick="toggleTema()">Tema Claro/Oscuro</button></li>
             <!-- Texto "Hola, Nombre de usuario" -->
