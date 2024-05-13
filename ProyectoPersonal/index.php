@@ -106,6 +106,11 @@
             var body = document.body;
             body.classList.toggle("tema-oscuro");
         }
+
+        function generarQR() {
+        // Redirigir a la página para mostrar el QR
+        window.location.href = "mostrar_Qr.php";
+        }
     </script>
     <!-- Scripts del carrusel -->
     <script src="./Assets/js/jquery.min.js"></script>
