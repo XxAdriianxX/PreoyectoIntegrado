@@ -1,0 +1,263 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap');
+
+/* Estilos para el contenedor principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos para el encabezado */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Estilos para el logo */
+.logo img {
+    max-width: 100px;
+    transition: filter 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+/* Estilos para el tema claro */
+.tema-claro .logo img {
+    filter: invert(0); /* Mantener el color original del logo */
+}
+
+/* Estilos para el tema oscuro */
+.tema-oscuro .logo img {
+    filter: invert(0.9) sepia(1) saturate(5) hue-rotate(90deg) brightness(80%) contrast(120%);
+}
+
+/* Estilos para el menú */
+.menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.menu li.right {
+    float: right;
+}
+
+/* Estilos para el botón de usuario */
+.usuario-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.usuario-btn i {
+    font-size: 24px; /* Tamaño del ícono */
+}
+
+/* Estilos para el tema claro */
+.tema-claro {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Estilos para el tema oscuro */
+.tema-oscuro {
+    background-color: #222;
+    color: #fff;
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+    margin-top: 20px;
+}
+
+/* Estilos para el saldo */
+.saldo-container {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.saldo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.saldo-header h3 {
+    margin: 0;
+}
+
+.toggle-saldo {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.toggle-saldo:hover {
+    background-color: #45a049;
+}
+
+.saldo {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilos para las acciones */
+.acciones {
+    margin-top: 20px;
+}
+
+.acciones button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.acciones button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para el carrusel */
+.owl-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.owl-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10em;
+    width: 10em;
+    padding: 15px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.item-carousel img {
+    object-fit: cover;
+    width: 100%;
+    background-position: center;
+    filter: grayscale(1);
+    transition: .5s;
+}
+
+.item-carousel img:hover {
+    filter: grayscale(0);
+    transform: scale(1.1);
+}
+
+.owl-theme .owl-dots .owl-dot span {
+    background-color: teal;
+}
+
+footer {
+    background-color: #f2f2f2; /* Color de fondo predeterminado */
+    color: #333; /* Color de texto predeterminado */
+    padding: 20px 0;
+}
+
+/* Estilos para el tema oscuro */
+.tema-oscuro footer {
+    background-color: #333; /* Cambiar el color de fondo en tema oscuro */
+    color: #f2f2f2; /* Cambiar el color de texto en tema oscuro */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.redes-sociales, .enlaces {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.redes-sociales h4, .enlaces h4 {
+    margin-bottom: 10px;
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icons li:last-child {
+    margin-right: 0;
+}
+
+.social-icons a {
+    color: #333; /* Color de los iconos de redes sociales */
+    font-size: 24px;
+}
+
+/* Estilos para el tema oscuro */
+.tema-oscuro .social-icons a {
+    color: #f2f2f2; /* Cambiar el color de los iconos de redes sociales en tema oscuro */
+}
+
+.enlaces ul {
+    list-style: none;
+    padding: 0;
+}
+
+.enlaces li {
+    margin-bottom: 5px;
+}
+
+.enlaces a {
+    color: #333; /* Color de los enlaces */
+    text-decoration: none;
+}
+
+.enlaces a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para el tema oscuro */
+.tema-oscuro .enlaces a {
+    color: #f2f2f2; /* Cambiar el color de los enlaces en tema oscuro */
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 20px;
+}
+
+
+
+
