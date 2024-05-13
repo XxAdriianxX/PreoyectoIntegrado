@@ -1,6 +1,6 @@
 <?php
 // Autoloader
-require_once "Clases/autoloader.php";
+require_once "autoloader.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recoge los datos del formulario

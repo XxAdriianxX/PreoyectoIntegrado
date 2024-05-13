@@ -1,5 +1,5 @@
 <?php
-require_once 'clases/Autoloader.php';
+require_once 'autoloader.php';
 
 // Creamos una instancia de la clase GeneradorQR
 $generadorQR = new GeneradorQR(new Conexion());
