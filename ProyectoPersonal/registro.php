@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="card border border-dark text-center" style="background-color: rgba(255, 255, 255, 0.8);">
                         <div class="card-body">
                             <h2 class="card-title text-center">Registro</h2>
-                            <form action="login.php" method="POST">
+                            <form action="" method="POST">
                                 <div class="form-group">
                                     <label for="corr">Correo Electrónico</label>
                                     <input type="email" class="form-control" id="corr" name="corr" placeholder="Ingrese su correo" required>
