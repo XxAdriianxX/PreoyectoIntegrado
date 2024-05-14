@@ -1,18 +1,17 @@
 <?php
-// Autoloader
 require_once "autoloader.php";
 
 // Creamos una instancia de la clase GeneradorQR pasando una instancia de Conexion
 $generadorQR = new GeneradorQR(new Conexion());
 
-// Obtener el ID del usuario (si es necesario)
-$idUsuario = obtener_id_del_usuario();
+// Obtener el DNI del usuario (si es necesario)
+$DNI_usuario = obtener_DNI_del_usuario();
 
 // Generar el nombre del archivo QR
-$nombreArchivo = "qr_codes/usuario_$idUsuario.png";
+$nombreArchivo = "qr_codes/usuario_$DNI_usuario.png";
 
 // Generar el código QR del usuario
-$generadorQR->generarQRUsuario($idUsuario, $nombreArchivo);
+$generadorQR->generarQRUsuario($DNI_usuario, $nombreArchivo);
 ?>
 
 <!DOCTYPE html>
@@ -28,3 +27,4 @@ $generadorQR->generarQRUsuario($idUsuario, $nombreArchivo);
     <img src="<?php echo $nombreArchivo; ?>" alt="Código QR del Usuario">
 </body>
 </html>
+

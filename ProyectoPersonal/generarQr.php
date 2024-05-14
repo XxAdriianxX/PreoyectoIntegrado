@@ -5,7 +5,7 @@ require_once 'autoloader.php';
 $generadorQR = new GeneradorQR(new Conexion());
 
 // Consulta para obtener todos los usuarios
-$sql = "SELECT Id FROM Usuario";
+$sql = "SELECT DNI FROM Usuario";
 
 // Ejecutamos la consulta
 $resultado = $generadorQR->getConexion()->query($sql);
