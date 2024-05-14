@@ -14,9 +14,9 @@ $resultado = $generadorQR->getConexion()->query($sql);
 if ($resultado->num_rows > 0) {
     // Recorremos los resultados y generamos el código QR para cada usuario
     while ($fila = $resultado->fetch_assoc()) {
-        $idUsuario = $fila['DNI'];
-        $nombreArchivo = $generadorQR->generarQRUsuario($idUsuario);
-        echo "Código QR generado para el usuario $idUsuario: <a href='$nombreArchivo'>Descargar</a><br>";
+        $dniUsuario = $fila['DNI'];
+        $nombreArchivo = $generadorQR->generarQRUsuario($dniUsuario);
+        echo "Código QR generado para el usuario $dniUsuario: <a href='$nombreArchivo'>Descargar</a><br>";
     }
 } else {
     echo "No se encontraron usuarios.";

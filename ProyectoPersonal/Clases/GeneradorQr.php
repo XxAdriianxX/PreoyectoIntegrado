@@ -12,12 +12,12 @@ class GeneradorQR{
         QRcode::png($datos, $nombreArchivo, $nivelCorreccion, $tamaño);
     }
 
-    public function generarQRUsuario($idUsuario) {
+    public function generarQRUsuario($dniUsuario) {
         // Datos que quieres codificar en el código QR (puede ser el ID del usuario, su nombre, etc.)
-        $datosQR = "https://tusitioweb.com/perfil.php?id=$idUsuario";
+        $datosQR = "https://tusitioweb.com/perfil.php?id=$dniUsuario";
 
         // Nombre del archivo donde se guardará el código QR
-        $nombreArchivo = "qr_codes/usuario_$idUsuario.png";
+        $nombreArchivo = "qr_codes/usuario_$dniUsuario.png";
 
         // Genera el código QR y lo guarda en un archivo
         $this->generarQR($datosQR, $nombreArchivo);
@@ -25,5 +25,6 @@ class GeneradorQR{
         // Devuelve el nombre del archivo generado
         return $nombreArchivo;
     }
+
 }
 ?>
