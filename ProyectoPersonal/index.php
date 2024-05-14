@@ -57,6 +57,9 @@
                 </div>
             </section>
 
+            <!-- Título "Próximos eventos" -->
+            <h2 class="titulo-eventos">Próximos eventos</h2>
+
             <!-- Carrusel -->
             <div class="owl-carousel owl-theme">
                 <div class="item-carousel"><img src="./Assets/img/prueba.png" alt="Prueba"></div>
