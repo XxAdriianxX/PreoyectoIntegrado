@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Contacto - ECOBUDDY</title>
-    <link rel="stylesheet" href="../css/Contacto.css">
+    <link rel="stylesheet" href="/Assets/css/combined-styles.css">
 </head>
 <body>
     <header>
         <h1>Formulario de Contacto</h1>
     </header>
     <main>
-        <form action="../enviar_correo.php" method="post">
+        <form action="enviar_correo.php" method="post">
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input type="text" id="nombre" name="nombre" required>
