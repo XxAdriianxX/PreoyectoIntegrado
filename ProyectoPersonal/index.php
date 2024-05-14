@@ -42,7 +42,9 @@
                 <div class="saldo-container">
                     <div class="saldo-header">
                         <h3>Mi Saldo</h3>
-                        <button class="toggle-saldo" onclick="toggleSaldo()">Ocultar/Mostrar</button>
+                        <button class="toggle-saldo" onclick="toggleSaldo()">
+                            <i id="toggle-icon" class='bx bx-hide bx-sm'></i>
+                        </button>
                     </div>
                     <div class="saldo" id="saldo">
                         <p>Tu saldo total es: <span id="saldo-total">100</span> tokens</p>
@@ -99,6 +101,15 @@
         function toggleSaldo() {
             var saldo = document.getElementById("saldo");
             saldo.classList.toggle("hidden");
+        // Alterna la visibilidad del saldo y cambia el ícono entre abierto y cerrado
+            var toggleIcon = document.getElementById('toggle-icon');
+                if (saldo.classList.contains('hidden')) {
+                    toggleIcon.classList.remove('bx-show');
+                    toggleIcon.classList.add('bx-hide');
+                } else {
+                    toggleIcon.classList.remove('bx-hide');
+                    toggleIcon.classList.add('bx-show');
+                }
         }
         
         // Función para cambiar entre temas claro y oscuro
