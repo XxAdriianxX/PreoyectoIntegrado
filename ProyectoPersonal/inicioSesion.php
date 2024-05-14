@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body{
-            background-image: url("img/arbol.jpg");
+            background-image: url("Assets/img/arbol.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-<header><h1>ECOBYDDY</h1></header>
+<header><h1>ECOBUDDY</h1></header>
 <nav></nav>
 <section>
     <article>
