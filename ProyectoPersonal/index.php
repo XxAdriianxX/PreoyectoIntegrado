@@ -29,9 +29,9 @@
             <!-- Texto "Hola, Nombre de usuario" -->
             <li><span>Hola, Sagre</span></li>
             <!-- Botón de usuario -->
-            <li><button class="salir-btn" onclick="location.href = 'logout.php';"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
+            <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
             <!-- Botón para salir -->
-            <li><button class="salir-btn"><i class='bx bx-log-out bx-sm bx-tada-hover text-primary'></i></button></li>
+            <li><button class="salir-btn" onclick="location.href = 'logout.php';"><i class='bx bx-log-out bx-sm bx-tada-hover text-primary'></i></button></li>
             </li>
         </ul>
     </nav>
