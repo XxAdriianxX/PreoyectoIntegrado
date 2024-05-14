@@ -25,6 +25,24 @@ class GeneradorQR{
         // Devuelve el nombre del archivo generado
         return $nombreArchivo;
     }
+    // Función para obtener el DNI del usuario autenticado
+    private function obtener_DNI_del_usuario() {
+    // Iniciar la sesión si no está iniciada
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Verificar si el usuario está autenticado y registrado
+    if (isset($_SESSION['DNI'])) {
+        // Devolver el DNI del usuario autenticado
+        return $_SESSION['DNI'];
+    } else {
+        // Si el usuario no está autenticado, redirigirlo a la página de inicio de sesión
+        header("Location: login.php");
+        exit; // Finalizar el script después de redirigir
+    }
+}
+
 
 }
 ?>
