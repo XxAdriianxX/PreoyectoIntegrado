@@ -70,3 +70,57 @@ CREATE TABLE IF NOT EXISTS Desbloquea (
     FOREIGN KEY (DNI_usuario) REFERENCES Usuario(DNI),
     FOREIGN KEY (nombre_logro) REFERENCES Logros(nombre)
 );
+
+-- Insertar usuarios
+INSERT INTO Usuario (DNI, username, mail, ubi, puntos, contrasena)
+VALUES 
+    ('123456789', 'usuario1', 'usuario1@example.com', 'Ubicacion1', 100, 'contrasena1'),
+    ('987654321', 'usuario2', 'usuario2@example.com', 'Ubicacion2', 150, 'contrasena2'),
+    ('456789123', 'usuario3', 'usuario3@example.com', 'Ubicacion3', 200, 'contrasena3'),
+    ('789123456', 'usuario4', 'usuario4@example.com', 'Ubicacion4', 120, 'contrasena4');
+
+-- Insertar amigos para usuario1
+INSERT INTO Amigos (DNI_usuario, DNI_amigo)
+VALUES 
+    ('123456789', '987654321'),
+    ('123456789', '456789123');
+
+-- Insertar amigos para usuario2
+INSERT INTO Amigos (DNI_usuario, DNI_amigo)
+VALUES 
+    ('987654321', '123456789'),
+    ('987654321', '789123456');
+
+-- Insertar eventos para usuario1
+INSERT INTO Evento (nombre, fecha_hora, ubi, descripcion, estado, DNI_usuario)
+VALUES 
+    ('Evento1', '2024-05-15 10:00:00', 'Ubicacion2', 'Descripción del evento 1', 'Activo', '123456789');
+
+-- Insertar asistencia a eventos para usuario1
+INSERT INTO Asiste (DNI_usuario, nombre_evento, fecha_hora_evento)
+VALUES 
+    ('123456789', 'Evento1', '2024-05-15 10:00:00');
+
+-- Insertar publicaciones para usuario2
+INSERT INTO Publicacion (fecha_hora, DNI_usuario, contenido)
+VALUES 
+    ('2024-05-14 15:30:00', '987654321', 'Contenido de la publicación 1'),
+    ('2024-05-14 16:00:00', '987654321', 'Contenido de la publicación 2');
+
+-- Insertar comentarios para usuario3
+INSERT INTO Comentario (fecha_hora_publicacion, DNI_usuario_publicacion, DNI_usuario_comentario, fecha_hora, contenido)
+VALUES 
+    ('2024-05-14 15:30:00', '987654321', '456789123', '2024-05-14 16:00:00', 'Contenido del comentario 1'),
+    ('2024-05-14 16:00:00', '987654321', '456789123', '2024-05-14 17:00:00', 'Contenido del comentario 2');
+
+-- Insertar logros
+INSERT INTO Logros (nombre, puntos_necesarios)
+VALUES 
+    ('Logro1', 50),
+    ('Logro2', 100);
+
+-- Insertar desbloqueo de logros para usuario4
+INSERT INTO Desbloquea (DNI_usuario, nombre_logro)
+VALUES 
+    ('789123456', 'Logro1'),
+    ('789123456', 'Logro2');
