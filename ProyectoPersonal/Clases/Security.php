@@ -1,38 +1,51 @@
 <?php
-
 require_once 'Conexion.php';
 
 class Security extends Conexion {
     
-    public function registro($user) {
+    public function registro() {
         if (isset($_POST["corr"]) && isset($_POST["con"]) && isset($_POST["user"]) && isset($_POST["dni"])) {
 
-            $conn = new Conexion;
-            $dataBase = $conn->getConn();
+            $dataBase = $this->getConn();
 
             $correo = $_POST["corr"];
             $contrasena = $_POST["con"];
+            $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT); 
             $user = $_POST["user"];
             $dni = $_POST["dni"];
 
-            $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";
-            $resultado = mysqli_query($dataBase, $consulta);
+            $consultaCorreo = "SELECT * FROM Usuario WHERE mail = '$correo'";
+            $resultadoCorreo = mysqli_query($dataBase, $consultaCorreo);
 
-            if (mysqli_num_rows($resultado) > 0) {
+            if (mysqli_num_rows($resultadoCorreo) > 0) {
                 echo "El correo ya está registrado";
             } else {
-                $insertar = "INSERT INTO Usuario (mail, contrasena, username, DNI) VALUES ('$correo', '$contrasena', '$user', '$dni')";
-                if (mysqli_query($dataBase, $insertar)) {
-                    echo "Registro exitoso";
+                $consultaUsuario = "SELECT * FROM Usuario WHERE username = '$user'";
+                $resultadoUsuario = mysqli_query($dataBase, $consultaUsuario);
+
+                if (mysqli_num_rows($resultadoUsuario) > 0) {
+                    echo "El nombre de usuario ya está registrado";
                 } else {
-                    echo "Error al conectar con la base de datos: " . mysqli_error($dataBase);
+                    $consultaDNI = "SELECT * FROM Usuario WHERE DNI = '$dni'";
+                    $resultadoDNI = mysqli_query($dataBase, $consultaDNI);
+
+                    if (mysqli_num_rows($resultadoDNI) > 0) {
+                        echo "El DNI ya está registrado";
+                    } else {
+                        $insertar = "INSERT INTO Usuario (mail, contrasena, username, DNI) VALUES ('$correo', '$contrasena_hash', '$user', '$dni')";
+                        if (mysqli_query($dataBase, $insertar)) {
+                            echo "Registro exitoso";
+                        } else {
+                            echo "Error al conectar con la base de datos: " . mysqli_error($dataBase);
+                        }
+                    }
                 }
             }
 
         } else {
-            echo "Error al conectar con la base de datos";
+            echo "Error: Todos los campos son requeridos";
         }
     }
-
+    
 }
 ?>
