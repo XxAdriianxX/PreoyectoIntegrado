@@ -96,8 +96,9 @@
 </footer>
 </div>
 
-    <!-- Script para ocultar/mostrar el saldo -->
+    <!-- Scripts Js-->
     <script>
+        // Función para mostrar o ocultar saldo
         function toggleSaldo() {
             var saldo = document.getElementById("saldo");
             saldo.classList.toggle("hidden");
