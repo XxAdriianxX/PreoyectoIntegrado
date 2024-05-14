@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS Evento (
     ubi VARCHAR(255),
     descripcion TEXT,
     estado VARCHAR(50),
-    DNI_usuario INT,
+    DNI_usuario VARCHAR(9),
+    puntos_asociados INT, 
     PRIMARY KEY (nombre, fecha_hora),
     FOREIGN KEY (DNI_usuario) REFERENCES Usuario(DNI)
 );
