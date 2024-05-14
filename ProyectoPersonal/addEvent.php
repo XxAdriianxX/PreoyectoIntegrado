@@ -4,11 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <title>Prueba Felipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Añadir Evento Prueba Felipe</title>
     <style>
         * {
             color: white;
@@ -40,9 +38,13 @@
             background-image: url(Assets/img/fondo.jpg);
         }
 
-        a{
+        a {
             text-decoration: none;
             color: white;
+        }
+
+        form {
+            color: black;
         }
     </style>
 </head>
@@ -52,9 +54,7 @@
         <header>
             <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
@@ -75,8 +75,7 @@
                                 <a class="nav-link" href="#">Apartado 4</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Apartado 5
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -102,39 +101,60 @@
                 <section>
                     <article>
                         <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="card custom-bg  text-center mb-5">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><strong>RECOGIDA DE BASURA</strong></h5>
-                                        <p class="card-text"><br>Ubicación: Parque natural de
-                                            L'albufera</p>
-                                        <div class="row justify-content-start mb-2">
-                                            <div class="col-md-6">
-                                                <span
-                                                    class="badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha:
-                                                    27/03/2024</span>
-                                                <span
-                                                    class="badge rounded-pill pill-bg border border-dark d-block mb-2">Horas:
-                                                    3</span>
+                            <div class="col-9 mb-5 mx-auto">
+                                <form>
+                                    <div class="form-group border custom-bg m-3 p-3 rounded">
+                                        <h4>Crea un evento</h4>
+                                        <p>Introduce la información solicitada</p>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="nombre" class="form-label">
+                                                        Nombre:</label>
+                                                    <input type="text" class="form-control text-muted" id="nombre" name="nombre" value="Nombre del evento">
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <span
-                                                    class="badge rounded-pill pill-bg border border-dark d-block mb-2">Hora:
-                                                    17:00</span>
-                                                <span
-                                                    class="badge rounded-pill pill-bg border border-dark d-block mb-2">Puntos:
-                                                    10</span>
+                                            <div class="col-md-4 offset-2">
+                                                <div class="mb-3">
+                                                    <label for="fecha" class="form-label">
+                                                        Fecha:</label>
+                                                    <input type="text" class="form-control text-muted" id="fecha" name="fecha" value="01/01/2024">
+                                                </div>
                                             </div>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint laborum porro
-                                            quod
-                                            veniam nemo eum qui voluptatem, eius inventore deleniti, at voluptate
-                                            repudiandae aspernatur beatae pariatur cumque ab velit aut!</p>
-                                        <a href="#"
-                                            class="btn custom-button border border-dark text-white">Apuntarse</a>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="ubicacion" class="form-label">
+                                                        Ubicación:</label>
+                                                    <input type="text" class="form-control text-muted" id="ubicacion" name="ubicacion" value="Parque Natural de L'Albufera ">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 offset-2">
+                                                <div class="mb-3">
+                                                    <label for="hora" class="form-label">
+                                                        Hora:</label>
+                                                    <input type="text" class="form-control text-muted" id="hora" name="hora" value="17:00">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <label for="descripcion" class="form-label">
+                                                    Deescripción:</label>
+                                                <textarea class="form-control text-muted" rows="3" id="descripcion" name="descripcion" placeholder="Describe tu evento"></textarea>
+                                            </div>
+                                            <div class="col-md-4 offste-2 align-self-end">
+                                                <button type="submit" class="btn border submit text-white rounded">Crear evento</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+
+                                            </div>
+                                        </div>
                                     </div>
-                                    <img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="...">
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </article>
@@ -144,30 +164,24 @@
         <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2"
-                        width="150px">
+                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2" width="150px">
                 </div>
                 <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-facebook"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-linkedin"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-youtube"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -181,11 +195,12 @@
                     </ul>
                 </div>
             </div>
+            <div class="copyright text-center">
+                <p>&copy; 2024 ECOBUDDY. Todos los derechos reservados.</p>
+            </div>
         </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
