@@ -25,7 +25,7 @@
             <!-- Botón para generar código QR -->
             <li><button class="nav-link" onclick="generarQR()"><i class='bx bx-qrcode bx-sm bx-tada-hover text-primary'></i></button></li>
             <!-- Botón para cambiar entre temas claro y oscuro -->
-            <li><button class="tema-btn" onclick="toggleTema()">Tema Claro/Oscuro</button></li>
+            <li><button class="tema-btn" onclick="toggleTema()"><i class='bx bx-sun bx-sm'></i><i class='bx bx-moon bx-sm'></i></button></li>
             <!-- Texto "Hola, Nombre de usuario" -->
             <li><span>Hola, Sagre</span></li>
             <!-- Botón de usuario -->
