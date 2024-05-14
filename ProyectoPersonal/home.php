@@ -39,6 +39,11 @@
             width: 100%;
             background-image: url(Assets/img/fondo.jpg);
         }
+
+        a{
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 
@@ -174,10 +179,11 @@
 
         <footer class="custom-bg text-black">
             <div class="row">
-                <div class="col-md-6">
-                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2" width="150px">
+                <div class="col-md-4">
+                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2"
+                        width="150px">
                 </div>
-                <div class="col-md-6 text-end social-icons">
+                <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">
                         <li class="list-inline-item">
                             <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
@@ -199,6 +205,15 @@
                             <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
                                     class="fab fa-youtube"></i></a>
                         </li>
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <h4>Enlaces útiles</h4>
+                    <ul>
+                        <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
+                        <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
+                        <li><a href="Contacto.php">Contacto</a></li>
+                        <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
                     </ul>
                 </div>
             </div>
