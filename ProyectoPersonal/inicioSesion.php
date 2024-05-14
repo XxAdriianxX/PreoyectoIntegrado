@@ -1,3 +1,14 @@
+<?php
+require_once "autoloader.php";
+
+/*<------------Cambiar---------------------->
+$che = new check();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $che->registro($_POST);
+}
+//<---------------------------------------->*/
+?>
 <!DOCTYPE html>
 <html>
 <head>
