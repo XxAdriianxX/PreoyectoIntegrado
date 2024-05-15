@@ -3,19 +3,14 @@ require_once "autoloader.php";
 
 session_start();
 
-if (isset($_SESSION['usuario'])) {
-    $usuario = $_SESSION['usuario'];
-} else {
-    echo "Usuario no encontrado en la sesión.";
-    $usuario = null;
-}
-
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header('Location: inicioSesion.php');
     exit;
 }
-?>
 
+// Obtener el nombre de usuario de la sesión
+$username = $_SESSION['username'];
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -32,27 +27,26 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <div class="container">
-    <header>
-    <div class="logo">
-        <!-- Logo de la aplicación -->
-        <img src="./Assets/img/logop.png" alt="Logo de la aplicación">
-    </div>
-    <nav>
-        <ul class="menu">
-            <!-- Botón de alertas -->
-            <li><a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a></li>
-            <!-- Botón para cambiar entre temas claro y oscuro -->
-            <li><button class="tema-btn" onclick="toggleTema()">Tema Claro/Oscuro</button></li>
-            <!-- Texto "Hola, Nombre de usuario" -->
-            <li><span>Hola, Sagre</span></li>
-            <!-- Botón de usuario -->
-            <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
-            <!-- Botón para salir -->
-            <li><button class="salir-btn">Salir</button></li>
-            </li>
-        </ul>
-    </nav>
-    </header>
+        <header>
+            <div class="logo">
+                <!-- Logo de la aplicación -->
+                <img src="./Assets/img/logop.png" alt="Logo de la aplicación">
+            </div>
+            <nav>
+                <ul class="menu">
+                    <!-- Botón de alertas -->
+                    <li><a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a></li>
+                    <!-- Botón para cambiar entre temas claro y oscuro -->
+                    <li><button class="tema-btn" onclick="toggleTema()">Tema Claro/Oscuro</button></li>
+                    <!-- Texto "Hola, Nombre de usuario" -->
+                    <li><span>Hola, <?php echo $username; ?></span></li>
+                    <!-- Botón de usuario -->
+                    <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
+                    <!-- Botón para salir -->
+                    <li><button class="salir-btn">Salir</button></li>
+                </ul>
+            </nav>
+        </header>
         <main>
             <section class="main-content">
                 <!-- Elementos para visualizar el saldo y los botones -->
@@ -85,31 +79,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             </div>
         </main>
         <footer>
-    <div class="footer-container">
-        <div class="redes-sociales">
-            <h4>Síguenos en redes sociales</h4>
-            <ul class="social-icons">
-                <li><a href="#"><i class="bx bxl-facebook-square"></i></a></li>
-                <li><a href="#"><i class="bx bxl-twitter-square"></i></a></li>
-                <li><a href="#"><i class="bx bxl-instagram-square"></i></a></li>
-                <li><a href="#"><i class="bx bxl-linkedin-square"></i></a></li>
-            </ul>
-        </div>
-        <div class="enlaces">
-            <h4>Enlaces útiles</h4>
-            <ul>
-                <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
-                <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
-                <li><a href="./Assets/html/Contacto.php">Contacto</a></li>
-                <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
-            </ul>
-        </div>
+            <div class="footer-container">
+                <div class="redes-sociales">
+                    <h4>Síguenos en redes sociales</h4>
+                    <ul class="social-icons">
+                        <li><a href="#"><i class="bx bxl-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="bx bxl-twitter-square"></i></a></li>
+                        <li><a href="#"><i class="bx bxl-instagram-square"></i></a></li>
+                        <li><a href="#"><i class="bx bxl-linkedin-square"></i></a></li>
+                    </ul>
+                </div>
+                <div class="enlaces">
+                    <h4>Enlaces útiles</h4>
+                    <ul>
+                        <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
+                        <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
+                        <li><a href="./Assets/html/Contacto.php">Contacto</a></li>
+                        <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 ECOBUDDY. Todos los derechos reservados.</p>
+            </div>
+        </footer>
     </div>
-    <div class="copyright">
-        <p>&copy; 2024 ECOBUDDY. Todos los derechos reservados.</p>
-    </div>
-</footer>
-</div>
 
     <!-- Script para ocultar/mostrar el saldo -->
     <script>
@@ -153,16 +147,3 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-

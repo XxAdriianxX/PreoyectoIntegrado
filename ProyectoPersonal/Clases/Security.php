@@ -34,7 +34,8 @@ class Security extends Conexion {
                     } else {
                         $insertar = "INSERT INTO Usuario (mail, contrasena, username, DNI) VALUES ('$correo', '$contrasena_hash', '$user', '$dni')";
                         if (mysqli_query($dataBase, $insertar)) {
-                            echo "Registro exitoso";
+                            header("Location: inicioSesion.php");
+                            exit; 
                         } else {
                             echo "Error al conectar con la base de datos: " . mysqli_error($dataBase);
                         }
@@ -55,8 +56,9 @@ class Security extends Conexion {
     
             $correo = $_POST["corr"];
             $contrasena = $_POST["con"];
+
     
-            $consulta = "SELECT mail, contrasena FROM Usuario WHERE mail = '$correo'";
+            $consulta = "SELECT mail, contrasena, username FROM Usuario WHERE mail = '$correo'";
             $resultado = mysqli_query($dataBase, $consulta);
     
             if (mysqli_num_rows($resultado) > 0) {
@@ -65,6 +67,7 @@ class Security extends Conexion {
                 if (password_verify($contrasena, $contrasena_hash)) { 
                     session_start();
                     $_SESSION['loggedin'] = true;
+                    $_SESSION['username'] = $fila['username']; 
                     header("Location: index.php");
                     exit;
                 } else {
@@ -94,6 +97,26 @@ class Security extends Conexion {
                 echo "Contraseña Actualizada";
             } else {
                 echo "Error al conectar con la base de datos: " . mysqli_error($dataBase);
+            }
+        }
+    }
+
+    public function deleteUser($user) {
+        if (isset($_POST["usuario"]) && isset($_POST["contraseña"]))  {
+    
+            $dataBase = $this->getConn();
+    
+            $usuario = $_POST["usuario"];
+            $contraseña = $_POST["contraseña"];
+            $contraseña_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+    
+            $eliminar = $dataBase->prepare("DELETE FROM Usuario WHERE username = ? AND contrasena = ?");
+            $eliminar->bind_param("ss", $usuario, $contraseña_hash);
+    
+            if ($eliminar->execute()) {
+                echo "Cuenta Eliminada";
+            } else {
+                echo "Error al conectar con la base de datos: " . $dataBase->error;
             }
         }
     }
