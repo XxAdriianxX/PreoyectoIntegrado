@@ -8,47 +8,8 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="Assets/css/events.css">
     <title>Añadir Evento Prueba Felipe</title>
-    <style>
-        * {
-            color: white;
-        }
-
-        .custom-bg {
-            background-color: #228B22;
-        }
-
-        .pill-bg {
-            background-color: rgba(217, 217, 217, .3);
-        }
-
-        .custom-button {
-            background-color: #00FF00;
-        }
-
-        h2 {
-            text-align: center;
-        }
-
-        body {
-            background-color: #F5F5DC;
-        }
-
-        aside {
-            height: 100%;
-            width: 100%;
-            background-image: url(Assets/img/fondo.jpg);
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        form {
-            color: black;
-        }
-    </style>
 </head>
 
 <body>
@@ -70,28 +31,33 @@
                                 <a class="nav-link" aria-current="page" href="#">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Perfil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Apartado 3</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Apartado 4</a>
+                                <a class="nav-link" href="#">Eventos</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    Apartado 5
+                                    Iniciar sesión/ Registrarse
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Apartado 5 a</a></li>
+                                    <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
+                                    <li><a class="dropdown-item" href="#">Registrarse</a></li>
                                 </ul>
+
                             </li>
                         </ul>
+                        <a href="#" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                            <i class="fas fa-user"></i>
+                        </a>
                         <form class="d-flex">
-                            <input class="form-control me-2 rounded-pill" type="search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </form>
+                        <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -114,45 +80,37 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="nombre" class="form-label">
+                                                    <label for="eventName" class="form-label">
                                                         Nombre:</label>
-                                                    <input type="text" class="form-control text-muted" id="nombre"
-                                                        name="nombre" value="Nombre del evento">
+                                                    <input type="text" class="form-control" id="eventName" name="eventName"
+                                                        placeholder="Nombre del evento">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 offset-2">
                                                 <div class="mb-3">
-                                                    <label for="fecha" class="form-label">
+                                                    <label for="date" class="form-label">
                                                         Fecha:</label>
-                                                    <input type="text" class="form-control text-muted" id="fecha"
-                                                        name="fecha" value="01/01/2024">
+                                                    <input type="datetime-local" class="form-control text-muted"
+                                                        id="date" name="date">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="mb-3">
-                                                    <label for="ubicacion" class="form-label">
+                                                    <label for="location" class="form-label">
                                                         Ubicación:</label>
-                                                    <input type="text" class="form-control text-muted" id="ubicacion"
-                                                        name="ubicacion" value="Parque Natural de L'Albufera ">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 offset-2">
-                                                <div class="mb-3">
-                                                    <label for="hora" class="form-label">
-                                                        Hora:</label>
-                                                    <input type="text" class="form-control text-muted" id="hora"
-                                                        name="hora" value="17:00">
+                                                    <input type="text" class="form-control" id="location"
+                                                        name="location" placeholder="Parque Natural de L'Albufera ">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4">
                                             <div class="col-md-6">
-                                                <label for="descripcion" class="form-label">
+                                                <label for="description" class="form-label">
                                                     Deescripción:</label>
-                                                <textarea class="form-control text-muted" rows="3" id="descripcion"
-                                                    name="descripcion" placeholder="Describe tu evento"></textarea>
+                                                <textarea class="form-control" rows="3" id="description"
+                                                    name="description" placeholder="Describe tu evento"></textarea>
                                             </div>
                                             <div class="col-md-4 offste-2 align-self-end">
                                                 <button type="submit" class="btn border submit text-white rounded">Crear

@@ -84,4 +84,21 @@ class EventList extends Connection
         }
         return $table;
     }
+
+    public function addEvent($data, $DNI)
+    {
+        $curdate = date('Y-m-d');
+        $eventName = $data["eventName"];
+        $date = $data["date"];
+        $location = $data["location"];
+        $points = $data['points'];
+        if ($date <= $curdate){
+            $active = 'activo';
+        }else{
+            $active = 'inactivo';
+        }
+        $query = "INSERT INTO tareas (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados )
+        values ('$eventName', '$date', '$location', '$active', '$DNI', '$points') ;";
+        mysqli_query($this->conn, $query);
+    }
 }

@@ -13,9 +13,6 @@ $conn = $connection->getConn();
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="Assets/css/events.css">
     <title>Prueba Felipe</title>
-    <style>
-
-    </style>
 </head>
 
 <body>
