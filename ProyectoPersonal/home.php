@@ -5,6 +5,7 @@ $conn = $connection->getConn();
 ?>
 <!doctype html>
 <html lang="es">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,6 +48,10 @@ $conn = $connection->getConn();
         a {
             text-decoration: none;
             color: white;
+        }
+
+        .custom-span {
+        
         }
     </style>
 </head>
@@ -101,12 +106,10 @@ $conn = $connection->getConn();
         <div class="row">
             <div class="col-2">
                 <aside>
-                    <h2 style="color:black">AMIGOS</h2>
-                    <ul>
-                        <li>Amigo 1 Puntos: 2</li>
-                        <li>Amigo 2 Puntos: 2</li>
-                        <li>Amigo 3 Puntos: 2</li>
-                    </ul>
+                    <h5 class=" text-light mx-auto text-center">Amigos:<h5>
+                            <span
+                                class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 ">Javier
+                                Zapata</span>
                 </aside>
             </div>
             <div class="col-10">
@@ -114,7 +117,7 @@ $conn = $connection->getConn();
                     <article>
                         <div class="row">
                             <h2 class="mb-4 rounded-pill  mx-auto custom-bg" style="width:95%">EVENTOS PRÓXIMOS</h2>
-                            <?=$connection->drawEventsList();?>
+                            <?= $connection->drawEventsList(); ?>
                         </div>
                     </article>
                 </section>
