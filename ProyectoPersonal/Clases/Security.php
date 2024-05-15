@@ -47,29 +47,30 @@ class Security extends Conexion {
         }
     }
 
-    public function iniciarSesion() {
-        if (isset($_POST["corr"]) && isset($_POST["con"])) {
-            $dataBase = $this->getConn();
+    public function login($correo, $contrasena) {
+        $dataBase = $this->getConn();
 
-            $correo = $_POST["corr"];
-            $contrasena = $_POST["con"];
+        $usuario = $this->obtenerUsuarioPorCorreo($correo);
 
-            $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";
-            $resultado = mysqli_query($dataBase, $consulta);
-
-            if (mysqli_num_rows($resultado) == 1) {
-                $fila = mysqli_fetch_assoc($resultado);
-                if (password_verify($contrasena, $fila['contrasena'])) {
-                    echo "Inicio de sesión exitoso";
-                } else {
-                    echo "Contraseña incorrecta";
-                }
-            } else {
-                echo "El correo no está registrado";
-            }
-        } else {
-            echo "Error: Todos los campos son requeridos";
+        if (!$usuario) {
+            return "El correo no está registrado";
         }
+
+        if (password_verify($contrasena, $usuario['contrasena'])) {
+            session_start();
+            $_SESSION['loggedin'] = true;
+            $_SESSION['usuario'] = $usuario['username'];
+            return true;
+        } else {
+            return "Contraseña incorrecta";
+        }
+    }
+
+    private function obtenerUsuarioPorCorreo($correo) {
+        $dataBase = $this->getConn();
+        $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";
+        $resultado = mysqli_query($dataBase, $consulta);
+        return mysqli_fetch_assoc($resultado);
     }
 
     public static function validarEmail($email) {

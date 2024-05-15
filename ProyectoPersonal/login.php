@@ -2,8 +2,22 @@
 require_once "autoloader.php";
 
 $security = new Security();
-$security->iniciarSesion();
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
+        $correo = $_POST["correo"];
+        $contrasena = $_POST["contrasena"];
+        $login_result = $security->login($correo, $contrasena);
+        if ($login_result === true) {
+            // Redirecciona al usuario a index.php si el inicio de sesión es exitoso
+            header('Location: index.php');
+            exit(); // Asegúrate de salir después de redireccionar
+        } else {
+            // Si hay un error en el inicio de sesión, muestra el mensaje de error
+            echo $login_result;
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,7 +55,7 @@ $security->iniciarSesion();
                 <div class="card border border-dark text-center" style="background-color: rgba(255, 255, 255, 0.8);">
                     <div class="card-body">
                     <h2 class="card-title text-center">Inicio de Sesión</h2>
-                    <form action="index.php" method="POST">
+                    <form action="" method="POST">
                         <div class="form-group">
                         <label for="correo">Correo Electrónico</label>
                         <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required>

@@ -1,3 +1,31 @@
+<?php
+require_once "autoloader.php";
+session_start(); // Inicia la sesión en la página de inicio
+
+$security = new Security();
+
+// Verifica si el usuario ha iniciado sesión
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $usuario = $_SESSION['usuario'];
+} else {
+    $usuario = null;
+}
+
+// Manejar el inicio de sesión si se envían los datos del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
+        $correo = $_POST["correo"];
+        $contrasena = $_POST["contrasena"];
+        $login_result = $security->login($correo, $contrasena);
+        if ($login_result !== true) {
+            // Si hay un error en el inicio de sesión, mostrarlo
+            echo $login_result;
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,7 +55,7 @@
             <!-- Botón para cambiar entre temas claro y oscuro -->
             <li><button class="tema-btn" onclick="toggleTema()"><i class='bx bx-sun bx-sm'></i><i class='bx bx-moon bx-sm'></i></button></li>
             <!-- Texto "Hola, Nombre de usuario" -->
-            <li><span>Hola, Sagre</span></li>
+            <li><span>Hola, <?php echo htmlspecialchars($usuario); ?></span></li>
             <!-- Botón de usuario -->
             <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
             <!-- Botón para salir -->
