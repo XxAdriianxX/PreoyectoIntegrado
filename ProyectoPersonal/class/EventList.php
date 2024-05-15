@@ -37,7 +37,7 @@ class EventList extends Connection
             $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</span>';
             $table .= '</div>';
             $table .= '<div class="col-md-6">';
-            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' .  $event->date . '</span>';
+            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</span>';
             $table .= '</div>';
             $table .= '</div>';
             $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
@@ -53,7 +53,26 @@ class EventList extends Connection
         return $table;
     }
 
-    public function getAllFriends()
+    public function getAllFriends($DNI)
+    {
+        $stmt = $this->conn->prepare('SELECT DNI_amigo FROM Amigos WHERE DNI_usuario = ? ');
+        $stmt->bind_param('s', $DNI);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $friends = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $friends[] = $row['DNI_amigo'];
+        }
+        $stmt->close();
+        return $friends;
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->conn->connect_error);
+        }
+
+    }
+
+    public function drawFriends()
     {
         
     }
