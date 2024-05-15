@@ -3,7 +3,7 @@ require_once 'Conexion.php';
 
 class Security extends Conexion {
     
-    public function registro() {
+    public function registro($reg) {
         if (isset($_POST["corr"]) && isset($_POST["con"]) && isset($_POST["user"]) && isset($_POST["dni"])) {
 
             $dataBase = $this->getConn();
@@ -46,6 +46,37 @@ class Security extends Conexion {
             echo "Error: Todos los campos son requeridos";
         }
     }
+
+
+
+    public function login($log){
+        if (isset($_POST["corr"]) && isset($_POST["con"])) {
+            $dataBase = $this->getConn();
     
+            $correo = $_POST["corr"];
+            $contrasena = $_POST["con"];
+    
+            $consulta = "SELECT mail, contrasena FROM Usuario WHERE mail = '$correo'";
+            $resultado = mysqli_query($dataBase, $consulta);
+    
+            if (mysqli_num_rows($resultado) > 0) {
+                $fila = mysqli_fetch_assoc($resultado);  
+                $contrasena_hash = $fila['contrasena']; 
+                if (password_verify($contrasena, $contrasena_hash)) { 
+                    session_start();
+                    $_SESSION['loggedin'] = true;
+                    header("Location: index.php");
+                    exit;
+                } else {
+                    echo "Contraseña incorrecta";
+                }
+            } else {
+                echo "El correo no está registrado";
+            }
+    
+        } else {
+            echo "Error al conectar con la base de datos";
+        }
+    }
 }
-?>
+

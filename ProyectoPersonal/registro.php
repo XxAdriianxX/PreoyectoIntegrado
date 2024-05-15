@@ -52,15 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <label for="con">Contraseña</label>
-                                    <input type="password" class="form-control" id="con" name="con" placeholder="Ingrese su contraseña" required>
+                                    <input type="password" class="form-control" id="con" name="con" placeholder="Ingrese su contraseña" required maxlength="16" minlength="12">
                                 </div>
                                 <div class="form-group">
                                     <label for="user">Username</label>
-                                    <input type="text" class="form-control" id="user" name="user" placeholder="Ingrese tu nombre de Usuario" required>
+                                    <input type="text" class="form-control" id="user" name="user" placeholder="Ingrese tu nombre de Usuario" required maxlength="20">
                                 </div>
                                 <div class="form-group">
                                     <label for="dni">DNI</label>
-                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" required>
+                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" required maxlength="9">
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-success btn-block">Registrarse</button>

@@ -1,13 +1,11 @@
 <?php
 require_once "autoloader.php";
 
-/*<------------Cambiar---------------------->
-$che = new check();
+$sec = new Security();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $che->registro($_POST);
+    $sec->login($_POST);
 }
-//<---------------------------------------->*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -45,14 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card border border-dark text-center" style="background-color: rgba(255, 255, 255, 0.8);">
                     <div class="card-body">
                     <h2 class="card-title text-center">Inicio de Sesión</h2>
-                    <form action="index.php" method="POST">
+                    <form action="" method="POST">
                         <div class="form-group">
-                        <label for="correo">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required>
+                        <div class="form-group">
+                            <label for="corr">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="corr" name="corr" placeholder="Ingrese su correo" required>
                         </div>
                         <div class="form-group">
-                        <label for="contrasena">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+                            <label for="con">Contraseña</label>
+                            <input type="password" class="form-control" id="con" name="con" placeholder="Ingrese su contraseña" required maxlength="16" minlength="12">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-block">Iniciar Sesión</button>
