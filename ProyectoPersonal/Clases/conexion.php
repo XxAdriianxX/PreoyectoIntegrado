@@ -20,6 +20,10 @@ class Conexion
             $this->conn->close();
         }
     }
+    
+    public function getConn() {
+        return $this->conn;
+    }
 
     public function connect()
     {
