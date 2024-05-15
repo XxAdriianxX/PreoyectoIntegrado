@@ -1,13 +1,13 @@
 <?php
 class Event
 {
-    private $name;
-    private $date;
-    private $location;
-    private $description;
-    private $active;
-    private $DNI;
-    private $points;
+    public $name;
+    public $date;
+    public $location;
+    public $description;
+    public $active;
+    public $DNI;
+    public $points;
 
     public function __construct($name, $date, $location, $description, $active, $DNI, $points)
     {
