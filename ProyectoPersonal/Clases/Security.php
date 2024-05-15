@@ -78,5 +78,25 @@ class Security extends Conexion {
             echo "Error al conectar con la base de datos";
         }
     }
+
+    public function changePassword($password){
+        if (isset($_POST["correo"]) && isset($_POST["contraseña"]))  {
+            $dataBase = $this->getConn();
+    
+            $correo = $_POST["correo"];
+            $contraseña = $_POST["contraseña"];
+    
+            $contraseña_hash = password_hash($contraseña, PASSWORD_DEFAULT);
+    
+            $change = "UPDATE Usuario SET contrasena = '$contraseña_hash' WHERE mail = '$correo'";
+    
+            if (mysqli_query($dataBase, $change)) {
+                echo "Contraseña Actualizada";
+            } else {
+                echo "Error al conectar con la base de datos: " . mysqli_error($dataBase);
+            }
+        }
+    }
+    
 }
 

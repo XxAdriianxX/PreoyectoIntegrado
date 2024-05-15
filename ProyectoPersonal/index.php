@@ -1,3 +1,22 @@
+<?php
+require_once "autoloader.php";
+
+session_start();
+
+if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+} else {
+    echo "Usuario no encontrado en la sesión.";
+    $usuario = null;
+}
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: inicioSesion.php');
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
