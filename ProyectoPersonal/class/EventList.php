@@ -55,14 +55,17 @@ class EventList extends Connection
 
     public function getAllFriends($DNI)
     {
-        $stmt = $this->conn->prepare('SELECT DNI_amigo FROM Amigos WHERE DNI_usuario = ? ');
+        $stmt = $this->conn->prepare('SELECT u.username AS nombre_amigo
+        FROM Usuario u
+        INNER JOIN Amigos a ON u.DNI = a.DNI_amigo
+        WHERE a.DNI_usuario = ?');
         $stmt->bind_param('s', $DNI);
         $stmt->execute();
         $result = $stmt->get_result();
         $friends = [];
 
         while ($row = $result->fetch_assoc()) {
-            $friends[] = $row['DNI_amigo'];
+            $friends[] = $row['nombre_amigo'];
         }
         $stmt->close();
         return $friends;
@@ -72,8 +75,13 @@ class EventList extends Connection
 
     }
 
-    public function drawFriends()
+    public function drawFriends($DNI)
     {
-        
+        $friends = $this->getAllFriends($DNI);
+        $table = '';
+        for ($i=0; $i<count($friends); $i++) {
+            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i] . '</span>';
+        }
+        return $table;
     }
 }

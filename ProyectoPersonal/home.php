@@ -51,7 +51,7 @@ $conn = $connection->getConn();
         }
 
         .custom-span {
-        
+            background-color: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -107,9 +107,7 @@ $conn = $connection->getConn();
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                            <span
-                                class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 ">Javier
-                                Zapata</span>
+                    <?= $connection->drawFriends(123456789); ?>
                 </aside>
             </div>
             <div class="col-10">
