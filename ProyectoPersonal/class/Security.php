@@ -1,8 +1,6 @@
 <?php
 
-require_once 'conexion.php';
-
-class Security extends Conexion {
+class Security extends Connection {
     public function registro() {
         if (isset($_POST["corr"]) && isset($_POST["con"]) && isset($_POST["user"]) && isset($_POST["dni"])) {
 
@@ -46,8 +44,8 @@ class Security extends Conexion {
             echo "Error: Todos los campos son requeridos";
         }
     }
-
-    public function login($correo, $contrasena) {
+ 
+    /* public function login($correo, $contrasena) {
         $dataBase = $this->getConn();
 
         $usuario = $this->obtenerUsuarioPorCorreo($correo);
@@ -66,7 +64,7 @@ class Security extends Conexion {
             return "Contraseña incorrecta";
         }
     }
-
+ */
     private function obtenerUsuarioPorCorreo($correo) {
         $dataBase = $this->getConn();
         $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";

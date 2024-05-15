@@ -12,7 +12,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 }
 
 // Maneja el inicio de sesión si se envían los datos del formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+/* if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
         $correo = $_POST["correo"];
         $contrasena = $_POST["contrasena"];
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo $login_result;
         }
     }
-}
+} */
 ?>
 
 
