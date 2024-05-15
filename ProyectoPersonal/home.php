@@ -72,11 +72,13 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Apartado 5
+                                    Iniciar sesión/ Registrarse
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Apartado 5 a</a></li>
+                                    <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
+                                    <li><a class="dropdown-item" href="#">Registrarse</a></li>
                                 </ul>
+                                
                             </li>
                         </ul>
                         <form class="d-flex">
@@ -91,6 +93,11 @@
             <div class="col-2">
                 <aside>
                     <h2 style="color:black">AMIGOS</h2>
+                    <ul>
+                        <li>Amigo 1 Puntos: 2</li>
+                        <li>Amigo 2 Puntos: 2</li>
+                        <li>Amigo 3 Puntos: 2</li>
+                    </ul>
                 </aside>
             </div>
             <div class="col-10">
