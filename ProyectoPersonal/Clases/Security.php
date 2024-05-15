@@ -60,6 +60,7 @@ class Security extends Conexion {
             session_start();
             $_SESSION['loggedin'] = true;
             $_SESSION['usuario'] = $usuario['username'];
+            $_SESSION['DNI'] = $fila['DNI'];
             return true;
         } else {
             return "Contraseña incorrecta";

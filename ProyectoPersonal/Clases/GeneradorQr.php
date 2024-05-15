@@ -2,47 +2,48 @@
 require_once 'Assets/vendor/phpQrCode/qrlib.php';
 require_once 'conexion.php';
 
-class GeneradorQR{
+class GeneradorQR {
+    private $conexion;
+
+    public function __construct($conexion) {
+        $this->conexion = $conexion;
+    }
+
     public function generarQR($datos, $nombreArchivo) {
         // Tamaño del código QR
         $tamaño = 10; // Tamaño del código QR (1-10)
         $nivelCorreccion = 'L'; // Nivel de corrección de errores (L, M, Q, H)
 
-        // Genera el código QR y lo guarda en un archivo
-        QRcode::png($datos, $nombreArchivo, $nivelCorreccion, $tamaño);
+        try {
+            // Genera el código QR y lo guarda en un archivo
+            QRcode::png($datos, $nombreArchivo, $nivelCorreccion, $tamaño);
+            return true;
+        } catch (Exception $e) {
+            // Si ocurre un error, muestra un mensaje de error
+            echo "Error al generar el código QR: " . $e->getMessage();
+            return false;
+        }
     }
 
     public function generarQRUsuario($dniUsuario) {
-        // Datos que quieres codificar en el código QR (puede ser el ID del usuario, su nombre, etc.)
-        $datosQR = "https://tusitioweb.com/perfil.php?id=$dniUsuario";
+        // Datos que quieres codificar en el código QR (en este caso, el DNI del usuario)
+        $datosQR = $dniUsuario;
 
-        // Nombre del archivo donde se guardará el código QR
-        $nombreArchivo = "qr_codes/usuario_$dniUsuario.png";
+        // Ruta absoluta donde se guardará el código QR
+        $rutaCompleta = __DIR__ . "/../../assets/vendor/phpQrCode/qr_codes/";
+        $nombreArchivo = $rutaCompleta . "usuario_$dniUsuario.png";
 
-        // Genera el código QR y lo guarda en un archivo
-        $this->generarQR($datosQR, $nombreArchivo);
-
-        // Devuelve el nombre del archivo generado
-        return $nombreArchivo;
+        // Genera el código QR y verifica si se generó correctamente
+        if ($this->generarQR($datosQR, $nombreArchivo)) {
+            // Si el código QR se generó correctamente, devuelve el nombre del archivo generado
+            return $nombreArchivo;
+        } else {
+            // Si hubo un error al generar el código QR, devuelve false
+            return false;
+        }
     }
-    // Función para obtener el DNI del usuario autenticado
-    private function obtener_DNI_del_usuario() {
-    // Iniciar la sesión si no está iniciada
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-
-    // Verificar si el usuario está autenticado y registrado
-    if (isset($_SESSION['DNI'])) {
-        // Devolver el DNI del usuario autenticado
-        return $_SESSION['DNI'];
-    } else {
-        // Si el usuario no está autenticado, redirigirlo a la página de inicio de sesión
-        header("Location: login.php");
-        exit; // Finalizar el script después de redirigir
-    }
-}
-
-
 }
 ?>
+
+
+
