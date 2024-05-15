@@ -1,13 +1,9 @@
 <?php
 require_once "autoloader.php";
 
-/*<------------Cambiar---------------------->
-$che = new check();
+$security = new Security();
+$security->iniciarSesion();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $che->registro($_POST);
-}
-//<---------------------------------------->*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                         <label for="contrasena">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese su contraseña" required>
+                        <input type="password" class="form-control" id="contrasena" name="contrasena" maxlength="16" placeholder="Ingrese su contraseña" required>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-block">Iniciar Sesión</button>

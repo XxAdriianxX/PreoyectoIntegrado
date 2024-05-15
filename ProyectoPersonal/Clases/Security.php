@@ -47,6 +47,32 @@ class Security extends Conexion {
         }
     }
 
+    public function iniciarSesion() {
+        if (isset($_POST["corr"]) && isset($_POST["con"])) {
+            $dataBase = $this->getConn();
+
+            $correo = $_POST["corr"];
+            $contrasena = $_POST["con"];
+
+            $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";
+            $resultado = mysqli_query($dataBase, $consulta);
+
+            if (mysqli_num_rows($resultado) == 1) {
+                $fila = mysqli_fetch_assoc($resultado);
+                if (password_verify($contrasena, $fila['contrasena'])) {
+                    echo "Inicio de sesión exitoso";
+                    // Aquí puedes establecer las variables de sesión o redirigir al usuario a otra página
+                } else {
+                    echo "Contraseña incorrecta";
+                }
+            } else {
+                echo "El correo no está registrado";
+            }
+        } else {
+            echo "Error: Todos los campos son requeridos";
+        }
+    }
+
     public static function validarEmail($email) {
         // Filtrar y validar el correo electrónico
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
