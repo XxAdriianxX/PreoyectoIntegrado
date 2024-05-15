@@ -61,7 +61,6 @@ class Security extends Conexion {
                 $fila = mysqli_fetch_assoc($resultado);
                 if (password_verify($contrasena, $fila['contrasena'])) {
                     echo "Inicio de sesión exitoso";
-                    // Aquí puedes establecer las variables de sesión o redirigir al usuario a otra página
                 } else {
                     echo "Contraseña incorrecta";
                 }
