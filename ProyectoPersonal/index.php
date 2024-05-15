@@ -33,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Interfaz Principal</title>
     <!-- Enlaces a archivos css -->
     <link rel="stylesheet" href="./Assets/css/index.css">
-    <link href="./Assets/css/boxicon.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Assets/css/boxicons.css">
+    <link rel="stylesheet" href="./Assets/css/boxicons.min.css">
     <!-- Enlaces a los estilos del carrusel -->
     <link rel="stylesheet" href="./Assets/owlcarousel/owl.carousel.min.css" />
     <link rel="stylesheet" href="./Assets/owlcarousel/owl.theme.default.min.css" />
