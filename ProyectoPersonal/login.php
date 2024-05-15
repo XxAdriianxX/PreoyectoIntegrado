@@ -9,11 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $contrasena = $_POST["contrasena"];
         $login_result = $security->login($correo, $contrasena);
         if ($login_result === true) {
-            // Redirecciona al usuario a index.php si el inicio de sesión es exitoso
             header('Location: index.php');
-            exit(); // Asegúrate de salir después de redireccionar
+            exit(); 
         } else {
-            // Si hay un error en el inicio de sesión, muestra el mensaje de error
             echo $login_result;
         }
     }

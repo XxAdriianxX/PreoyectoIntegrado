@@ -11,14 +11,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $usuario = null;
 }
 
-// Manejar el inicio de sesión si se envían los datos del formulario
+// Maneja el inicio de sesión si se envían los datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
         $correo = $_POST["correo"];
         $contrasena = $_POST["contrasena"];
         $login_result = $security->login($correo, $contrasena);
         if ($login_result !== true) {
-            // Si hay un error en el inicio de sesión, mostrarlo
             echo $login_result;
         }
     }
