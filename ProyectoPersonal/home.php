@@ -62,7 +62,7 @@
                                 <a class="nav-link" aria-current="page" href="#">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Perfil</a>
+                                <a class="nav-link" href="profile.html">Perfil</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Apartado 3</a>
