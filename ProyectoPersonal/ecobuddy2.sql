@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS Usuario (
     mail VARCHAR(255),
     ubi VARCHAR(255),
     puntos INT,
-    contrasena VARCHAR(255)
+    contrasena VARCHAR(255),
+    contr_cifrada VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Amigos (

@@ -75,13 +75,10 @@ $conn = $connection->getConn();
                                 <a class="nav-link" aria-current="page" href="#">Inicio</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#">Eventos</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">Perfil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Apartado 3</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Apartado 4</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

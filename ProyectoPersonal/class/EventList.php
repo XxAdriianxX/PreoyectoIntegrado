@@ -25,9 +25,9 @@ class EventList extends Connection
         foreach ($events as $event) {
             $table .= '<div class="col-lg-4 col-md-6">';
             if ($event->active == 'Activo') {
-                $table .= '<div class="card custom-bg  text-center mb-5">';
-            } else {
                 $table .= '<div class="card text-center mb-5">';
+            } else {
+                $table .= '<div class="card custom-bg text-center mb-5">';
             }
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
