@@ -1,6 +1,20 @@
-<!doctype html>
-<html lang="es">
+    <?php
+       require_once "autoloader.php";
+    session_start();
+    $conn = new mysqli('db', 'root', 'test', "EcoBuddy");
+    
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
+    $objetoSecurity = new User();
+
+    if (isset($_SESSION['username'])) {  
+        $Usuario = $_SESSION['username'];
+    }
+    ?>
+    <!doctype html>
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,30 +130,7 @@
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-2">
                                             <div class="col-md-12">
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <h3 class="mb-0 me-2 text-nowrap" style="width: 280px;">Nombre de usuario:</h3>
-                                                    <span class="badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6">Jhon Cobra</span>
-                                                </div>
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <h3 class="mb-0 me-2 text-nowrap" style="width: 280px;">Contraseña:</h3>
-                                                    <span class="badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6">gjviehcis</span>
-                                                </div>
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <h3 class="mb-0 me-2 text-nowrap" style="width: 280px;">E-mail:</h3>
-                                                    <span class="badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6">hola@gmail.com</span>
-                                                </div>
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <h3 class="mb-0 me-2 text-nowrap" style="width: 280px;">DNI:</h3>
-                                                    <span class="badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6">56726562P</span>
-                                                </div>
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <h3 class="mb-0 me-2 text-nowrap" style="width: 280px;">Ubicación:</h3>
-                                                    <span class="badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6">Valencia</span>
-                                                </div>
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <h3 class="mb-0 me-2 text-nowrap" style="width: 280px;">Puntos:</h3>
-                                                    <span class="badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6">300.000</span>
-                                                </div>
+                                            <?= $objetoSecurity->mostrarUsuario($Usuario) ?>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">

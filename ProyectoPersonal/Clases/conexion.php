@@ -24,10 +24,6 @@ class Conexion
         return $this->conn;
     }
     
-    public function getConn() {
-        return $this->conn;
-    }
-
     public function connect()
     {
         $configFile = fopen($this->configFile, "r") or die("Unable to open file!");

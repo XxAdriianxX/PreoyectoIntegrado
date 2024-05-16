@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><span>Hola, <?php echo htmlspecialchars($usuario); ?></span></li>
             <!-- Botón de usuario -->
             <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
+            <li><a href="profile.php">Perfil</a></li>
             <!-- Botón para salir -->
             <li><button class="salir-btn" onclick="location.href = 'logout.php';"><i class='bx bx-log-out bx-sm bx-tada-hover text-primary'></i></button></li>
         </ul>
