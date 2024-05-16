@@ -30,7 +30,7 @@ class GeneradorQR {
         $datosQR = $dniUsuario;
 
         // Ruta absoluta donde se guardará el código QR
-        $rutaCompleta = __DIR__ . "/../../assets/vendor/phpQrCode/qr_codes/";
+        $rutaCompleta = __DIR__ . "/../../Assets/vendor/qr_codes/";
         $nombreArchivo = $rutaCompleta . "usuario_$dniUsuario.png";
 
         // Genera el código QR y verifica si se generó correctamente
