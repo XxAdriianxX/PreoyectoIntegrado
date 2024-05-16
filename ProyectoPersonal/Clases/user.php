@@ -2,6 +2,12 @@
 require_once "conexion.php"; 
 
 class User {
+    private $dni;
+    private $username;
+    private $mail;
+    private $ubi;
+    private $points;
+    private $password;
     public static function getUserData($dni) {
         // Crear una instancia de la clase Conexion para obtener la conexión
         $conexion = new Conexion();
