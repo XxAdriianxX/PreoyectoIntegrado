@@ -50,8 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required>
                         </div>
                         <div class="form-group">
-                            <label for="contraseña">Contraseña</label>
-                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese su contraseña" required maxlength="16" minlength="12">
+                            <label for="contraseña">Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese la nueva contraseña" required maxlength="16" minlength="12">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-block">Cambiar Contraseña</button>
