@@ -1,6 +1,4 @@
 <?php
-require_once 'Conexion.php';
-
 class Security extends Conexion {
     
     public function registro($reg) {
