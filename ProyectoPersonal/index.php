@@ -7,8 +7,10 @@ $security = new Security();
 // Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $usuario = $_SESSION['usuario'];
+    $puntos = $_SESSION['puntos'];
 } else {
     $usuario = null;
+    $puntos = 0;
 }
 
 // Maneja el inicio de sesión si se envían los datos del formulario
@@ -19,11 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $login_result = $security->login($correo, $contrasena);
         if ($login_result !== true) {
             echo $login_result;
+        } else {
+            // Redirigir para refrescar la página y asegurar que las variables de sesión se carguen
+            header("Location: index.php");
+            exit();
         }
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">
@@ -60,7 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
             <!-- Botón para salir -->
             <li><button class="salir-btn" onclick="location.href = 'logout.php';"><i class='bx bx-log-out bx-sm bx-tada-hover text-primary'></i></button></li>
-            </li>
         </ul>
     </nav>
     </header>
@@ -75,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </button>
                     </div>
                     <div class="saldo" id="saldo">
-                        <p>Tu saldo total es: <span id="saldo-total">100</span> tokens</p>
+                        <p>Tu saldo total es: <span id="saldo-total"><?php echo $puntos; ?></span> puntos</p>
                     </div>
                 </div>
                 <div class="acciones">
@@ -184,6 +188,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 </body>
 </html>
+
+
+
+
 
 
 
