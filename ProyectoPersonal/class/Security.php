@@ -25,12 +25,12 @@ class Security extends Connection
             $mail = $data['mail'];
             $userLocation = $data['userLocation'];
             $securePassword = password_hash($userPassword, PASSWORD_BCRYPT);
-            $query = 'INSERT INTO Usuario (DNI, username, contrasena, contr_cifrada, puntos, mail, ubi )
-          VALUES ("' . $DNI . '", "' . $userName . '", "' . $userPassword . '", "' . $securePassword . '", 100, "' . $mail . '", "' . $userLocation . '")';
+            $query = 'INSERT INTO Usuario (DNI, username, contrasena, puntos, mail, ubi )
+          VALUES ("' . $DNI . '", "' . $userName . '", "' . $securePassword . '", 100, "' . $mail . '", "' . $userLocation . '")';
             mysqli_query($this->conn, $query);
 
 
-            header("location: events.php");
+            header("location: login.php");
         } else {
             return null;
         }

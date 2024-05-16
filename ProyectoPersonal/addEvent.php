@@ -2,6 +2,7 @@
 require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
+var_dump($_SESSION);
 if (count($_POST) > 0) {
     $connection->addEvent($_POST, $_SESSION['dni']);
     header("location: events.php");
@@ -98,7 +99,7 @@ if (count($_POST) > 0) {
                                                     <label for="points" class="form-label">
                                                         Puntos por asistir:</label>
                                                     <input type="number" placeholder="50"
-                                                        class="form-control text-muted" id="points" name="points">
+                                                        class="form-control" id="points" name="points">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 offset-2">
