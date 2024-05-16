@@ -25,7 +25,7 @@ class EventList extends Connection
         foreach ($events as $event) {
             $table .= '<div class="col-lg-4 col-md-6">';
             if ($event->active == 'Activo') {
-                $table .= '<div class="card text-center mb-5">';
+                $table .= '<div class="card text-center mb-5 custom-bg">';
             } else {
                 $table .= '<div class="card custom-bg text-center mb-5">';
             }
@@ -79,7 +79,7 @@ class EventList extends Connection
     {
         $friends = $this->getAllFriends($DNI);
         $table = '';
-        for ($i=0; $i<count($friends); $i++) {
+        for ($i = 0; $i < count($friends); $i++) {
             $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i] . '</span>';
         }
         return $table;
@@ -87,18 +87,21 @@ class EventList extends Connection
 
     public function addEvent($data, $DNI)
     {
-        $curdate = date('Y-m-d');
+        $curdate = date('Y-m-d H:i:s');
         $eventName = $data["eventName"];
         $date = $data["date"];
+        $dateFormat = strtotime($date);
+        $dateFormat = date('Y-m-d H:i:s', $dateFormat);
         $location = $data["location"];
         $points = $data['points'];
-        if ($date <= $curdate){
+        $description= $data['description'];
+        if ($date <= $curdate) {
             $active = 'activo';
-        }else{
+        } else {
             $active = 'inactivo';
         }
-        $query = "INSERT INTO tareas (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados )
-        values ('$eventName', '$date', '$location', '$active', '$DNI', '$points') ;";
+        $query = "INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion )
+        values ('$eventName', '$dateFormat', '$location', '$active', '$DNI', '$points', '$description') ;";
         mysqli_query($this->conn, $query);
     }
 }
