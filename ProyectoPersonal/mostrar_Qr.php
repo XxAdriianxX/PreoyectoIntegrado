@@ -10,7 +10,7 @@ if (isset($_SESSION['DNI'])) {
     $dniUsuario = $_SESSION['DNI'];
 
     // Definir la ruta completa del archivo QR generado
-    $nombreArchivo = __DIR__ . "/../../Assets/vendor/qr_codes/usuario_$dniUsuario.png";
+    $nombreArchivo = __DIR__ . "/../Assets/vendor/qr_codes/usuario_$dniUsuario.png";
 
     // Verificar si el archivo existe
     if (file_exists($nombreArchivo)) {

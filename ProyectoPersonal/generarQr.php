@@ -13,7 +13,7 @@ if (isset($_SESSION['DNI'])) {
     $generadorQR = new GeneradorQR(new Conexion());
 
     // Definir la ruta completa del archivo QR
-    $nombreArchivo = __DIR__ . "/../../Assets/vendor/qr_codes/usuario_$dniUsuario.png";
+    $nombreArchivo = __DIR__ . "/../Assets/vendor/qr_codes/usuario_$dniUsuario.png";
 
     // Generar el código QR del usuario
     if ($generadorQR->generarQRUsuario($dniUsuario)) {
