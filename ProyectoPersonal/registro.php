@@ -1,10 +1,10 @@
 <?php
 require_once "autoloader.php";
 
-$sec = new Security();
+$security = new Security();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $sec->registro($_POST);
+    $security->doSingUp($_POST); 
 }
 
 ?>
@@ -48,20 +48,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h2 class="card-title text-center">Registro</h2>
                             <form action="" method="POST">
                                 <div class="form-group">
-                                    <label for="corr">Correo Electrónico</label>
-                                    <input type="email" class="form-control" id="corr" name="corr" placeholder="Ingrese su correo" required>
+                                    <label for="mail">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="mail" name="mail" placeholder="Ingrese su correo" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="con">Contraseña</label>
-                                    <input type="password" class="form-control" id="con" name="con" maxlength="16" placeholder="Ingrese su contraseña" required>
+                                    <label for="userPassword">Contraseña</label>
+                                    <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="16" placeholder="Ingrese su contraseña" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="user">Username</label>
-                                    <input type="text" class="form-control" id="user" name="user" maxlength="15" placeholder="Ingrese tu nombre de Usuario" required>
+                                    <label for="userName">Username</label>
+                                    <input type="text" class="form-control" id="userName" name="userName" maxlength="15" placeholder="Ingrese tu nombre de Usuario" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="dni">DNI</label>
                                     <input type="text" class="form-control" id="dni" name="dni" maxlength="9" placeholder="Ingrese su DNI" required >
+                                </div>
+                                <div class="form-group">
+                                    <label for="userLocation">Ubicación</label>
+                                    <input type="text" class="form-control" id="userLocation" name="userLocation" maxlength="9" placeholder="Ingrese su Ubicación" required >
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-success btn-block">Registrarse</button>

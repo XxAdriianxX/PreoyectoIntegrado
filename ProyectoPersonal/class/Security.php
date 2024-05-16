@@ -1,91 +1,86 @@
 <?php
+class Security extends Connection
+{
+    private $loginPage = "login.php";
+    private $homePage = "events.php";
+    public function __construct()
+    {
+        parent::__construct();
+        session_start();
+    }
 
-class Security extends Connection {
-    public function registro() {
-        if (isset($_POST["corr"]) && isset($_POST["con"]) && isset($_POST["user"]) && isset($_POST["dni"])) {
+    public function checkLoggedIn()
+    {
+        if (!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"]) {
+            header("Location: " . $this->loginPage);
+        }
+    }
 
-            $dataBase = $this->getConn();
+    public function doSingUp($data)
+    {
+        if (count($data) > 0) {
+            $userName = $data["userName"];
+            $userPassword = $data["userPassword"];
+            $DNI = $data['dni'];
+            $mail = $data['mail'];
+            $userLocation = $data['userLocation'];
+            $securePassword = password_hash($userPassword, PASSWORD_BCRYPT);
+            $query = 'INSERT INTO Usuario (DNI, username, contrasena, contr_cifrada, puntos, mail, ubi )
+          VALUES ("' . $DNI . '", "' . $userName . '", "' . $userPassword . '", "' . $securePassword . '", 100, "' . $mail . '", "' . $userLocation . '")';
+            mysqli_query($this->conn, $query);
 
-            $correo = $_POST["corr"];
-            $contrasena = $_POST["con"];
-            $contrasena_hash = password_hash($contrasena, PASSWORD_DEFAULT); 
-            $user = $_POST["user"];
-            $dni = $_POST["dni"];
 
-            $consultaCorreo = "SELECT * FROM Usuario WHERE mail = '$correo'";
-            $resultadoCorreo = mysqli_query($dataBase, $consultaCorreo);
-
-            if (mysqli_num_rows($resultadoCorreo) > 0) {
-                echo "El correo ya está registrado";
+            header("location: events.php");
+        } else {
+            return null;
+        }
+    }
+    public function doLogin()
+    {
+        if (count($_POST) > 0) {
+            $mail = $this->getUser($_POST["mail"]);
+            $_SESSION["loggedIn"] = $this->checkUser($mail, $_POST["password"]) ? $mail["mail"] : false;
+            if ($_SESSION["loggedIn"]) {
+                header("Location: " . $this->homePage);
             } else {
-                $consultaUsuario = "SELECT * FROM Usuario WHERE username = '$user'";
-                $resultadoUsuario = mysqli_query($dataBase, $consultaUsuario);
-
-                if (mysqli_num_rows($resultadoUsuario) > 0) {
-                    echo "El nombre de usuario ya está registrado";
-                } else {
-                    $consultaDNI = "SELECT * FROM Usuario WHERE DNI = '$dni'";
-                    $resultadoDNI = mysqli_query($dataBase, $consultaDNI);
-
-                    if (mysqli_num_rows($resultadoDNI) > 0) {
-                        echo "El DNI ya está registrado";
-                    } else {
-                        $insertar = "INSERT INTO Usuario (mail, contrasena, username, DNI) VALUES ('$correo', '$contrasena_hash', '$user', '$dni')";
-                        if (mysqli_query($dataBase, $insertar)) {
-                            echo "Registro exitoso";
-                        } else {
-                            echo "Error al conectar con la base de datos: " . mysqli_error($dataBase);
-                        }
-                    }
-                }
+                return "Incorrect User Name or Password";
             }
-
         } else {
-            echo "Error: Todos los campos son requeridos";
+            return null;
         }
     }
- 
-    /* public function login($correo, $contrasena) {
-        $dataBase = $this->getConn();
 
-        $usuario = $this->obtenerUsuarioPorCorreo($correo);
-
-        if (!$usuario) {
-            return "El correo no está registrado";
+    public function getUserData()
+    {
+        if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]) {
+            return $_SESSION["loggedIn"];
         }
+    }
 
-        if (password_verify($contrasena, $usuario['contrasena'])) {
-            session_start();
-            $_SESSION['loggedin'] = true;
-            $_SESSION['usuario'] = $usuario['username'];
-            $_SESSION['DNI'] = $fila['DNI'];
-            return true;
+    private function checkUser($mail, $userPassword)
+    {
+        if ($mail) {
+            //return $this->checkPassword($mail["userPassword"], $userPassword);
+            return $this->checkPassword($mail["securePassword"], $userPassword);
         } else {
-            return "Contraseña incorrecta";
-        }
-    }
- */
-    private function obtenerUsuarioPorCorreo($correo) {
-        $dataBase = $this->getConn();
-        $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";
-        $resultado = mysqli_query($dataBase, $consulta);
-        return mysqli_fetch_assoc($resultado);
-    }
-
-    public static function validarEmail($email) {
-        // Filtrar y validar el correo electrónico
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return false;
         }
-        return true;
     }
 
-    public static function validarTexto($texto) {
-        // Validar que el texto no esté vacío
-        if (empty($texto)) {
+    private function checkPassword($securePassword, $userPassword)
+    {
+        return password_verify($userPassword, $securePassword);
+        //return ($userPassword === $securePassword);
+    }
+
+    private function getUser($mail)
+    {
+        $sql = "SELECT * FROM Usuario WHERE mail = '$mail'";
+        $result = $this->conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
             return false;
         }
-        return true;
     }
 }
-?>

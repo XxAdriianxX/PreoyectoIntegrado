@@ -2,6 +2,9 @@
 require_once "autoloader.php";
 $connection = new EventList();
 $conn = $connection->getConn();
+$security = new Security();
+$loginMessage = $security->doLogin();
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -38,16 +41,8 @@ $conn = $connection->getConn();
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Eventos</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Iniciar sesión/ Registrarse
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
-                                    <li><a class="dropdown-item" href="#">Registrarse</a></li>
-                                </ul>
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Premios</a>
                             </li>
                         </ul>
                         <a href="#" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">

@@ -1,9 +1,9 @@
 <?php
 require_once "autoloader.php";
-
 $security = new Security();
+$loginMessage = $security->doLogin();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+/* if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
         $correo = $_POST["correo"];
         $contrasena = $_POST["contrasena"];
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo $login_result;
         }
     }
-}
+} */
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,12 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h2 class="card-title text-center">Inicio de Sesión</h2>
                     <form action="" method="POST">
                         <div class="form-group">
-                        <label for="correo">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" required>
+                        <label for="mail">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="mail" name="mail" placeholder="Ingrese su correo" required>
                         </div>
                         <div class="form-group">
-                        <label for="contrasena">Contraseña</label>
-                        <input type="password" class="form-control" id="contrasena" name="contrasena" maxlength="16" placeholder="Ingrese su contraseña" required>
+                        <label for="userPassword">Contraseña</label>
+                        <input type="password" class="form-control" id="userPassword" name="userPassword" maxlength="16" placeholder="Ingrese su contraseña" required>
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success btn-block">Iniciar Sesión</button>

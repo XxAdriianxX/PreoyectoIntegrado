@@ -4,8 +4,11 @@ class UsuarioDTO {
     private $id;
     private $username;
     private $mail;
+    private $password;
+    private $securePassword;
     private $ubicacion;
     private $puntos;
+
 
     public function getId() {
         return $this->id;

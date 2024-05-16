@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS EcoBuddy;
+CREATE DATABASE IF NOT EXISTS EcoBuddy2;
 
-USE EcoBuddy;
+USE EcoBuddy2;
 
 CREATE TABLE IF NOT EXISTS Usuario (
     DNI VARCHAR(9) PRIMARY KEY,
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Evento (
     fecha_hora DATETIME,
     ubi VARCHAR(255),
     descripcion TEXT,
-    estado VARCHAR(50),
+    estado TINYINT(1),
     DNI_usuario VARCHAR(9),
     puntos_asociados INT, 
     PRIMARY KEY (nombre, fecha_hora),
