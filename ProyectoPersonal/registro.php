@@ -1,5 +1,6 @@
 <?php
 require_once "autoloader.php";
+
 $sec = new Security();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -52,22 +53,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <label for="con">Contraseña</label>
-                                    <input type="password" class="form-control" id="con" name="con" placeholder="Ingrese su contraseña" required>
+                                    <input type="password" class="form-control" id="con" name="con" maxlength="16" placeholder="Ingrese su contraseña" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="user">Username</label>
-                                    <input type="text" class="form-control" id="user" name="user" placeholder="Ingrese tu nombre de Usuario" required>
+                                    <input type="text" class="form-control" id="user" name="user" maxlength="15" placeholder="Ingrese tu nombre de Usuario" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="dni">DNI</label>
-                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" required>
+                                    <input type="text" class="form-control" id="dni" name="dni" maxlength="9" placeholder="Ingrese su DNI" required >
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-success btn-block">Registrarse</button>
                                 <br>
                                 <br>
                                 <p>¿Ya tienes cuenta?</p>
-                                <a href="inicioSesion.php" class="btn btn-sm btn-success ">Iniciar Sesión</a>
+                                <a href="login.php" class="btn btn-sm btn-success ">Iniciar Sesión</a>
                             </form>
                         </div>
                     </div>

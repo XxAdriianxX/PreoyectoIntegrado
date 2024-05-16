@@ -1,3 +1,30 @@
+<?php
+require_once "autoloader.php";
+session_start(); // Inicia la sesión en la página de inicio
+
+$security = new Security();
+
+// Verifica si el usuario ha iniciado sesión
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $usuario = $_SESSION['usuario'];
+} else {
+    $usuario = null;
+}
+
+// Maneja el inicio de sesión si se envían los datos del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
+        $correo = $_POST["correo"];
+        $contrasena = $_POST["contrasena"];
+        $login_result = $security->login($correo, $contrasena);
+        if ($login_result !== true) {
+            echo $login_result;
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,7 +33,8 @@
     <title>Interfaz Principal</title>
     <!-- Enlaces a archivos css -->
     <link rel="stylesheet" href="./Assets/css/index.css">
-    <link href="./Assets/css/boxicon.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./Assets/css/boxicons.css">
+    <link rel="stylesheet" href="./Assets/css/boxicons.min.css">
     <!-- Enlaces a los estilos del carrusel -->
     <link rel="stylesheet" href="./Assets/owlcarousel/owl.carousel.min.css" />
     <link rel="stylesheet" href="./Assets/owlcarousel/owl.theme.default.min.css" />
@@ -22,14 +50,16 @@
         <ul class="menu">
             <!-- Botón de alertas -->
             <li><a class="nav-link" href="#"><i class='bx bx-bell bx-sm bx-tada-hover text-primary'></i></a></li>
+            <!-- Botón para generar código QR -->
+            <li><button class="nav-link" onclick="generarQR()"><i class='bx bx-qrcode bx-sm bx-tada-hover text-primary'></i></button></li>
             <!-- Botón para cambiar entre temas claro y oscuro -->
-            <li><button class="tema-btn" onclick="toggleTema()">Tema Claro/Oscuro</button></li>
+            <li><button class="tema-btn" onclick="toggleTema()"><i class='bx bx-sun bx-sm'></i><i class='bx bx-moon bx-sm'></i></button></li>
             <!-- Texto "Hola, Nombre de usuario" -->
-            <li><span>Hola, Sagre</span></li>
+            <li><span>Hola, <?php echo htmlspecialchars($usuario); ?></span></li>
             <!-- Botón de usuario -->
             <li><button class="usuario-btn"><i class='bx bx-user-circle bx-sm text-primary'></i></button></li>
             <!-- Botón para salir -->
-            <li><button class="salir-btn">Salir</button></li>
+            <li><button class="salir-btn" onclick="location.href = 'logout.php';"><i class='bx bx-log-out bx-sm bx-tada-hover text-primary'></i></button></li>
             </li>
         </ul>
     </nav>
@@ -40,7 +70,9 @@
                 <div class="saldo-container">
                     <div class="saldo-header">
                         <h3>Mi Saldo</h3>
-                        <button class="toggle-saldo" onclick="toggleSaldo()">Ocultar/Mostrar</button>
+                        <button class="toggle-saldo" onclick="toggleSaldo()">
+                            <i id="toggle-icon" class='bx bx-hide bx-sm'></i>
+                        </button>
                     </div>
                     <div class="saldo" id="saldo">
                         <p>Tu saldo total es: <span id="saldo-total">100</span> tokens</p>
@@ -52,6 +84,9 @@
                     <button class="intercambiar">Intercambiar</button>
                 </div>
             </section>
+
+            <!-- Título "Próximos eventos" -->
+            <h2 class="titulo-eventos">Próximos eventos</h2>
 
             <!-- Carrusel -->
             <div class="owl-carousel owl-theme">
@@ -92,17 +127,32 @@
 </footer>
 </div>
 
-    <!-- Script para ocultar/mostrar el saldo -->
+    <!-- Scripts Js-->
     <script>
+        // Función para mostrar o ocultar saldo
         function toggleSaldo() {
             var saldo = document.getElementById("saldo");
             saldo.classList.toggle("hidden");
+        // Alterna la visibilidad del saldo y cambia el ícono entre abierto y cerrado
+            var toggleIcon = document.getElementById('toggle-icon');
+                if (saldo.classList.contains('hidden')) {
+                    toggleIcon.classList.remove('bx-show');
+                    toggleIcon.classList.add('bx-hide');
+                } else {
+                    toggleIcon.classList.remove('bx-hide');
+                    toggleIcon.classList.add('bx-show');
+                }
         }
         
         // Función para cambiar entre temas claro y oscuro
         function toggleTema() {
             var body = document.body;
             body.classList.toggle("tema-oscuro");
+        }
+
+        function generarQR() {
+        // Redirigir a la página para mostrar el QR
+        window.location.href = "mostrar_Qr.php";
         }
     </script>
     <!-- Scripts del carrusel -->

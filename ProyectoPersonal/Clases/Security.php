@@ -1,8 +1,8 @@
 <?php
-require_once 'Conexion.php';
+
+require_once 'conexion.php';
 
 class Security extends Conexion {
-    
     public function registro() {
         if (isset($_POST["corr"]) && isset($_POST["con"]) && isset($_POST["user"]) && isset($_POST["dni"])) {
 
@@ -46,6 +46,48 @@ class Security extends Conexion {
             echo "Error: Todos los campos son requeridos";
         }
     }
-    
+
+    public function login($correo, $contrasena) {
+        $dataBase = $this->getConn();
+
+        $usuario = $this->obtenerUsuarioPorCorreo($correo);
+
+        if (!$usuario) {
+            return "El correo no está registrado";
+        }
+
+        if (password_verify($contrasena, $usuario['contrasena'])) {
+            session_start();
+            $_SESSION['loggedin'] = true;
+            $_SESSION['usuario'] = $usuario['username'];
+            $_SESSION['DNI'] = $fila['DNI'];
+            return true;
+        } else {
+            return "Contraseña incorrecta";
+        }
+    }
+
+    private function obtenerUsuarioPorCorreo($correo) {
+        $dataBase = $this->getConn();
+        $consulta = "SELECT * FROM Usuario WHERE mail = '$correo'";
+        $resultado = mysqli_query($dataBase, $consulta);
+        return mysqli_fetch_assoc($resultado);
+    }
+
+    public static function validarEmail($email) {
+        // Filtrar y validar el correo electrónico
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static function validarTexto($texto) {
+        // Validar que el texto no esté vacío
+        if (empty($texto)) {
+            return false;
+        }
+        return true;
+    }
 }
 ?>

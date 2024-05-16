@@ -23,6 +23,10 @@ class Conexion
     {
         return $this->conn;
     }
+    
+    public function getConn() {
+        return $this->conn;
+    }
 
     public function connect()
     {
