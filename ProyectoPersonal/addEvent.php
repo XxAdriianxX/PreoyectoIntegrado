@@ -1,9 +1,9 @@
 <?php
 require_once "autoloader.php";
-$connection = new EventList();
+$connection = new Model();
 $conn = $connection->getConn();
 if (count($_POST) > 0) {
-    $connection->addEvent($_POST, 123456789);
+    $connection->addEvent($_POST, $_SESSION['dni']);
     header("location: events.php");
 }
 

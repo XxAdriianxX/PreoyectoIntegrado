@@ -1,17 +1,16 @@
 <?php
 require_once "autoloader.php";
-session_start(); // Inicia la sesión en la página de inicio
-$connection = new EventList();
+/* session_start();  */// Inicia la sesión en la página de inicio
+$connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
-
-// Verifica si el usuario ha iniciado sesión
+var_dump($_SESSION);
+/* // Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $usuario = $_SESSION['usuario'];
     $puntos = $_SESSION['puntos'];
 } else {
-    $puntos = 0;
-    $usuario = null;
+    header('location: login.php');
 }
 
 // Maneja el inicio de sesión si se envían los datos del formulario
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header('location: events.php');
         }
     }
-}
+} */
 
 
 ?>
@@ -69,10 +68,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <a class="nav-link" href="#">Premios</a>
                             </li>
                         </ul>
-                        <a href="#" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                        <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                             <i class="fas fa-user"></i>
                         </a>
-                        <span>Hola, <?php echo htmlspecialchars($usuario); ?></span>
                         <form class="d-flex">
                             <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
                                 aria-label="Search">
@@ -91,9 +90,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                    <?= $puntos; ?>
+                    <?= $_SESSION['puntos']; ?>
                     <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                    <?= $connection->drawFriends(123456789); ?>
+                    <?= $connection->drawFriends($_SESSION['dni']); ?>
                 </aside>
             </div>
             <div class="col-10">

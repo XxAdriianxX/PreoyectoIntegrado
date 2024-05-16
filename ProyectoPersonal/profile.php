@@ -1,11 +1,13 @@
 <?php
 require_once "autoloader.php";
+$user = new Model();
+$security = new Security();
+$conn = $security->getConn();
+var_dump($_SESSION);
 
-session_start();
 
-// Verificar si el DNI del usuario está en la sesión
+/* session_start();
 if (isset($_SESSION['dni'])) {
-    // Obtener el DNI del usuario de la sesión
     $dniUsuario = $_SESSION['dni'];
     $userData = User::getUserData($dniUsuario);
 
@@ -18,7 +20,7 @@ if (isset($_SESSION['dni'])) {
     header("Location: login.php");
     exit();
 }
-
+ */
 ?>
 <!doctype html>
 <html lang="es">
@@ -26,10 +28,8 @@ if (isset($_SESSION['dni'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Prueba Felipe</title>
     <style>
         * {
@@ -83,9 +83,7 @@ if (isset($_SESSION['dni'])) {
         <header>
             <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
@@ -94,7 +92,7 @@ if (isset($_SESSION['dni'])) {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="home.php">Inicio</a>
+                                <a class="nav-link" aria-current="page" href="events.php">Inicio</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Perfil</a>
@@ -106,8 +104,7 @@ if (isset($_SESSION['dni'])) {
                                 <a class="nav-link" href="#">Apartado 4</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Apartado 5
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -129,24 +126,11 @@ if (isset($_SESSION['dni'])) {
                     <article>
                         <div class="row">
                             <div class="col-lg-2  col-md-6">
-                                <img src="Assets/img/risa_incontenible.jpg"
-                                    class="border border-light rounded-circle bg-light m-2 p-2" width="200px"
-                                    height="180px">
+                                <img src="Assets/img/risa_incontenible.jpg" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
                                         <h5 class=" text-light">Amigos:<h5>
-                                                <span
-                                                    class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 ">Javier
-                                                    Zapata</span>
-                                                <span
-                                                    class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2">Jorge
-                                                    Esteve</span>
-                                                <span
-                                                    class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2">Beto
-                                                    Da silva</span>
-                                                <span
-                                                    class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2">Manuel
-                                                    Rosa</span>
+                                                <?= $user->drawFriends($_SESSION['dni']); ?>
                                     </div>
                                 </div>
                             </div>
@@ -156,12 +140,11 @@ if (isset($_SESSION['dni'])) {
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-2">
                                             <div class="col-md-12">
-                                                <?= $objetoSecurity->mostrarUsuario($Usuario) ?>
+                                                <?= $user->mostrarUsuario($_SESSION) ?>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">
-                                            <a href="#" class="btn custom-button border border-dark text-dark bg-light"
-                                                style="width: 150px">Editar</a>
+                                            <a href="#" class="btn custom-button border border-dark text-dark bg-light" style="width: 150px">Editar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -175,30 +158,24 @@ if (isset($_SESSION['dni'])) {
         <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2"
-                        width="150px">
+                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2" width="150px">
                 </div>
                 <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-facebook"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-linkedin"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                    class="fab fa-youtube"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -217,9 +194,7 @@ if (isset($_SESSION['dni'])) {
             </div>
         </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>

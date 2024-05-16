@@ -1,9 +1,9 @@
 <?php
 require_once "autoloader.php";
 $security = new Security();
-/* $loginMessage = $security->login(); */
+$loginMessage = $security->doLogin();
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+/* if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["mail"]) && isset($_POST["userPassword"])) {
         $correo = $_POST["mail"];
         $contrasena = $_POST["userPassword"];
@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo $login_result;
         }
     }
-}
+} */
 ?>
 <!DOCTYPE html>
 <html>

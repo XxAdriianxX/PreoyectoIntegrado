@@ -1,5 +1,5 @@
 <?php
-class EventList extends Connection
+class Model extends Connection
 {
     public function getAllEvents()
     {
@@ -96,12 +96,29 @@ class EventList extends Connection
         $points = $data['points'];
         $description= $data['description'];
         if ($date <= $curdate) {
-            $active = 'activo';
+            $active = '1';
         } else {
-            $active = 'inactivo';
+            $active = '0';
         }
         $query = "INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion )
         values ('$eventName', '$dateFormat', '$location', '$active', '$DNI', '$points', '$description') ;";
         mysqli_query($this->conn, $query);
+    }
+
+    public function mostrarUsuario($data)
+    {
+        
+        $form = "";
+        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span>";
+        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>E-mail:</h3>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['mail'] . "</span>";
+        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span>";
+        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['ubi'] . "</span>";
+        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Puntos:</h3>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['puntos'] . "</span>";
+        return $form;
     }
 }
