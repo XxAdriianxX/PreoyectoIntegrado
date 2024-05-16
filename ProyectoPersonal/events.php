@@ -1,9 +1,33 @@
 <?php
 require_once "autoloader.php";
+session_start(); // Inicia la sesión en la página de inicio
 $connection = new EventList();
 $conn = $connection->getConn();
 $security = new Security();
-$loginMessage = $security->doLogin();
+
+// Verifica si el usuario ha iniciado sesión
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $usuario = $_SESSION['usuario'];
+    $puntos = $_SESSION['puntos'];
+} else {
+    $puntos = 0;
+    $usuario = null;
+}
+
+// Maneja el inicio de sesión si se envían los datos del formulario
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
+        $correo = $_POST["correo"];
+        $contrasena = $_POST["contrasena"];
+        $login_result = $security->login($correo, $contrasena);
+        if ($login_result !== true) {
+            echo $login_result;
+        } else {
+            header('location: events.php');
+        }
+    }
+}
+
 
 ?>
 <!doctype html>
@@ -48,6 +72,7 @@ $loginMessage = $security->doLogin();
                         <a href="#" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                             <i class="fas fa-user"></i>
                         </a>
+                        <span>Hola, <?php echo htmlspecialchars($usuario); ?></span>
                         <form class="d-flex">
                             <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
                                 aria-label="Search">
@@ -65,8 +90,10 @@ $loginMessage = $security->doLogin();
         <div class="row">
             <div class="col-2">
                 <aside>
+                    <h5 class=" text-light mx-auto text-center">Puntos:<h5>
+                    <?= $puntos; ?>
                     <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                            <?= $connection->drawFriends(123456789); ?>
+                    <?= $connection->drawFriends(123456789); ?>
                 </aside>
             </div>
             <div class="col-10">

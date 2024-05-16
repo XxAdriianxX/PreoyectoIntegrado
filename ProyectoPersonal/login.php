@@ -1,21 +1,21 @@
 <?php
 require_once "autoloader.php";
 $security = new Security();
-$loginMessage = $security->doLogin();
+/* $loginMessage = $security->login(); */
 
-/* if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
-        $correo = $_POST["correo"];
-        $contrasena = $_POST["contrasena"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["mail"]) && isset($_POST["userPassword"])) {
+        $correo = $_POST["mail"];
+        $contrasena = $_POST["userPassword"];
         $login_result = $security->login($correo, $contrasena);
         if ($login_result === true) {
-            header('Location: index.php');
-            exit(); 
+            header('Location: events.php');
+            exit();  
         } else {
             echo $login_result;
         }
     }
-} */
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,7 +67,7 @@ $loginMessage = $security->doLogin();
                         <br>
                         <br>
                         <p>¿No tienes cuenta?</p>
-                        <a href="registro.php" class="btn btn-sm btn-success">Registrarse</a>
+                        <a href="signup.php" class="btn btn-sm btn-success">Registrarse</a>
                     </form>
                     </div>
                 </div>

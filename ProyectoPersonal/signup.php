@@ -4,7 +4,7 @@ require_once "autoloader.php";
 $security = new Security();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $security->doSingUp($_POST); 
+    $security->registro($_POST); 
 }
 
 ?>
