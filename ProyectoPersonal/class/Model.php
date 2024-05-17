@@ -108,9 +108,7 @@ class Model extends Connection
         $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)');
         $stmt->bind_param('sssssis', $eventName, $dateFormat, $location, $active, $DNI, $points, $description);
 
-        if ($stmt->execute()) {
-            echo "Evento añadido con éxito.";
-        } else {
+        if (!$stmt->execute()) {
             echo "Error al añadir el evento.";
         }
     }
@@ -118,7 +116,7 @@ class Model extends Connection
     public function goEvent($dni, $eventName, $eventDate)
     {
         $stmt = $this->conn->prepare('INSERT INTO Asiste (DNI_usuario, nombre_evento, fecha_hora_evento) VALUES (?, ?, ?)');
-        $stmt->bind_param('sss', $dni, $eventName, $eventDate );
+        $stmt->bind_param('sss', $dni, $eventName, $eventDate);
         if ($stmt->execute()) {
             header("location: events.php");
         } else {
