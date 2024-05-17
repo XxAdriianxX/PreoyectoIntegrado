@@ -24,13 +24,21 @@ class Security extends Connection
             $DNI = $data['dni'];
             $mail = $data['mail'];
             $userLocation = $data['userLocation'];
+            if (!$this->checkMail($mail))
+                return print ("El correo ya está registrado. Por favor, usa otro correo.");
+            if (!$this->checkUsername($userName))
+                return print ("El nombre de usuario ya está registrado. Por favor, usa otro nombre de usuario.");
             $securePassword = password_hash($userPassword, PASSWORD_BCRYPT);
-            $query = 'INSERT INTO Usuario (DNI, username, contrasena, puntos, mail, ubi )
-          VALUES ("' . $DNI . '", "' . $userName . '", "' . $securePassword . '", 100, "' . $mail . '", "' . $userLocation . '")';
-            mysqli_query($this->conn, $query);
+            $stmt = $this->conn->prepare('INSERT INTO Usuario (DNI, username, contrasena, puntos, mail, ubi) VALUES (?, ?, ?, 100, ?, ?)');
+            $stmt->bind_param('sssss', $DNI, $userName, $securePassword, $mail, $userLocation);
 
+            if ($stmt->execute()) {
+                header("location: login.php");
+            } else {
+                echo "Error al registrar el usuario.";
+            }
 
-            header("location: login.php");
+            $stmt->close();
         } else {
             return null;
         }
@@ -54,7 +62,7 @@ class Security extends Connection
             return null;
         }
     }
-    
+
 
     public function getUserData()
     {
@@ -96,6 +104,14 @@ class Security extends Connection
         $stmt->bind_param("s", $mail);
         $stmt->execute();
         $result = $stmt->get_result();
-        $result->num_rows;
+        return $result->num_rows === 0;
+    }
+    public function checkUsername($userName)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM Usuario WHERE username = ?");
+        $stmt->bind_param("s", $userName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows === 0;
     }
 }

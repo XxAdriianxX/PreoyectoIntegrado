@@ -24,10 +24,10 @@ class Model extends Connection
         $table = '';
         foreach ($events as $event) {
             $table .= '<div class="col-lg-4 col-md-6">';
-            if ($event->active == 'Activo') {
+            if ($event->active == '1') {
                 $table .= '<div class="card text-center mb-5 custom-bg">';
             } else {
-                $table .= '<div class="card custom-bg text-center mb-5">';
+                $table .= '<div class="card bg-dark text-center mb-5">';
             }
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
@@ -44,7 +44,12 @@ class Model extends Connection
             $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '<p></p>';
-            $table .= '<a href="#" class="btn custom-button border border-dark">Apuntarse</a>';
+            if ($event->active == '1') {
+                $table .= '<a href="goEvent.php" class="btn custom-button border border-dark">Apuntarse</a>';
+            } else {
+                $table .= '<a href="" class="btn custom-button border border-dark">Apuntarse</a>';
+            }
+
             $table .= '</div>';
             $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="...">';
             $table .= '</div>';
@@ -94,20 +99,38 @@ class Model extends Connection
         $dateFormat = date('Y-m-d H:i:s', $dateFormat);
         $location = $data["location"];
         $points = $data['points'];
-        $description= $data['description'];
-        if ($date <= $curdate) {
+        $description = $data['description'];
+        if ($dateFormat <= $curdate) {
             $active = '1';
         } else {
             $active = '0';
         }
-        $query = "INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion )
-        values ('$eventName', '$dateFormat', '$location', '$active', '$DNI', '$points', '$description') ;";
-        mysqli_query($this->conn, $query);
+        $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('sssssis', $eventName, $dateFormat, $location, $active, $DNI, $points, $description);
+
+        if ($stmt->execute()) {
+            echo "Evento añadido con éxito.";
+        } else {
+            echo "Error al añadir el evento.";
+        }
     }
 
+    public function goEvent($dni, $eventName, $eventDate)
+    {
+
+    }
+
+    public function verifyAttendance($dni, $eventName, $eventDate)
+    {
+        $stmt = $this->conn->prepare("SELECT  SELECT DNI_usuario FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ?");
+        $stmt->bind_param("ii", $eventName, $eventDate);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0;
+    }
     public function mostrarUsuario($data)
     {
-        
+
         $form = "";
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
         $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span>";
