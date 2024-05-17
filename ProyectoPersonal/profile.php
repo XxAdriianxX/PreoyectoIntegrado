@@ -126,7 +126,7 @@ if (isset($_SESSION['dni'])) {
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-2">
                                             <div class="col-md-12">
-                                                <?= $user->mostrarUsuario($_SESSION) ?>
+                                                <?= $user->showProfile($_SESSION) ?>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">

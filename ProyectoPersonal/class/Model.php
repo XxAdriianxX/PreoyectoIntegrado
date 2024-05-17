@@ -45,7 +45,7 @@ class Model extends Connection
             $table .= '</div>';
             $table .= '<p></p>';
             if ($event->active == '1') {
-                $table .= '<a href="goEvent.php" class="btn custom-button border border-dark">Apuntarse</a>';
+                $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
             } else {
                 $table .= '<a href="" class="btn custom-button border border-dark">Apuntarse</a>';
             }
@@ -117,18 +117,34 @@ class Model extends Connection
 
     public function goEvent($dni, $eventName, $eventDate)
     {
+        $stmt = $this->conn->prepare('INSERT INTO Asiste (DNI_usuario, nombre_evento, fecha_hora_evento) VALUES (?, ?, ?)');
+        $stmt->bind_param('sss', $dni, $eventName, $eventDate );
+        if ($stmt->execute()) {
+            header("location: events.php");
+        } else {
+            echo "Error al apuntarse.";
+        }
 
+        $stmt->close();
     }
 
     public function verifyAttendance($dni, $eventName, $eventDate)
     {
-        $stmt = $this->conn->prepare("SELECT  SELECT DNI_usuario FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ?");
-        $stmt->bind_param("ii", $eventName, $eventDate);
+        $stmt = $this->conn->prepare("SELECT COUNT(*) AS asistente FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ? AND DNI_usuario = ?");
+        $stmt->bind_param("ssi", $eventName, $eventDate, $dni);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->num_rows > 0;
+        $row = $result->fetch_assoc();
+        $count = $row['asistente'];
+        $stmt->close();
+        if ($count > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    public function mostrarUsuario($data)
+
+    public function showProfile($data)
     {
 
         $form = "";
