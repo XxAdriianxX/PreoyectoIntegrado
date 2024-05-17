@@ -1,12 +1,13 @@
 <?php
 require_once "autoloader.php";
+$security = new Security;
 $connection = new Model();
 $conn = $connection->getConn();
-var_dump($_SESSION);
 if (count($_POST) > 0) {
     $connection->addEvent($_POST, $_SESSION['dni']);
     header("location: events.php");
 }
+
 
 ?>
 <!doctype html>

@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <label for="userLocation">Ubicación</label>
-                                    <input type="text" class="form-control" id="userLocation" name="userLocation" maxlength="9" placeholder="Ingrese su Ubicación" required >
+                                    <input type="text" class="form-control" id="userLocation" name="userLocation" placeholder="Ingrese su Ubicación" required >
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-success btn-block">Registrarse</button>

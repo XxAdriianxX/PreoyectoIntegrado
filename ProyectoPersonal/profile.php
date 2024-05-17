@@ -3,7 +3,7 @@ require_once "autoloader.php";
 $user = new Model();
 $security = new Security();
 $conn = $security->getConn();
-var_dump($_SESSION);
+
 
 
 /* session_start();
@@ -37,7 +37,7 @@ if (isset($_SESSION['dni'])) {
         }
 
         .custom-bg {
-            background-color: #228B22;
+            background-color: #0E2D40;
         }
 
         .pill-bg {
@@ -53,7 +53,7 @@ if (isset($_SESSION['dni'])) {
         }
 
         body {
-            background-color: #F5F5DC;
+            background-color: #D9D9D9;
         }
 
         a {
@@ -73,17 +73,39 @@ if (isset($_SESSION['dni'])) {
         }
 
         .cuerpo {
-            background-color: #dededd;
+            background-image: url("Assets/img/fondo2.jpg")
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group h3 {
+            flex-shrink: 0;
+        }
+
+        .form-group span {
+            flex-grow: 1;
+            border-radius:1ºxpx;
         }
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <header>
+    <header>
             <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
@@ -101,10 +123,19 @@ if (isset($_SESSION['dni'])) {
                                 <a class="nav-link" href="#">Premios</a>
                             </li>
                         </ul>
+                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                            <i class="fas fa-user"></i>
+                        </a>
                         <form class="d-flex">
-                            <input class="form-control me-2 rounded-pill" type="search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </form>
+                        <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
                     </div>
                 </div>
             </nav>
@@ -114,7 +145,7 @@ if (isset($_SESSION['dni'])) {
                 <section>
                     <article>
                         <div class="row">
-                            <div class="col-lg-2  col-md-6">
+                            <div class="col-lg-2  col-md-6 ms-4 ">
                                 <img src="Assets/img/risa_incontenible.jpg" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
@@ -123,12 +154,12 @@ if (isset($_SESSION['dni'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-10 col-md-6">
+                            <div class="col-lg-6 col-md-6 offset-1">
                                 <h2 class="mb-4 rounded-pill  mx-auto custom-bg">TU PERFIL</h2>
                                 <div class="card cuerpo">
                                     <div class="card-body">
-                                        <div class="row justify-content-start mb-2">
-                                            <div class="col-md-12">
+                                        <div class="row justify-content-start mb-3">
+                                            <div class="col-md-12">                           
                                                 <?= $user->mostrarUsuario($_SESSION) ?>
                                             </div>
                                         </div>
@@ -136,6 +167,21 @@ if (isset($_SESSION['dni'])) {
                                             <a href="#" class="btn custom-button border border-dark text-dark bg-light" style="width: 150px">Editar</a>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                                <div class="col-lg-2 col-md-6 ms-5">
+                                <div class="card fondo custom-bg " style="margin-top: 60px">
+                                    <div class="card-body">
+                                        <h2>Tus eventos: </h2>
+                                        <div class='form-container'>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Fecha:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Hora:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Participantes:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        </div>                                                  
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
