@@ -12,13 +12,15 @@ if (isset($_SESSION['DNI'])) {
     // Creamos una instancia de la clase GeneradorQR pasando una instancia de Conexion
     $generadorQR = new GeneradorQR(new Conexion());
 
-    // Definir la ruta completa del archivo QR
-    $nombreArchivo = __DIR__ . "/../Assets/vendor/qr_codes/usuario_$dniUsuario.png";
-
     // Generar el código QR del usuario
-    if ($generadorQR->generarQRUsuario($dniUsuario)) {
+    $nombreArchivo = $generadorQR->generarQRUsuario($dniUsuario);
+
+    // Verificar si se generó correctamente
+    if ($nombreArchivo) {
+        // Convertir la ruta absoluta en una ruta relativa para el HTML
+        $rutaRelativa = str_replace(realpath(__DIR__ . '/../..'), '', realpath($nombreArchivo));
         // Mostrar el código QR generado si se generó correctamente
-        echo "Código QR generado para el usuario $dniUsuario: <img src='$nombreArchivo' alt='Código QR del usuario'>";
+        echo "Código QR generado para el usuario $dniUsuario: <img src='$rutaRelativa' alt='Código QR del usuario'>";
     } else {
         // Manejar el caso en que ocurra un error durante la generación del código QR
         echo "Error al generar el código QR.";
@@ -28,6 +30,8 @@ if (isset($_SESSION['DNI'])) {
     exit;
 }
 ?>
+
+
 
 
 
