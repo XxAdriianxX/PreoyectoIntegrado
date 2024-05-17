@@ -57,27 +57,29 @@ class Security extends Conexion {
         }
     }
     
-
-    public function login($log){
+    //IMPORTANTE los datos que se quieran coger mediante variables de sesion se tienen que declarar primero en el Login
+    public function login($log) {
         if (isset($_POST["corr"]) && isset($_POST["con"])) {
             $dataBase = $this->getConn();
     
             $correo = $_POST["corr"];
             $contrasena = $_POST["con"];
     
-            $consulta = "SELECT mail, contrasena, username FROM Usuario WHERE mail = ?";
+            $consulta = "SELECT mail, contrasena, username, DNI, puntos FROM Usuario WHERE mail = ?";
             $stmt = mysqli_prepare($dataBase, $consulta);
             mysqli_stmt_bind_param($stmt, "s", $correo);
             mysqli_stmt_execute($stmt);
             $resultado = mysqli_stmt_get_result($stmt);
     
             if (mysqli_num_rows($resultado) > 0) {
-                $fila = mysqli_fetch_assoc($resultado);  
-                $contrasena_hash = $fila['contrasena']; 
-                if (password_verify($contrasena, $contrasena_hash)) { 
+                $fila = mysqli_fetch_assoc($resultado);
+                $contrasena_hash = $fila['contrasena'];
+                if (password_verify($contrasena, $contrasena_hash)) {
                     session_start();
                     $_SESSION['loggedin'] = true;
-                    $_SESSION['username'] = $fila['username']; 
+                    $_SESSION['username'] = $fila['username'];
+                    $_SESSION['DNI'] = $fila['DNI'];
+                    $_SESSION['puntos'] = $fila['puntos'];
                     header("Location: index.php");
                     exit;
                 } else {
@@ -89,7 +91,8 @@ class Security extends Conexion {
         } else {
             echo "Error: Todos los campos son requeridos";
         }
-    }    
+    }
+    
 
     public function changePassword($password) {
         if (isset($_POST["correo"]) && isset($_POST["contraseña"])) {
