@@ -24,17 +24,16 @@ class GeneradorQR {
 
     public function generarQRUsuario($dniUsuario) {
         $datosQR = $dniUsuario;
-        $rutaRelativa = '/Assets/vendor/qr_codes/';
-        $rutaCompleta = realpath(__DIR__ . '/../..') . $rutaRelativa;
+        // Ruta relativa desde el directorio actual hasta la carpeta qr_codes
+        $ruta = 'Assets/vendor/qr_codes/';
+        // Ruta absoluta al directorio qr_codes
+        /* $ruta = realpath(__DIR__ . '/../../..') . $rutaRelativa; */
 
-        if (!is_dir($rutaCompleta)) {
-            mkdir($rutaCompleta, 0777, true);
+        if (!is_dir($ruta)) {
+            mkdir($ruta, 0777, true);
         }
 
-        $nombreArchivo = $rutaCompleta . "usuario_$dniUsuario.png";
-
-        echo "Ruta completa: $rutaCompleta<br>";
-        echo "Nombre del archivo: $nombreArchivo<br>";
+        $nombreArchivo = $ruta . "usuario_$dniUsuario.png";
 
         if ($this->generarQR($datosQR, $nombreArchivo)) {
             return $nombreArchivo;
@@ -44,6 +43,7 @@ class GeneradorQR {
     }
 }
 ?>
+
 
 
 

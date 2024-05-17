@@ -579,7 +579,15 @@
         }
 
         //----------------------------------------------------------------------
-        public static function rsBlockNum($spec)     { return $spec[0] + $spec[3]; }
+        // Cálculo del número de bloques RS
+        public static function rsBlockNum($spec) {
+            // Asegúrate de que el directorio de caché exista
+            if (!is_dir(QR_CACHE_DIR)) {
+                mkdir(QR_CACHE_DIR, 0777, true);
+            }
+            
+            return $spec[0] + $spec[3]; 
+        }
         public static function rsBlockNum1($spec)    { return $spec[0]; }
         public static function rsDataCodes1($spec)   { return $spec[1]; }
         public static function rsEccCodes1($spec)    { return $spec[2]; }
