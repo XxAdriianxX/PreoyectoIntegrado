@@ -4,7 +4,6 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
-var_dump($_SESSION);
 /* // Verifica si el usuario ha iniciado sesión
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $usuario = $_SESSION['usuario'];

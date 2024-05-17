@@ -39,7 +39,7 @@ class User
 
     public function mostrarUsuario($usuario)
     {
-        $user = $this->obtenerUsuario($usuario);
+        $user = $this->getUserData($usuario);
         if (!$user) {
             echo "No se encontró el usuario.";
             error_log("Error: No se encontró el usuario con DNI $usuario.");

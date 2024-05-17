@@ -89,4 +89,13 @@ class Security extends Connection
             return false;
         }
     }
+
+    public function checkMail($mail)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM Usuario WHERE mail = ?");
+        $stmt->bind_param("s", $mail);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $result->num_rows;
+    }
 }
