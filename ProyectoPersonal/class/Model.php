@@ -18,7 +18,7 @@ class Model extends Connection
         return $newEvents;
     }
 
-    public function drawEventsList()
+    public function drawEventsList($dni)
     {
         $events = $this->getAllEvents();
         $table = '';
@@ -44,12 +44,16 @@ class Model extends Connection
             $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '<p></p>';
+            $isAttending = $this->verifyAttendance($dni, $event->name, $event->date);
             if ($event->active == '1') {
-                $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
+                if ($isAttending) {
+                    $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
+                } else {
+                    $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
+                }
             } else {
-                $table .= '<a href="" class="btn custom-button border border-dark">Apuntarse</a>';
+                $table .= '<a href="#" class="btn custom-button border border-dark disabled">Apuntarse</a>';
             }
-
             $table .= '</div>';
             $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="...">';
             $table .= '</div>';
@@ -77,7 +81,6 @@ class Model extends Connection
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }
-
     }
 
     public function drawFriends($DNI)
@@ -92,33 +95,34 @@ class Model extends Connection
 
     public function addEvent($data, $DNI)
     {
-        $curdate = date('Y-m-d H:i:s');
-        $eventName = $data["eventName"];
+        $curdate = new DateTime();
         $date = $data["date"];
-        $dateFormat = strtotime($date);
-        $dateFormat = date('Y-m-d H:i:s', $dateFormat);
+        $dateFormat = DateTime::createFromFormat('Y-m-d\TH:i', $date); // Convertir desde 'datetime-local'
+        if (!$dateFormat) {
+            echo "Formato de fecha inválido.";
+            return;
+        }
+        $dateFormatStr = $dateFormat->format('Y-m-d H:i:s');
+        $active = ($dateFormat > $curdate) ? 1 : 0;
+        $eventName = $data["eventName"];
         $location = $data["location"];
         $points = $data['points'];
         $description = $data['description'];
-        if ($dateFormat <= $curdate) {
-            $active = '1';
-        } else {
-            $active = '0';
-        }
         $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('sssssis', $eventName, $dateFormat, $location, $active, $DNI, $points, $description);
+        $stmt->bind_param('sssisis', $eventName, $dateFormatStr, $location, $active, $DNI, $points, $description);
 
-        if ($stmt->execute()) {
-            echo "Evento añadido con éxito.";
-        } else {
+        if (!$stmt->execute()) {
             echo "Error al añadir el evento.";
+        } else {
+            header("location: events.php");
         }
     }
+
 
     public function goEvent($dni, $eventName, $eventDate)
     {
         $stmt = $this->conn->prepare('INSERT INTO Asiste (DNI_usuario, nombre_evento, fecha_hora_evento) VALUES (?, ?, ?)');
-        $stmt->bind_param('sss', $dni, $eventName, $eventDate );
+        $stmt->bind_param('sss', $dni, $eventName, $eventDate);
         if ($stmt->execute()) {
             header("location: events.php");
         } else {
@@ -159,5 +163,18 @@ class Model extends Connection
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Puntos:</h3>";
         $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['puntos'] . "</span>";
         return $form;
+    }
+
+    public function notGoEvent($dni, $eventName, $eventDate)
+    {
+        $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE DNI_usuario= ? AND nombre_evento = ? AND fecha_hora_evento = ?');
+        $stmt->bind_param('sss', $dni, $eventName, $eventDate);
+        if ($stmt->execute()) {
+            header("location: events.php");
+        } else {
+            echo "Error al desapuntarse.";
+        }
+
+        $stmt->close();
     }
 }

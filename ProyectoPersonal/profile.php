@@ -2,7 +2,7 @@
 require_once "autoloader.php";
 $user = new Model();
 $security = new Security();
-$conn = $security->getConn()
+$conn = $security->getConn();
 /* session_start();
 if (isset($_SESSION['dni'])) {
     $dniUsuario = $_SESSION['dni'];
