@@ -47,7 +47,7 @@ class Model extends Connection
             $isAttending = $this->verifyAttendance($dni, $event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
-                    $table .= '<a href="notGo Event.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
+                    $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
                 } else {
                     $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
                 }
