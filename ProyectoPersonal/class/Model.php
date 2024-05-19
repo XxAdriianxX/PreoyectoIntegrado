@@ -12,7 +12,7 @@ class Model extends Connection
         $result->close();
         $newEvents = [];
         foreach ($events as $event) {
-            $object = new Event($event['nombre'], $event['fecha_hora'], $event['ubi'], $event['descripcion'], $event['estado'], $event['DNI_usuario'], $event['puntos_asociados']);
+            $object = new Event($event['nombre'], $event['fecha_hora'], $event['ubi'], $event['descripcion'], $event['estado'], $event['DNI_usuario'], $event['puntos_asociados'], $event['imagen']);
             $newEvents[] = $object;
         }
         return $newEvents;
@@ -47,7 +47,7 @@ class Model extends Connection
             $isAttending = $this->verifyAttendance($dni, $event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
-                    $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
+                    $table .= '<a href="notGo Event.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
                 } else {
                     $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
                 }
@@ -55,7 +55,11 @@ class Model extends Connection
                 $table .= '<a href="#" class="btn custom-button border border-dark disabled">Apuntarse</a>';
             }
             $table .= '</div>';
-            $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="...">';
+            if (!empty($event->picture)) {
+                $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
+            } else {
+                $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="Imagen por defecto">';
+            }
             $table .= '</div>';
             $table .= '</div>';
         }
@@ -97,7 +101,7 @@ class Model extends Connection
     {
         $curdate = new DateTime();
         $date = $data["date"];
-        $dateFormat = DateTime::createFromFormat('Y-m-d\TH:i', $date); // Convertir desde 'datetime-local'
+        $dateFormat = DateTime::createFromFormat('Y-m-d\TH:i', $date);
         if (!$dateFormat) {
             echo "Formato de fecha inválido.";
             return;
@@ -108,8 +112,41 @@ class Model extends Connection
         $location = $data["location"];
         $points = $data['points'];
         $description = $data['description'];
-        $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('sssisis', $eventName, $dateFormatStr, $location, $active, $DNI, $points, $description);
+        $targetDir = "Assets/event_picture/";
+        $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+        $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            echo "El archivo no es una imagen.";
+            $uploadOk = 0;
+        }
+        if ($_FILES["imageFile"]["size"] > 5000000) {
+            echo "Lo siento, tu archivo es demasiado grande.";
+            $uploadOk = 0;
+        }
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif"
+        ) {
+            echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+            $uploadOk = 0;
+        }
+        if ($uploadOk == 0) {
+            echo "Lo siento, tu archivo no fue subido.";
+            return;
+        } else {
+            if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                $imagePath = $targetFile;
+            } else {
+                echo "Lo siento, hubo un error al subir tu archivo.";
+                return;
+            }
+        }
+        $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $DNI, $points, $description, $imagePath);
 
         if (!$stmt->execute()) {
             echo "Error al añadir el evento.";
@@ -117,7 +154,6 @@ class Model extends Connection
             header("location: events.php");
         }
     }
-
 
     public function goEvent($dni, $eventName, $eventDate)
     {

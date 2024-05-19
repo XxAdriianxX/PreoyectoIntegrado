@@ -8,8 +8,9 @@ class Event
     public $active;
     public $DNI;
     public $points;
+    public $picture;
 
-    public function __construct($name, $date, $location, $description, $active, $DNI, $points)
+    public function __construct($name, $date, $location, $description, $active, $DNI, $points, $picture)
     {
         $this->name = $name;
         $this->date = $date;
@@ -18,5 +19,6 @@ class Event
         $this->active = $active;
         $this->DNI = $DNI;
         $this->points = $points;
+        $this->picture = $picture;
     }
 }
