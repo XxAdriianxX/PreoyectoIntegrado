@@ -43,10 +43,11 @@ $conn = $connection->getConn();
         }
 
         .btn-custom {
-            background-color: #0E2D40;
+            background-color: #D9D9D9;
             color: white;
             font-size: 20px; /* Tamaño del texto del botón */
             padding: 15px 30px; /* Espaciado interno del botón */
+            margin: 12px;
         }
 
         .btn-custom:hover {
@@ -57,6 +58,9 @@ $conn = $connection->getConn();
         .btn-editar {
             font-size: 16px; /* Tamaño del texto específico para el botón "Editar" */
             padding: 10px 20px; /* Espaciado interno específico para el botón "Editar" */
+        }
+        .card{
+            margin-bottom: 400px;
         }
     </style>
 </head>
@@ -73,8 +77,10 @@ $conn = $connection->getConn();
                             <div class="mb-3 text-center">
                                 <label for="id" class="form-label mx-auto">Contraseña:</label>
                                 <div class="input-group">
-                                    <input type="password" class="form-control" id="id" name="id" required>
-                                    <button class="btn btn-outline-secondary" type="button" id="showPasswordButton">Mostrar</button>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="showPasswordButton">Mostrar</button><br>
+                                    <button class="btn-custom btn-outline-secondary" type="submit" id="Send"> <a href="profile.php" class="btn text-success" style="font-size: 20px">Enviar</a></button>
+
                                 </div>
                             </div>
 
