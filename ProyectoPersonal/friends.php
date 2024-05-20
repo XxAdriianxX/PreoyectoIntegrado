@@ -1,5 +1,6 @@
 <?php
 require_once "autoloader.php";
+/* session_start();  */// Inicia la sesión en la página de inicio
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
@@ -17,62 +18,44 @@ $security = new Security();
     <link rel="stylesheet" href="Assets/css/events.css">
     <title>Prueba Felipe</title>
     <style>
+        * {
+            color: white;
+        }
+
+        .custom-bg {
+            background-color: #228B22;
+        }
+
+        .pill-bg {
+            background-color: rgba(217, 217, 217, .3);
+        }
+
+        .custom-button {
+            background-color: rgba(245, 249, 245, 0.7);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
         body {
-            background-color: #f8f9fa;
-            padding-top: 20px;
-        }
-
-        .contenedor-premios {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .logros-info {
-            font-size: 1.2rem;
-            color: #6c757d;
-            margin-bottom: 50px;
-        }
-
-        .logros-info strong {
-            color: #28a745;
-        }
-
-        .card {
             background-color: #fff;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-            margin-bottom: 20px;
+            ;
         }
 
-        .card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        aside {
+            height: 100%;
+            width: 100%;
+            background-image: url(Assets/img/fondo.jpg);
         }
 
-        .card-img-top {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+        a {
+            text-decoration: none;
+            color: white;
         }
 
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            color: #343a40;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            color: #6c757d;
+        .custom-span {
+            background-color: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
@@ -137,20 +120,11 @@ $security = new Security();
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
-                            <div class="row">
-                                <div class="col-md-8 text-center">
-                                    <h1 class="text-center mx-auto">MIS LOGROS</h1>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-center logros-info">
-                                    Logros desbloqueados: <strong><?= $connection->numGoals(); ?></strong> de 9
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <?= $connection->drawGoals(); ?>
-                            </div>
+                            <h2 class="mb-4 rounded-pill mx-auto custom-bg d-flex justify-content-center align-items-center"
+                                style="width:95%;">TUS AMIGOS</h2>
+                        </div>
+                        <div class="row">
+                            <?= $connection->cardFriends($_SESSION['dni']); ?>
                         </div>
                     </article>
                 </section>
@@ -158,15 +132,16 @@ $security = new Security();
             <div class="col-2">
                 <section>
                     <article>
-                        <div class="card fondo " style="margin-top: 60px">
+                        <div class="card fondo custom-bg " style="margin-top: 60px">
                             <div class="card-body">
-                                <h2 class="text-dark">Tus eventos: </h2>
+                                <h2>Tus eventos: </h2>
                                 <?= $connection->drawUserEvents($_SESSION['dni']); ?>
                             </div>
                     </article>
                 </section>
             </div>
         </div>
+
         <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">

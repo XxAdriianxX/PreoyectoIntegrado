@@ -4,29 +4,6 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
-/* // Verifica si el usuario ha iniciado sesión
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    $usuario = $_SESSION['usuario'];
-    $puntos = $_SESSION['puntos'];
-} else {
-    header('location: login.php');
-}
-
-// Maneja el inicio de sesión si se envían los datos del formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
-        $correo = $_POST["correo"];
-        $contrasena = $_POST["contrasena"];
-        $login_result = $security->login($correo, $contrasena);
-        if ($login_result !== true) {
-            echo $login_result;
-        } else {
-            header('location: events.php');
-        }
-    }
-} */
-
-
 ?>
 <!doctype html>
 <html lang="es">
@@ -40,6 +17,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="Assets/css/events.css">
     <title>Prueba Felipe</title>
+    <style>
+        * {
+            color: white;
+        }
+
+        .custom-bg {
+            background-color: #228B22;
+        }
+
+        .pill-bg {
+            background-color: rgba(217, 217, 217, .3);
+        }
+
+        .custom-button {
+            background-color: rgba(245, 249, 245, 0.7);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        body {
+            background-color: #fff;
+            ;
+        }
+
+        aside {
+            height: 100%;
+            width: 100%;
+            background-image: url(Assets/img/fondo.jpg);
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .custom-span {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
 </head>
 
 <body>
@@ -61,13 +79,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <a class="nav-link" aria-current="page" href="events.php">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Eventos</a>
+                                <a class="nav-link" href="events.php">Eventos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Premios</a>
+                                <a class="nav-link" href="premios.php">Premios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Amigos</a>
+                                <a class="nav-link" href="friends.php">Amigos</a>
                             </li>
                         </ul>
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
@@ -92,12 +110,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                    <?= $_SESSION['puntos']; ?>
-                    <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                    <?= $connection->drawFriends($_SESSION['dni']); ?>
+                            <span
+                                class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
+                            <h5 class=" text-light mx-auto text-center">Amigos:<h5>
+                                    <?= $connection->drawFriends($_SESSION['dni']); ?>
                 </aside>
             </div>
-            <div class="col-10">
+            <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
@@ -113,6 +132,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3"
                                 style="width:20%">Crear Evento +</a>
                         </div>
+                    </article>
+                </section>
+            </div>
+            <div class="col-2">
+                <section>
+                    <article>
+                        <div class="card fondo custom-bg " style="margin-top: 60px">
+                            <div class="card-body">
+                                <h2>Tus eventos: </h2>
+                                <?= $connection->drawUserEvents($_SESSION['dni']); ?>
+                            </div>
                     </article>
                 </section>
             </div>
