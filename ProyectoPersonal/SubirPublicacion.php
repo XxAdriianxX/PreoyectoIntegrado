@@ -16,7 +16,7 @@ $imgUser = new PublicacionesUsurario();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagen de Logro</title>
+    <title>Subir Publicacion</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -58,7 +58,7 @@ $imgUser = new PublicacionesUsurario();
 </head>
 <body>
     <div class="container">
-        <h1>Imagen de Logro</h1>
+        <h1>Subir Publicacion</h1>
         <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="imagen">Selecciona una imagen:</label>
