@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <a class="nav-link" aria-current="page" href="events.php">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Eventos</a>
+                                <a class="nav-link" href="events.php">Eventos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Premios</a>
@@ -144,16 +144,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <article>
                         <div class="row mx-auto mb-3">
                             <h2 class="mb-4 rounded-pill mx-auto custom-bg d-flex justify-content-center align-items-center"
-                                style="width:95%;">EVENTOS PRÓXIMOS</h2>
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto"
-                                style="width:20%">Crear Evento +</a>
+                                style="width:95%;">TUS AMIGOS</h2>
                         </div>
                         <div class="row">
-                            <?= $connection->drawEventsList($_SESSION['dni']); ?>
-                        </div>
-                        <div class="row">
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3"
-                                style="width:20%">Crear Evento +</a>
+                            <?= $connection->cardFriends($_SESSION['dni']); ?>
                         </div>
                     </article>
                 </section>

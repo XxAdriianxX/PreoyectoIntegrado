@@ -77,7 +77,7 @@ class Model extends Connection
         $result->close();
         $newEvents = [];
         foreach ($events as $event) {
-            $object = new Event($event['nombre_evento'], $event['fecha_hora_evento'], null, null , null, $dni, null , null);
+            $object = new Event($event['nombre_evento'], $event['fecha_hora_evento'], null, null, null, $dni, null, null);
             $newEvents[] = $object;
         }
         return $newEvents;
@@ -94,7 +94,7 @@ class Model extends Connection
     }
     public function getAllFriends($DNI)
     {
-        $stmt = $this->conn->prepare('SELECT u.*,  AS nombre_amigo
+        $stmt = $this->conn->prepare('SELECT u.*
         FROM Usuario u
         INNER JOIN Amigos a ON u.DNI = a.DNI_amigo
         WHERE a.DNI_usuario = ?');
@@ -118,11 +118,46 @@ class Model extends Connection
         $friends = $this->getAllFriends($DNI);
         $table = '';
         for ($i = 0; $i < count($friends); $i++) {
-            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i] . '</span>';
+            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i]['username'] . '</span>';
         }
         return $table;
     }
 
+    public function cardFriends($dni)
+    {
+        $friends = $this->getAllFriends($dni);
+        $table = '';
+        for ($i = 0; $i < count($friends); $i++) {
+            $table .= '<div class="col-lg-6 col-md-6 mb-4">';
+        $table .= '<div class="card text-center custom-bg">';
+        $table .= '<div class="card-body">';
+        $table .= '<h5 class="card-title"><strong>' . $friends[$i]['username'] . '</strong></h5>';
+        $table .= '<p class="card-text">Ubicación: ' . $friends[$i]['ubi'] . '</p>';
+        $table .= '<div class="row justify-content-center mb-2">';
+        $table .= '<div class="col-auto">';
+        $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $friends[$i]['puntos'] . '</span>';
+        $table .= '</div>';
+        $table .= '</div>';
+        $table .= '<a href="deleteFriend.php?dniFriend=' . $friends[$i]['DNI'] . '" class="btn custom-button border border-dark">Eliminar amigo</a>';
+        $table .= '</div>';
+        $table .= '</div>';
+        $table .= '</div>';
+        }
+        return $table;
+    }
+
+    public function deleteFriend($dni, $dniFriend)
+    {
+        $stmt = $this->conn->prepare('DELETE FROM Amigos WHERE DNI_usuario= ? AND DNI_amigo = ?');
+        $stmt->bind_param('ss', $dni, $dniFriend);
+        if ($stmt->execute()) {
+            header("location: events.php");
+        } else {
+            echo "Error al eliminar amigo.";
+        }
+
+        $stmt->close();
+    }
     public function addEvent($data, $DNI)
     {
         $curdate = new DateTime();

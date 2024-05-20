@@ -102,13 +102,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <a class="nav-link" aria-current="page" href="events.php">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Eventos</a>
+                                <a class="nav-link" href="events.php">Eventos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Premios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Amigos</a>
+                                <a class="nav-link" href="friends.php">Amigos</a>
                             </li>
                         </ul>
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
