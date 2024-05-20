@@ -218,23 +218,43 @@ class Model extends Connection
 
     public function goEvent($dni, $eventName, $eventDate)
     {
-        $dni = '53876055k';
+        // Insertar la asistencia al evento
         $stmt = $this->conn->prepare('INSERT INTO Asiste (DNI_usuario, nombre_evento, fecha_hora_evento) VALUES (?, ?, ?)');
         $stmt->bind_param('sss', $dni, $eventName, $eventDate);
+
         if ($stmt->execute()) {
             $stmt->close();
-            $updateStmt = $this->conn->prepare('UPDATE Usuario SET puntos = puntos + (SELECT puntos_asociados FROM Evento WHERE nombre = ? AND fecha_hora = ?) WHERE DNI = ?');
-            $updateStmt->bind_param('ssi', $eventName, $eventDate, $dni);
-            if ($updateStmt->execute()) {
-                header("location: events.php");
+
+            // Obtener los puntos asociados al evento
+            $subquery = $this->conn->prepare('SELECT puntos_asociados FROM Evento WHERE nombre = ? AND fecha_hora = ?');
+            $subquery->bind_param('ss', $eventName, $eventDate);
+            $subquery->execute();
+            $subquery->bind_result($puntos_asociados);
+
+            // Verificar si se obtuvieron resultados
+            if ($subquery->fetch()) {
+                $subquery->close();
+
+                // Actualizar los puntos del usuario
+                $updateStmt = $this->conn->prepare('UPDATE Usuario SET puntos = puntos + ? WHERE DNI = ?');
+                $updateStmt->bind_param('is', $puntos_asociados, $dni);
+
+                if ($updateStmt->execute()) {
+                    header("location: events.php");
+                } else {
+                    echo "Error al actualizar puntos del usuario.";
+                }
+
+                $updateStmt->close();
             } else {
-                echo "Error al actualizar puntos del usuario.";
+                $subquery->close();
+                echo "Error al obtener puntos asociados al evento.";
             }
-            $updateStmt->close();
         } else {
             echo "Error al apuntarse.";
         }
     }
+
 
 
     public function verifyAttendance($dni, $eventName, $eventDate)
@@ -432,6 +452,12 @@ class Model extends Connection
 
     public function getPoints()
     {
-        
+        $dni = $_SESSION['dni'];
+        $logroQuery = "SELECT puntos FROM Usuario WHERE DNI = ?";
+        $stmt = $this->conn->prepare($logroQuery);
+        $stmt->bind_param("i", $dni);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_assoc()['puntos'];
+        return $result;
     }
 }
