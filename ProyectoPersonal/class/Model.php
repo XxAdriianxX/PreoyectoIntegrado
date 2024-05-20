@@ -44,7 +44,7 @@ class Model extends Connection
             $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '<p></p>';
-            $isAttending = $this->verifyAttendance($dni, $event->name, $event->date);
+            $isAttending = $this->verifyAttendance($event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
                     $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
@@ -83,8 +83,9 @@ class Model extends Connection
         return $newEvents;
     }
 
-    public function drawUserEvents($dni)
+    public function drawUserEvents()
     {
+        $dni = $_SESSION['dni'];
         $events = $this->getUserEvents($dni);
         $table = '';
         foreach ($events as $event) {
@@ -158,7 +159,7 @@ class Model extends Connection
 
         $stmt->close();
     }
-    public function addEvent($data, $DNI)
+    public function addEvent($data)
     {
         $curdate = new DateTime();
         $date = $data["date"];
@@ -168,6 +169,7 @@ class Model extends Connection
             return;
         }
         $dateFormatStr = $dateFormat->format('Y-m-d H:i:s');
+        $dni = $_SESSION['dni'];
         $active = ($dateFormat > $curdate) ? 1 : 0;
         $eventName = $data["eventName"];
         $location = $data["location"];
@@ -207,7 +209,7 @@ class Model extends Connection
             }
         }
         $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $DNI, $points, $description, $imagePath);
+        $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $imagePath);
 
         if (!$stmt->execute()) {
             echo "Error al añadir el evento.";
@@ -216,35 +218,27 @@ class Model extends Connection
         }
     }
 
-    public function goEvent($dni, $eventName, $eventDate)
+    public function goEvent($eventName, $eventDate)
     {
-        // Insertar la asistencia al evento
+        $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare('INSERT INTO Asiste (DNI_usuario, nombre_evento, fecha_hora_evento) VALUES (?, ?, ?)');
         $stmt->bind_param('sss', $dni, $eventName, $eventDate);
-
         if ($stmt->execute()) {
             $stmt->close();
-
-            // Obtener los puntos asociados al evento
             $subquery = $this->conn->prepare('SELECT puntos_asociados FROM Evento WHERE nombre = ? AND fecha_hora = ?');
             $subquery->bind_param('ss', $eventName, $eventDate);
             $subquery->execute();
-            $subquery->bind_result($puntos_asociados);
-
-            // Verificar si se obtuvieron resultados
-            if ($subquery->fetch()) {
+            $result = $subquery->get_result();
+            if ($result->num_rows > 0) {
+                $points = $result->fetch_assoc()['puntos_asociados'];
                 $subquery->close();
-
-                // Actualizar los puntos del usuario
                 $updateStmt = $this->conn->prepare('UPDATE Usuario SET puntos = puntos + ? WHERE DNI = ?');
-                $updateStmt->bind_param('is', $puntos_asociados, $dni);
-
+                $updateStmt->bind_param('is', $points, $dni);
                 if ($updateStmt->execute()) {
                     header("location: events.php");
                 } else {
                     echo "Error al actualizar puntos del usuario.";
                 }
-
                 $updateStmt->close();
             } else {
                 $subquery->close();
@@ -255,12 +249,11 @@ class Model extends Connection
         }
     }
 
-
-
-    public function verifyAttendance($dni, $eventName, $eventDate)
+    public function verifyAttendance($eventName, $eventDate)
     {
+        $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare("SELECT COUNT(*) AS asistente FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ? AND DNI_usuario = ?");
-        $stmt->bind_param("ssi", $eventName, $eventDate, $dni);
+        $stmt->bind_param("sss", $eventName, $eventDate, $dni);
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
@@ -290,8 +283,9 @@ class Model extends Connection
         return $form;
     }
 
-    public function notGoEvent($dni, $eventName, $eventDate)
+    public function notGoEvent($eventName, $eventDate)
     {
+        $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE DNI_usuario= ? AND nombre_evento = ? AND fecha_hora_evento = ?');
         $stmt->bind_param('sss', $dni, $eventName, $eventDate);
         if ($stmt->execute()) {
@@ -305,9 +299,10 @@ class Model extends Connection
 
     public function logrosUsuario()
     {
+        $dni = $_SESSION['dni'];
         $puntosUsuarioQuery = "SELECT puntos FROM Usuario WHERE DNI = ?";
         $stmt = $this->conn->prepare($puntosUsuarioQuery);
-        $stmt->bind_param("s", $dniUsuario);
+        $stmt->bind_param("s", $dni);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -338,39 +333,28 @@ class Model extends Connection
 
     public function numGoals()
     {
-        $dni = $_SESSION['dni'];
-        $query = "SELECT puntos FROM Usuario WHERE DNI = ?";
-        $stmt = mysqli_prepare($this->conn, $query);
-        mysqli_stmt_bind_param($stmt, "s", $dni);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        if ($result->num_rows > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $puntos = $row['puntos'];
-            switch (true) {
-                case $puntos < 200:
-                    return 0;
-                case $puntos >= 200 && $puntos < 300:
-                    return 1;
-                case $puntos >= 300 && $puntos < 400:
-                    return 2;
-                case $puntos >= 400 && $puntos < 500:
-                    return 3;
-                case $puntos >= 500 && $puntos < 600:
-                    return 4;
-                case $puntos >= 600 && $puntos < 700:
-                    return 5;
-                case $puntos >= 700 && $puntos < 800:
-                    return 6;
-                case $puntos >= 800 && $puntos < 900:
-                    return 7;
-                case $puntos >= 900 && $puntos < 1000:
-                    return 8;
-                default:
-                    return 9;
-            }
-        } else {
-            return 0;
+        $points = $this->getPoints();
+        switch (true) {
+            case $points < 200:
+                return 0;
+            case $points >= 200 && $points < 300:
+                return 1;
+            case $points >= 300 && $points < 400:
+                return 2;
+            case $points >= 400 && $points < 500:
+                return 3;
+            case $points >= 500 && $points < 600:
+                return 4;
+            case $points >= 600 && $points < 700:
+                return 5;
+            case $points >= 700 && $points < 800:
+                return 6;
+            case $points >= 800 && $points < 900:
+                return 7;
+            case $points >= 900 && $points < 1000:
+                return 8;
+            default:
+                return 9;
         }
     }
 
@@ -378,19 +362,19 @@ class Model extends Connection
     {
         $puntos = $_SESSION['points'];
         if ($puntos !== false) {
-            $logros = $this->getGoals($puntos);
+            $logros = $this->getUserGoals($puntos);
             if (!empty($logros)) {
                 $this->addGoal($logros);
             }
         }
     }
 
-    private function getGoals()
+    private function getUserGoals()
     {
-        $puntos = $_SESSION['puntos'];
+        $points = $this->getPoints();
         $logroQuery = "SELECT nombre, imagen FROM Logros WHERE puntos_necesarios <= ? ORDER BY puntos_necesarios ASC";
         $stmt = $this->conn->prepare($logroQuery);
-        $stmt->bind_param("i", $puntos);
+        $stmt->bind_param("i", $points);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $logros = array();
@@ -408,7 +392,7 @@ class Model extends Connection
 
     public function drawGoals()
     {
-        $goals = $this->getGoals();
+        $goals = $this->getUserGoals();
         $html = '';
         foreach ($goals as $goal) {
             $html .= '<div class="col-md-4 text-center">';
@@ -453,8 +437,8 @@ class Model extends Connection
     public function getPoints()
     {
         $dni = $_SESSION['dni'];
-        $logroQuery = "SELECT puntos FROM Usuario WHERE DNI = ?";
-        $stmt = $this->conn->prepare($logroQuery);
+        $query = "SELECT puntos FROM Usuario WHERE DNI = ?";
+        $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $dni);
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc()['puntos'];
