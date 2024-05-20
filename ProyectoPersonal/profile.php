@@ -164,7 +164,7 @@ if (isset($_SESSION['dni'])) {
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">
-                                            <a href="edit1.php" class="btn custom-button border border-dark text-dark bg-light" style="width: 150px">Editar</a>
+                                            <a href="edit1.php" class="btn custom-button border border-dark text-dark bg-light" style="width: 150px">Editar<img src='Assets/img/edit.png' width='25'></a>
                                         </div>
                                     </div>
                                 </div>

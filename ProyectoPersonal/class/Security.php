@@ -90,64 +90,43 @@ class Security extends Connection
         }
     }
 
-    public function changeName()
+    public function changeInfo()
     {
         if (isset($_SESSION["mail"])) {
             $correo = $_SESSION["mail"];
             $nombre = $_SESSION["userName"];
+            $dni = $_SESSION["dni"];
+            $ubi = $_SESSION["userLocation"];
 
             $stmt = $this->conn->prepare("UPDATE Usuario SET username = ? WHERE mail = ?");
             $stmt->bind_param("ss", $nombre, $correo);
 
             if ($stmt->execute()) {
-                echo "Nombre de usuario atualizado";
+                echo "Datos atualizados";
             } else {
                 echo "Error al conectar con la base de datos: " . $this->conn->error;
             }
 
             $stmt->close();
+        } 
+        $stmt2 = $this->conn->prepare("UPDATE Usuario SET DNI = ? WHERE mail = ?");
+        $stmt2->bind_param("ss", $dni, $correo);
+        
+        if ($stmt2->execute()) {
+            echo "Datos atualizados";
         } else {
-            echo "Usuario no autenticado.";
+            echo "Error al conectar con la base de datos: " . $this->conn->error;
         }
-    }
-    public function changeDni()
-    {
-        if (isset($_SESSION["mail"])) {
-            $correo = $_SESSION["mail"];
-            $dni = $_SESSION["dni"];
-
-            $stmt = $this->conn->prepare("UPDATE Usuario SET DNI = ? WHERE mail = ?");
-            $stmt->bind_param("ss", $dni, $correo);
-
-            if ($stmt->execute()) {
-                echo "DNI atualizado";
-            } else {
-                echo "Error al conectar con la base de datos: " . $this->conn->error;
-            }
-
-            $stmt->close();
+        $stmt2->close();
+        $stmt3 = $this->conn->prepare("UPDATE Usuario SET ubi = ? WHERE mail = ?");
+        $stmt3->bind_param("ss", $ubi, $correo);
+        
+        if ($stmt3->execute()) {
+            echo "Datos atualizados";
         } else {
-            echo "Usuario no autenticado.";
+            echo "Error al conectar con la base de datos: " . $this->conn->error;
         }
+        $stmt3->close();
     }
-    public function changeUbi()
-    {
-        if (isset($_SESSION["mail"])) {
-            $correo = $_SESSION["mail"];
-            $ubi = $_SESSION["userLocation"];
 
-            $stmt = $this->conn->prepare("UPDATE Usuario SET ubi = ? WHERE mail = ?");
-            $stmt->bind_param("ss", $ubi, $correo);
-
-            if ($stmt->execute()) {
-                echo "Ubicación atualizada";
-            } else {
-                echo "Error al conectar con la base de datos: " . $this->conn->error;
-            }
-
-            $stmt->close();
-        } else {
-            echo "Usuario no autenticado.";
-        }
-    }
 }

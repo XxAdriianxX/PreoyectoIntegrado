@@ -52,7 +52,32 @@ class Model extends Connection
         }
         return $table;
     }
+    public function getUserEvents($dni)
+    {
+        $query = "SELECT nombre_evento, fecha_hora_evento  from Asiste where dni_usuario = '$dni' ";
+        $result = mysqli_query($this->conn, $query);
+        $events = [];
+        while ($row = $result->fetch_assoc()) {
+            $events[] = $row;
+        }
+        $result->close();
+        $newEvents = [];
+        foreach ($events as $event) {
+            $object = new Event($event['nombre_evento'], $event['fecha_hora_evento'], null, null , null, $dni, null , null);
+            $newEvents[] = $object;
+        }
+        return $newEvents;
+    }
 
+    public function drawUserEvents($dni)
+    {
+        $events = $this->getUserEvents($dni);
+        $table = '';
+        foreach ($events as $event) {
+            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $event->name . '</span>';
+        }
+        return $table;
+    }
     public function getAllFriends($DNI)
     {
         $stmt = $this->conn->prepare('SELECT u.username AS nombre_amigo
@@ -108,10 +133,10 @@ class Model extends Connection
     public function mostrarUsuario($data)
     { 
         $form = "<div class='form-container'>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>Nombre de usuario:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span></div>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>E-mail:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['mail'] . "</span></div>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>DNI:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span></div>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>Ubicación:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['ubi'] . "</span></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>E-mail:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['mail'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>DNI:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>Ubicación:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['ubi'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
         $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap  ' style='width: 280px;'>Puntos:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['puntos'] . "</span></div>";
         $form .= "</div>";
         return $form;

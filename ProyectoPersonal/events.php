@@ -40,6 +40,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="Assets/css/events.css">
     <title>Prueba Felipe</title>
+    <style>
+        * {
+            color: white;
+        }
+
+        .custom-bg {
+            background-color: #228B22;
+        }
+
+        .pill-bg {
+            background-color: rgba(217, 217, 217, .3);
+        }
+
+        .custom-button {
+            background-color: rgba(245, 249, 245, 0.7);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        body {
+            background-color: #fff;
+            
+        }
+
+        aside {
+            height: 100%;
+            width: 100%;
+            background-image: url(Assets/img/fondo.jpg);
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .custom-span {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
 </head>
 
 <body>
@@ -66,6 +107,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Premios</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Amigos</a>
+                            </li>
                         </ul>
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
                         <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
@@ -89,12 +133,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                    <?= $_SESSION['puntos']; ?>
-                    <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                    <?= $connection->drawFriends($_SESSION['dni']); ?>
+                            <span
+                                class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $_SESSION['puntos']; ?></span>
+                            <h5 class=" text-light mx-auto text-center">Amigos:<h5>
+                                    <?= $connection->drawFriends($_SESSION['dni']); ?>
                 </aside>
             </div>
-            <div class="col-10">
+            <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
@@ -104,12 +149,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 style="width:20%">Crear Evento +</a>
                         </div>
                         <div class="row">
-                            <?= $connection->drawEventsList(); ?>
+                            <?= $connection->drawEventsList($_SESSION['dni']); ?>
                         </div>
                         <div class="row">
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3"
                                 style="width:20%">Crear Evento +</a>
                         </div>
+                    </article>
+                </section>
+            </div>
+            <div class="col-2">
+                <section>
+                    <article>
+                        <div class="card fondo custom-bg " style="margin-top: 60px">
+                            <div class="card-body">
+                                <h2>Tus eventos: </h2>
+                                <?= $connection->drawUserEvents($_SESSION['dni']); ?>
+                            </div>
                     </article>
                 </section>
             </div>

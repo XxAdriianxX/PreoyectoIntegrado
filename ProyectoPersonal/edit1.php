@@ -1,106 +1,262 @@
 <?php
 require_once "autoloader.php";
+$user = new Model();
+$security = new Security();
+$conn = $security->getConn();
 
-$connection = new Connection();
-$conn = $connection->getConn();
+$task = $security->changeInfo();
+header("location: profile.php");
 
+/* session_start();
+if (isset($_SESSION['dni'])) {
+    $dniUsuario = $_SESSION['dni'];
+    $userData = User::getUserData($dniUsuario);
+
+    // Verificar si el campo 'correo' está definido en $userData
+    $correo = isset($userData['mail']) ? $userData['mail'] : "No disponible";
+
+    // Verificar si el campo 'ubicacion' está definido en $userData
+    $ubicacion = isset($userData['userLocation']) ? $userData['userLocation'] : "No disponible";
+} else {
+    header("Location: login.php");
+    exit();
+}
+ */
 ?>
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduce la Contraseña</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Prueba Felipe</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #D9D9D9;
-            background-size: cover;   /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
-            background-repeat: no-repeat;  /* Evita que la imagen se repita */
-            background-position: center center; /* Centra la imagen en el contenedor */
-            background-attachment: fixed; /* Hace que la imagen de fondo se quede fija al hacer scroll */
-            margin: 0; /* Elimina el margen por defecto del cuerpo */
-        }
-
-        .form-container {
-            background-color: #0E2D40;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        * {
             color: white;
-    
         }
 
-        h1 {
-            color: #333;
+        .custom-bg {
+            background-color: #0E2D40;
+        }
+
+        .pill-bg {
+            background-color: rgba(217, 217, 217, .3);
+        }
+
+        .custom-button {
+            background-color: #00FF00;
+        }
+
+        h2 {
             text-align: center;
+        }
+
+        body {
+            background-color: #D9D9D9;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .fondo {
+            background-image: url(Assets/img/fondo.jpg);
+            height: 290px;
             margin-bottom: 20px;
         }
 
-        .btn-custom {
-            background-color: #D9D9D9;
-            color: white;
-            font-size: 20px; /* Tamaño del texto del botón */
-            padding: 15px 30px; /* Espaciado interno del botón */
-            margin: 12px;
+        .custom-span {
+            background-color: rgba(255, 255, 255, 0.5);
+
         }
 
-        .btn-custom:hover {
-            background-color: #0056b3;
+        .cuerpo {
+            background-image: url("Assets/img/fondo2.jpg")
         }
 
-        /* Clase específica para el botón de editar */
-        .btn-editar {
-            font-size: 16px; /* Tamaño del texto específico para el botón "Editar" */
-            padding: 10px 20px; /* Espaciado interno específico para el botón "Editar" */
+        .rounded-input {
+            border-radius: 20px;
+            width: 400px;
+            height: 30px;
+            border-color: black;    
         }
-        .card{
-            margin-bottom: 400px;
+        .form-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group h3 {
+            flex-shrink: 0;
+        }
+
+        .form-group span {
+            flex-grow: 1;
+            border-radius:1px;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <h1>INTRODUCE LA CONTRASEÑA</h1>
-            </div>
-            <div class="col-lg-6">
-                <div class="card text-center mb-5 form-container">
-                    <div class="card-body text-center">
-                        <form action="" method="post">
-                            <div class="mb-3 text-center">
-                                <label for="id" class="form-label mx-auto">Contraseña:</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                    <button class="btn btn-outline-secondary" type="button" id="showPasswordButton">Mostrar</button><br>
-                                    <button class="btn-custom btn-outline-secondary" type="submit" id="Send"> <a href="profile.php" class="btn text-success" style="font-size: 20px">Enviar</a></button>
-
-                                </div>
-                            </div>
-
+    <div class="container-fluid">
+    <header>
+            <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
+                        <img src="Assets/img/logop.png" style="width: 60px;">
+                    </a>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="events.php">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Eventos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Premios</a>
+                            </li>
+                        </ul>
+                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <form class="d-flex">
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
+                                aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </form>
+                        <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
                     </div>
                 </div>
+            </nav>
+        </header>
+        <div class="row">
+            <div class="col-12">
+                <section>
+                    <article>
+                        <div class="row">
+                            <div class="col-lg-2  col-md-6 ms-4 ">
+                                <img src="Assets/img/risa_incontenible.jpg" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
+                                <div class="card fondo custom-bg">
+                                    <div class="card-body">
+                                        <h5 class=" text-light">Amigos:<h5>
+                                                <?= $user->drawFriends($_SESSION['dni']); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 offset-1">
+                                <h2 class="mb-4 rounded-pill  mx-auto custom-bg">TU PERFIL</h2>
+                                <div class="card cuerpo">
+                                    <div class="card-body">
+                                        <div class="row justify-content-start mb-3">
+                                            <div class="col-md-12">                           
+                                            <form action="edit1.php?id=<?=$_SESSION['mail']?>" method="POST">
+                                            <div class="form-group">
+                                                <label for="username" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario: </h3></label>
+                                                <input type="text" class="form-control rounded-input" id="username" name="username" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px'>Email: </h3></label>
+                                                <input type="email" class="form-control rounded-input" id="email" name="email" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dni" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI: </h3></label>
+                                                <input type="text" class="form-control rounded-input" id="dni" name="dni" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="location" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación: </h3></label>
+                                                <input type="text" class="form-control rounded-input" id="location" name="location" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" name="id" value="12028" />
+                                                <input class="button_text" type="submit" name="submit" value="Guardar" />
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                                <div class="col-lg-2 col-md-6 ms-5">
+                                <div class="card fondo custom-bg " style="margin-top: 60px">
+                                    <div class="card-body">
+                                        <h2>Tus eventos: </h2>
+                                        <div class='form-container'>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Fecha:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Hora:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Participantes:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        </div>                                                  
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
             </div>
         </div>
+
+        <footer class="custom-bg text-black">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2" width="150px">
+                </div>
+                <div class="col-md-4 text-center social-icons">
+                    <ul class="list-unstyled list-inline">
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <h4>Enlaces útiles</h4>
+                    <ul>
+                        <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
+                        <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
+                        <li><a href="Contacto.php">Contacto</a></li>
+                        <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright text-center">
+                <p>&copy; 2024 ECOBUDDY. Todos los derechos reservados.</p>
+            </div>
+        </footer>
     </div>
-
-    <!-- JavaScript para mostrar/ocultar la contraseña -->
-    <script>
-        // Función para mostrar/ocultar la contraseña
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('id');
-            passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-        }
-
-        // Evento click del botón
-        document.getElementById('showPasswordButton').addEventListener('click', togglePasswordVisibility);
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
+
 </html>
