@@ -89,4 +89,65 @@ class Security extends Connection
             return false;
         }
     }
+
+    public function changeName()
+    {
+        if (isset($_SESSION["mail"])) {
+            $correo = $_SESSION["mail"];
+            $nombre = $_SESSION["userName"];
+
+            $stmt = $this->conn->prepare("UPDATE Usuario SET username = ? WHERE mail = ?");
+            $stmt->bind_param("ss", $nombre, $correo);
+
+            if ($stmt->execute()) {
+                echo "Nombre de usuario atualizado";
+            } else {
+                echo "Error al conectar con la base de datos: " . $this->conn->error;
+            }
+
+            $stmt->close();
+        } else {
+            echo "Usuario no autenticado.";
+        }
+    }
+    public function changeDni()
+    {
+        if (isset($_SESSION["mail"])) {
+            $correo = $_SESSION["mail"];
+            $dni = $_SESSION["dni"];
+
+            $stmt = $this->conn->prepare("UPDATE Usuario SET DNI = ? WHERE mail = ?");
+            $stmt->bind_param("ss", $dni, $correo);
+
+            if ($stmt->execute()) {
+                echo "DNI atualizado";
+            } else {
+                echo "Error al conectar con la base de datos: " . $this->conn->error;
+            }
+
+            $stmt->close();
+        } else {
+            echo "Usuario no autenticado.";
+        }
+    }
+    public function changeUbi()
+    {
+        if (isset($_SESSION["mail"])) {
+            $correo = $_SESSION["mail"];
+            $ubi = $_SESSION["userLocation"];
+
+            $stmt = $this->conn->prepare("UPDATE Usuario SET ubi = ? WHERE mail = ?");
+            $stmt->bind_param("ss", $ubi, $correo);
+
+            if ($stmt->execute()) {
+                echo "Ubicación atualizada";
+            } else {
+                echo "Error al conectar con la base de datos: " . $this->conn->error;
+            }
+
+            $stmt->close();
+        } else {
+            echo "Usuario no autenticado.";
+        }
+    }
 }
