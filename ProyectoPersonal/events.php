@@ -4,29 +4,6 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
-/* // Verifica si el usuario ha iniciado sesión
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    $usuario = $_SESSION['usuario'];
-    $puntos = $_SESSION['puntos'];
-} else {
-    header('location: login.php');
-}
-
-// Maneja el inicio de sesión si se envían los datos del formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["correo"]) && isset($_POST["contrasena"])) {
-        $correo = $_POST["correo"];
-        $contrasena = $_POST["contrasena"];
-        $login_result = $security->login($correo, $contrasena);
-        if ($login_result !== true) {
-            echo $login_result;
-        } else {
-            header('location: events.php');
-        }
-    }
-} */
-
-
 ?>
 <!doctype html>
 <html lang="es">
@@ -105,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <a class="nav-link" href="events.php">Eventos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Premios</a>
+                                <a class="nav-link" href="premios.php">Premios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="friends.php">Amigos</a>

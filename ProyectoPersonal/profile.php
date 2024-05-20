@@ -3,24 +3,6 @@ require_once "autoloader.php";
 $user = new Model();
 $security = new Security();
 $conn = $security->getConn();
-
-
-
-/* session_start();
-if (isset($_SESSION['dni'])) {
-    $dniUsuario = $_SESSION['dni'];
-    $userData = User::getUserData($dniUsuario);
-
-    // Verificar si el campo 'correo' está definido en $userData
-    $correo = isset($userData['mail']) ? $userData['mail'] : "No disponible";
-
-    // Verificar si el campo 'ubicacion' está definido en $userData
-    $ubicacion = isset($userData['userLocation']) ? $userData['userLocation'] : "No disponible";
-} else {
-    header("Location: login.php");
-    exit();
-}
- */
 ?>
 <!doctype html>
 <html lang="es">
@@ -122,7 +104,7 @@ if (isset($_SESSION['dni'])) {
                                 <a class="nav-link" href="events.php">Eventos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Premios</a>
+                                <a class="nav-link" href="premios.php">Premios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="friends.php">Amigos</a>

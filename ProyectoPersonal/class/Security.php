@@ -11,7 +11,7 @@ class Security extends Connection
 
     public function checkLoggedIn()
     {
-        if (!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"]) {
+        if (!isset($_SESSION["mail"]) || !$_SESSION["mail"]) {
             header("Location: " . $this->loginPage);
         }
     }
