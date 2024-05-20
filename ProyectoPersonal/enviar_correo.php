@@ -1,13 +1,15 @@
 <?php
+session_start();
+
 // Autoloader
 require_once "autoloader.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Recoge los datos del formulario
-    $nombre = $_POST["nombre"];
-    $email = $_POST["email"];
-    $asunto = $_POST["asunto"];
-    $mensaje = $_POST["mensaje"];
+if (isset($_SESSION['nombre'], $_SESSION['email'], $_SESSION['asunto'], $_SESSION['mensaje'])) {
+    // Recoge los datos de la sesión
+    $nombre = $_SESSION['nombre'];
+    $email = $_SESSION['email'];
+    $asunto = $_SESSION['asunto'];
+    $mensaje = $_SESSION['mensaje'];
 
     // Dirección de correo a la que se enviará el mensaje
     $destinatario = "tu_correo@example.com";
@@ -21,5 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<p>¡Hubo un error al enviar el mensaje! Por favor, inténtalo de nuevo más tarde.</p>";
     }
+
+    // Borra los datos de la sesión
+    session_unset();
+    session_destroy();
+} else {
+    echo "<p>No se encontraron datos para enviar el correo.</p>";
 }
 ?>
+
