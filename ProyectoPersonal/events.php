@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 style="width:20%">Crear Evento +</a>
                         </div>
                         <div class="row">
-                            <?= $connection->drawEventsList(); ?>
+                            <?= $connection->drawEventsList($_SESSION['dni']); ?>
                         </div>
                         <div class="row">
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3"
