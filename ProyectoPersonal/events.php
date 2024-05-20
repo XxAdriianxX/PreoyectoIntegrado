@@ -92,12 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                    <?= $_SESSION['puntos']; ?>
-                    <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                    <?= $connection->drawFriends($_SESSION['dni']); ?>
+                            <?= $_SESSION['puntos']; ?>
+                            <h5 class=" text-light mx-auto text-center">Amigos:<h5>
+                                    <?= $connection->drawFriends($_SESSION['dni']); ?>
                 </aside>
             </div>
-            <div class="col-10">
+            <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
@@ -113,6 +113,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3"
                                 style="width:20%">Crear Evento +</a>
                         </div>
+                    </article>
+                </section>
+            </div>
+            <div class="col-2">
+                <section>
+                    <article>
+                        <div class="card fondo custom-bg " style="margin-top: 60px">
+                            <div class="card-body">
+                                <h2>Tus eventos: </h2>
+                                <?= $connection->drawUserEvents($_SESSION['dni']);?>
+                            </div>
                     </article>
                 </section>
             </div>

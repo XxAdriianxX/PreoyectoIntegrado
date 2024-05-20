@@ -23,7 +23,7 @@ class Model extends Connection
         $events = $this->getAllEvents();
         $table = '';
         foreach ($events as $event) {
-            $table .= '<div class="col-lg-4 col-md-6">';
+            $table .= '<div class="col-lg-6 col-md-6">';
             if ($event->active == '1') {
                 $table .= '<div class="card text-center mb-5 custom-bg">';
             } else {
@@ -47,7 +47,7 @@ class Model extends Connection
             $isAttending = $this->verifyAttendance($dni, $event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
-                    $table .= '<a href="notGo Event.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
+                    $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
                 } else {
                     $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
                 }
@@ -66,6 +66,32 @@ class Model extends Connection
         return $table;
     }
 
+    public function getUserEvents($dni)
+    {
+        $query = "SELECT nombre_evento, fecha_hora_evento  from Asiste where dni_usuario = '$dni' ";
+        $result = mysqli_query($this->conn, $query);
+        $events = [];
+        while ($row = $result->fetch_assoc()) {
+            $events[] = $row;
+        }
+        $result->close();
+        $newEvents = [];
+        foreach ($events as $event) {
+            $object = new Event($event['nombre_evento'], $event['fecha_hora_evento'], null, null , null, $dni, null , null);
+            $newEvents[] = $object;
+        }
+        return $newEvents;
+    }
+
+    public function drawUserEvents($dni)
+    {
+        $events = $this->getUserEvents($dni);
+        $table = '';
+        foreach ($events as $event) {
+            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $event->name . '</span>';
+        }
+        return $table;
+    }
     public function getAllFriends($DNI)
     {
         $stmt = $this->conn->prepare('SELECT u.username AS nombre_amigo
