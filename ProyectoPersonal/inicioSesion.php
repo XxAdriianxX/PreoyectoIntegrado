@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h2 class="card-title text-center">Inicio de Sesión</h2>
                     <form action="" method="POST">
                         <div class="form-group">
-                        <div class="form-group">
                             <label for="corr">Correo Electrónico</label>
                             <input type="email" class="form-control" id="corr" name="corr" placeholder="Ingrese su correo" required>
                         </div>
