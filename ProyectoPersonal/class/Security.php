@@ -114,4 +114,25 @@ class Security extends Connection
         $result = $stmt->get_result();
         return $result->num_rows === 0;
     }
+
+    public function changePassword($password)
+    {
+        if (isset($_SESSION["mail"])) {
+            $correo = $_SESSION["mail"];
+            $contraseña_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            $stmt = $this->conn->prepare("UPDATE Usuario SET contrasena = ? WHERE mail = ?");
+            $stmt->bind_param("ss", $contraseña_hash, $correo);
+
+            if ($stmt->execute()) {
+                echo "Contraseña Actualizada";
+            } else {
+                echo "Error al conectar con la base de datos: " . $this->conn->error;
+            }
+
+            $stmt->close();
+        } else {
+            echo "Usuario no autenticado.";
+        }
+    }
 }

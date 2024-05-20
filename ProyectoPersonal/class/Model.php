@@ -94,7 +94,7 @@ class Model extends Connection
     }
     public function getAllFriends($DNI)
     {
-        $stmt = $this->conn->prepare('SELECT u.username AS nombre_amigo
+        $stmt = $this->conn->prepare('SELECT u.*,  AS nombre_amigo
         FROM Usuario u
         INNER JOIN Amigos a ON u.DNI = a.DNI_amigo
         WHERE a.DNI_usuario = ?');
@@ -104,7 +104,7 @@ class Model extends Connection
         $friends = [];
 
         while ($row = $result->fetch_assoc()) {
-            $friends[] = $row['nombre_amigo'];
+            $friends[] = $row;
         }
         $stmt->close();
         return $friends;
