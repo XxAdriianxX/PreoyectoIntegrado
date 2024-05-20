@@ -1,27 +1,32 @@
 <?php
 require_once "autoloader.php";
 
-function imagen() {
-    $conn = new Conexion;
-    $dataBase = $conn->getConn();
+// Directorio donde se almacenarán las imágenes cargadas
+$directorio = "uploads/";
 
-    // Query para obtener la ruta de la imagen del logro "Guardian del Planeta"
-    $imgQuery = "SELECT imagenes FROM Logros WHERE nombre = 'Guardian del Planeta'";
-    $result = mysqli_query($dataBase, $imgQuery);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        // Obtener la fila de resultado
-        $fila = mysqli_fetch_assoc($result);
-        // Obtener la ruta de la imagen
-        $rutaImagen = $fila['imagenes'];
-        // Devolver la ruta de la imagen
-        return $rutaImagen;
-    } else {
-        // Si no se encuentra la imagen, devolver una ruta de imagen por defecto o null
-        return null;
+// Verifica si el directorio no existe, y si es así, intenta crearlo
+if (!file_exists($directorio)) {
+    if (!mkdir($directorio, 0755, true)) {
+        die("Error al crear el directorio uploads/");
     }
 }
 
+// Verifica si se está enviando una publicación con imagen
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imagen"])) {
+    // Nombre del archivo de la imagen
+    $nombreArchivo = basename($_FILES["imagen"]["name"]);
+    $rutaArchivo = $directorio . $nombreArchivo;
+
+    // Mueve el archivo cargado al directorio de destino
+    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaArchivo)) {
+        // Guarda la ruta de la imagen en la base de datos como parte del contenido de la publicación
+        $contenido = '<img src="' . $rutaArchivo . '" alt="Imagen de la publicación">';
+        // Inserta la publicación en la base de datos con la imagen
+        // Aquí debes agregar tu lógica para insertar la publicación en la base de datos
+    } else {
+        echo "Hubo un error al cargar la imagen.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,18 +38,10 @@ function imagen() {
 </head>
 <body>
     <h1>Imagen de Logro</h1>
-    <div>
-        <?php
-        // Obtener la ruta de la imagen
-        $rutaImagen = imagen();
-        if ($rutaImagen) {
-            // Mostrar la imagen si se encuentra la ruta
-            echo "<img src='$rutaImagen' alt='Guardian del Planeta'>";
-        } else {
-            // Mostrar un mensaje de imagen no encontrada si no se encuentra la ruta
-            echo "Imagen no encontrada";
-        }
-        ?>
-    </div>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+        <label for="imagen">Selecciona una imagen:</label>
+        <input type="file" name="imagen" id="imagen">
+        <input type="submit" value="Subir imagen" name="submit">
+    </form>
 </body>
 </html>

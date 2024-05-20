@@ -8,8 +8,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-// Obtener el nombre de usuario de la sesión
 $username = $_SESSION['username'];
+
+//Se llama para guardar los logros de cada usuario en la tabla Desbloquea
+$connUsuario = new LogrosUsuario;
+$dataUsuario = $connUsuario ->guardarDesbloqueos();
 ?>
 
 <!DOCTYPE html>
