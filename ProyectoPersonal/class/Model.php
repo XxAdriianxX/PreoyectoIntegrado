@@ -178,6 +178,7 @@ class Model extends Connection
         $points = $data['points'];
         $description = $data['description'];
         $targetDir = "Assets/event_picture/";
+        $_FILES['imageFile']['name'] = 'prueba.jpg';
         $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
@@ -302,8 +303,8 @@ class Model extends Connection
     public function logrosUsuario()
     {
         $dni = $_SESSION['dni'];
-        $puntosUsuarioQuery = "SELECT puntos FROM Usuario WHERE DNI = ?";
-        $stmt = $this->conn->prepare($puntosUsuarioQuery);
+        $query = "SELECT puntos FROM Usuario WHERE DNI = ?";
+        $stmt = $this->conn->prepare($query);
         $stmt->bind_param("s", $dni);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -312,8 +313,8 @@ class Model extends Connection
             $row = $result->fetch_assoc();
             $puntos = $row['puntos'];
 
-            $logroQuery = "SELECT nombre, imagen FROM Logros WHERE puntos_necesarios <= ?";
-            $stmt = $this->conn->prepare($logroQuery);
+            $goalQuery = "SELECT nombre, imagen FROM Logros WHERE puntos_necesarios <= ?";
+            $stmt = $this->conn->prepare($goalQuery);
             $stmt->bind_param("i", $puntos);
             $stmt->execute();
             $resultado = $stmt->get_result();
@@ -370,10 +371,23 @@ class Model extends Connection
             }
         }
     }
-
+    public function updateUnlock()
+    {
+        $query = "SELECT nombre FROM Logros";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $goals = [];
+        while ($row = $result->fetch_assoc()['nombre']) {
+            echo $row;
+            $goals[] = $row;
+        }
+        $stmt->close();
+        var_dump($goals);
+    }
     private function getUserGoals()
     {
-        $points = $this->getPoints(); 
+        $points = $this->getPoints();
         $query = "SELECT nombre, imagen FROM Logros WHERE puntos_necesarios <= ? ORDER BY puntos_necesarios ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $points);
@@ -387,8 +401,6 @@ class Model extends Connection
                 'imagen' => $row['imagen'],
             ];
         }
-        var_dump($goals);
-
         $stmt->close();
         return $goals;
     }

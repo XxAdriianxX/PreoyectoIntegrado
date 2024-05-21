@@ -4,7 +4,7 @@ $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
 if (count($_POST) > 0) {
-    $connection->addEvent($_POST, $_SESSION['dni']);
+    $connection->addEvent($_POST);
 }
 
 ?>
@@ -72,7 +72,7 @@ if (count($_POST) > 0) {
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                            <?= $connection->drawFriends($_SESSION['dni']); ?>
+                            <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
             <div class="col-10">
