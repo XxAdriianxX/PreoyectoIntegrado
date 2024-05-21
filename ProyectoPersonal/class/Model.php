@@ -130,13 +130,14 @@ class Model extends Connection
         mysqli_query($this->conn, $query);
     }
 
-    public function mostrarUsuario($data)
+    public function mostrarUsuario()
     { 
+        $data = $_SESSION;
         $form = "<div class='form-container'>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>E-mail:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['mail'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>DNI:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
-        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>Ubicación:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['ubi'] . "</span><a href='modifica.php?id='''><img src='Assets/img/edit.png' width='25'></a></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>E-mail:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['mail'] . "</span></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>DNI:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span></div>";
+        $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap ' style='width: 280px;'>Ubicación:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['ubi'] . "</span>    </div>";
         $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap  ' style='width: 280px;'>Puntos:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['puntos'] . "</span></div>";
         $form .= "</div>";
         return $form;

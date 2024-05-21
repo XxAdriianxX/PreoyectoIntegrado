@@ -6,6 +6,7 @@ $conn = $security->getConn();
 
 
 
+
 /* session_start();
 if (isset($_SESSION['dni'])) {
     $dniUsuario = $_SESSION['dni'];
@@ -160,7 +161,7 @@ if (isset($_SESSION['dni'])) {
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-3">
                                             <div class="col-md-12">                           
-                                                <?= $user->mostrarUsuario($_SESSION) ?>
+                                                <?= $user->mostrarUsuario() ?>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">

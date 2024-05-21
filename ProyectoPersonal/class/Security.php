@@ -79,7 +79,7 @@ class Security extends Connection
         //return ($userPassword === $securePassword);
     }
 
-    private function getUser($mail)
+    public function getUser($mail)
     {
         $sql = "SELECT * FROM Usuario WHERE mail = '$mail'";
         $result = $this->conn->query($sql);
@@ -90,43 +90,38 @@ class Security extends Connection
         }
     }
 
-    public function changeInfo()
+    public function changeInfo($data)
     {
-        if (isset($_SESSION["mail"])) {
-            $correo = $_SESSION["mail"];
-            $nombre = $_SESSION["userName"];
-            $dni = $_SESSION["dni"];
-            $ubi = $_SESSION["userLocation"];
+        if (count($data) > 0) {
+            
+            $name = $data["username"];
+            $mail = $data["email"];
+            $ubi = $data["ubi"];
 
-            $stmt = $this->conn->prepare("UPDATE Usuario SET username = ? WHERE mail = ?");
-            $stmt->bind_param("ss", $nombre, $correo);
-
-            if ($stmt->execute()) {
-                echo "Datos atualizados";
-            } else {
-                echo "Error al conectar con la base de datos: " . $this->conn->error;
+            $_SESSION['username'] = $name;
+            $_SESSION['mail'] = $mail;
+            $_SESSION['ubi'] = $ubi;
+        
+            $query = "UPDATE Usuario SET username = ?, mail = ?, ubi = ? WHERE DNI = ?";
+            $stmt = $this->conn->prepare($query);
+        
+            if ($stmt === false) {
+                die("Error en el statement: " . $this->conn->error);
             }
-
+        
+            $dni = $_SESSION['dni'];
+            $stmt->bind_param("ssss", $name, $mail, $ubi, $dni);
+        
+            if ($stmt->execute()) {
+                header("Location: profile.php");
+                exit();
+            } else {
+                echo "Error: " . $stmt->error;
+            }
+        
+        
             $stmt->close();
-        } 
-        $stmt2 = $this->conn->prepare("UPDATE Usuario SET DNI = ? WHERE mail = ?");
-        $stmt2->bind_param("ss", $dni, $correo);
-        
-        if ($stmt2->execute()) {
-            echo "Datos atualizados";
-        } else {
-            echo "Error al conectar con la base de datos: " . $this->conn->error;
         }
-        $stmt2->close();
-        $stmt3 = $this->conn->prepare("UPDATE Usuario SET ubi = ? WHERE mail = ?");
-        $stmt3->bind_param("ss", $ubi, $correo);
-        
-        if ($stmt3->execute()) {
-            echo "Datos atualizados";
-        } else {
-            echo "Error al conectar con la base de datos: " . $this->conn->error;
-        }
-        $stmt3->close();
     }
 
 }

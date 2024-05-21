@@ -3,9 +3,40 @@ require_once "autoloader.php";
 $user = new Model();
 $security = new Security();
 $conn = $security->getConn();
+$mail = $security->getUserData();
+$hola = $security->getUser($mail);
 
-$task = $security->changeInfo();
-header("location: profile.php");
+$task = $security->changeInfo($_POST); 
+/* var_dump($hola); */
+
+/* if (count($_POST) > 0) {
+    $name = $_POST["username"];
+    $mail = $_POST["email"];
+    $ubi = $_POST["ubi"];
+
+    $query = "UPDATE Usuario SET username = ?, mail = ?, ubi = ? WHERE DNI = ?";
+    $stmt = $conn->prepare($query);
+
+    if ($stmt === false) {
+        die("Error en ek statement: " . $conn->error);
+    }
+
+    $dni = $_SESSION['dni'];
+    $stmt->bind_param("ssss", $name, $mail, $ubi, $dni);
+
+    if ($stmt->execute()) {
+        header("Location: profile.php");
+        exit();
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+
+    $stmt->close();
+} */
+
+/* $conn->close(); */
+/* header("location: profile.php"); */
 
 /* session_start();
 if (isset($_SESSION['dni'])) {
@@ -170,19 +201,19 @@ if (isset($_SESSION['dni'])) {
                                             <form action="edit1.php?id=<?=$_SESSION['mail']?>" method="POST">
                                             <div class="form-group">
                                                 <label for="username" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario: </h3></label>
-                                                <input type="text" class="form-control rounded-input" id="username" name="username" required>
+                                                <input type="text" class="form-control rounded-input" id="username" name="username" value="<?= $hola['username']?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="email" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px'>Email: </h3></label>
-                                                <input type="email" class="form-control rounded-input" id="email" name="email" required>
+                                                <input type="email" class="form-control rounded-input" id="email" name="email" value="<?= $hola['mail']?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="dni" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI: </h3></label>
-                                                <input type="text" class="form-control rounded-input" id="dni" name="dni" required>
+                                                <span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'><?= $hola['DNI']?></span>
                                             </div>
                                             <div class="form-group">
-                                                <label for="location" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación: </h3></label>
-                                                <input type="text" class="form-control rounded-input" id="location" name="location" required>
+                                                <label for="ubi" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación: </h3></label>
+                                                <input type="text" class="form-control rounded-input" id="ubi" name="ubi" value="<?= $hola['ubi']?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <input type="hidden" name="id" value="12028" />
