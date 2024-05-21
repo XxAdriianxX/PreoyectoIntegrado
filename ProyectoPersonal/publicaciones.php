@@ -2,7 +2,7 @@
 require_once("autoloader.php");
 session_start();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: inicioSesion.php');
+    header('Location: index.php');
     exit;
 }
 
@@ -10,6 +10,8 @@ $con = new Conexion;
 $data = $con->getConn();
 
 $imgUser = new PublicacionesUsurario();
+$imgUser->procesarComentario();
+
 ?>
 
 <!DOCTYPE html>
@@ -34,10 +36,11 @@ $imgUser = new PublicacionesUsurario();
             flex: 1;
         }
         aside {
-            width: 300px; /* Ajusta el ancho del aside según sea necesario */
+            width: 300px; 
+            height: 90vh;
             background-color: #d3d3d3;
             padding: 10px;
-            margin-left: 20px; /* Espaciado entre el contenido principal y el aside */
+            border-radius: 10px;
         }
         .card {
             margin-bottom: 20px; 
@@ -93,16 +96,6 @@ $imgUser = new PublicacionesUsurario();
                                 </div>
                                 <button type="submit" class="btn btn-success btn-block" name="submit_comment">Publicar Comentario</button>
                             </form>
-                            
-                            <?php
-                            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {
-                                $comentario = $_POST['Comentario'];
-                                $fecha_hora_publicacion = $_POST['fecha_hora_publicacion'];
-                                $DNI_usuario_P = $_POST['DNI_usuario_P'];
-
-                                $comentUser = $imgUser->insertarComentario($comentario, $fecha_hora_publicacion, $DNI_usuario_P);
-                            }
-                            ?>
                             
                             <!-- Botón para mostrar/ocultar comentarios -->
                             <button class="btn btn-primary btn-toggle-comments">Mostrar Comentarios</button>

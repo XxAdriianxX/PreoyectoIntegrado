@@ -7,7 +7,7 @@ $connUser = new LogrosUsuario;
 $connUser->logrosUsuario(); 
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: inicioSesion.php');
+    header('Location: logros.php');
     exit;
 }
 
