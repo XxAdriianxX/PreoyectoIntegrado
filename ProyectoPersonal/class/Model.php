@@ -18,7 +18,7 @@ class Model extends Connection
         return $newEvents;
     }
 
-    public function drawEventsList($dni)
+    public function drawEventsList()
     {
         $events = $this->getAllEvents();
         $table = '';
@@ -93,13 +93,14 @@ class Model extends Connection
         }
         return $table;
     }
-    public function getAllFriends($DNI)
+    public function getAllFriends()
     {
+        $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare('SELECT u.*
         FROM Usuario u
         INNER JOIN Amigos a ON u.DNI = a.DNI_amigo
         WHERE a.DNI_usuario = ?');
-        $stmt->bind_param('s', $DNI);
+        $stmt->bind_param('s', $dni);
         $stmt->execute();
         $result = $stmt->get_result();
         $friends = [];
@@ -114,9 +115,9 @@ class Model extends Connection
         }
     }
 
-    public function drawFriends($DNI)
+    public function drawFriends()
     {
-        $friends = $this->getAllFriends($DNI);
+        $friends = $this->getAllFriends();
         $table = '';
         for ($i = 0; $i < count($friends); $i++) {
             $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i]['username'] . '</span>';
@@ -126,7 +127,7 @@ class Model extends Connection
 
     public function cardFriends($dni)
     {
-        $friends = $this->getAllFriends($dni);
+        $friends = $this->getAllFriends();
         $table = '';
         for ($i = 0; $i < count($friends); $i++) {
             $table .= '<div class="col-lg-6 col-md-6 mb-4">';
@@ -147,8 +148,9 @@ class Model extends Connection
         return $table;
     }
 
-    public function deleteFriend($dni, $dniFriend)
+    public function deleteFriend( $dniFriend)
     {
+        $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare('DELETE FROM Amigos WHERE DNI_usuario= ? AND DNI_amigo = ?');
         $stmt->bind_param('ss', $dni, $dniFriend);
         if ($stmt->execute()) {
@@ -266,20 +268,20 @@ class Model extends Connection
         }
     }
 
-    public function showProfile($data)
+    public function showProfile()
     {
 
         $form = "";
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['username'] . "</span>";
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>E-mail:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['mail'] . "</span>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['mail'] . "</span>";
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['dni'] . "</span>";
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['ubi'] . "</span>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['ubi'] . "</span>";
         $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Puntos:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['puntos'] . "</span>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['puntos'] . "</span>";
         return $form;
     }
 
@@ -371,23 +373,24 @@ class Model extends Connection
 
     private function getUserGoals()
     {
-        $points = $this->getPoints();
-        $logroQuery = "SELECT nombre, imagen FROM Logros WHERE puntos_necesarios <= ? ORDER BY puntos_necesarios ASC";
-        $stmt = $this->conn->prepare($logroQuery);
+        $points = $this->getPoints(); 
+        $query = "SELECT nombre, imagen FROM Logros WHERE puntos_necesarios <= ? ORDER BY puntos_necesarios ASC";
+        $stmt = $this->conn->prepare($query);
         $stmt->bind_param("i", $points);
         $stmt->execute();
-        $resultado = $stmt->get_result();
-        $logros = array();
+        $result = $stmt->get_result();
+        $goals = array();
 
-        while ($fila = $resultado->fetch_assoc()) {
-            $logros[] = [
-                'nombre' => $fila['nombre'],
-                'imagen' => $fila['imagen'],
+        while ($row = $result->fetch_assoc()) {
+            $goals[] = [
+                'nombre' => $row['nombre'],
+                'imagen' => $row['imagen'],
             ];
         }
+        var_dump($goals);
 
         $stmt->close();
-        return $logros;
+        return $goals;
     }
 
     public function drawGoals()
@@ -408,30 +411,31 @@ class Model extends Connection
     }
 
     // Función para insertar los logros desbloqueados de cada Usuario en la tabla Desbloquea
-    private function addGoal($goals)
+    private function addGoal()
     {
-        $dniUsuario = $_SESSION['DNI'];
-        $insertQuery = "INSERT INTO Desbloquea (DNI_usuario, nombre_logro) VALUES (?, ?)";
-        $insertStmt = $this->conn->prepare($insertQuery);
-        $insertStmt->bind_param("ss", $dniUsuario, $nombreLogro);
+        $dni = $_SESSION['DNI'];
+        $query = "INSERT INTO Desbloquea (DNI_usuario, nombre_logro) VALUES (?, ?)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("ss", $dni, $nombreLogro);
 
+        $goals = $this->getUserGoals();
         foreach ($goals as $goal) {
-            $nombreLogro = $goal['nombre'];
-            $verificarQuery = "SELECT COUNT(*) AS count FROM Desbloquea WHERE DNI_usuario = ? AND nombre_logro = ?";
-            $verificarStmt = $this->conn->prepare($verificarQuery);
-            $verificarStmt->bind_param("ss", $dniUsuario, $nombreLogro);
-            $verificarStmt->execute();
-            $countResult = $verificarStmt->get_result();
+            $name = $goal['nombre'];
+            $query2 = "SELECT COUNT(*) AS count FROM Desbloquea WHERE DNI_usuario = ? AND nombre_logro = ?";
+            $stmt2 = $this->conn->prepare($query2);
+            $stmt2->bind_param("ss", $dni, $name);
+            $stmt2->execute();
+            $countResult = $stmt2->get_result();
             $countRow = $countResult->fetch_assoc();
 
             if ($countRow['count'] == 0) {
-                $insertStmt->execute();
+                $stmt->execute();
             }
 
-            $verificarStmt->close();
+            $stmt2->close();
         }
 
-        $insertStmt->close();
+        $stmt->close();
     }
 
     public function getPoints()

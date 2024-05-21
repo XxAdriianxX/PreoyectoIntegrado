@@ -88,6 +88,7 @@ $security = new Security();
                                 <a class="nav-link" href="friends.php">Amigos</a>
                             </li>
                         </ul>
+                        <a href="generar"
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
                         <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                             <i class="fas fa-user"></i>
@@ -113,7 +114,7 @@ $security = new Security();
                             <span
                                 class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
                             <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                                    <?= $connection->drawFriends($_SESSION['dni']); ?>
+                                    <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
             <div class="col-8">
@@ -126,7 +127,7 @@ $security = new Security();
                                 style="width:20%">Crear Evento +</a>
                         </div>
                         <div class="row">
-                            <?= $connection->drawEventsList($_SESSION['dni']); ?>
+                            <?= $connection->drawEventsList(); ?>
                         </div>
                         <div class="row">
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3"
@@ -141,7 +142,7 @@ $security = new Security();
                         <div class="card fondo custom-bg " style="margin-top: 60px">
                             <div class="card-body">
                                 <h2>Tus eventos: </h2>
-                                <?= $connection->drawUserEvents($_SESSION['dni']); ?>
+                                <?= $connection->drawUserEvents(); ?>
                             </div>
                     </article>
                 </section>

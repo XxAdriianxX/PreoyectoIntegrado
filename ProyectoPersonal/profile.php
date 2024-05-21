@@ -140,7 +140,7 @@ $conn = $security->getConn();
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
                                         <h5 class=" text-light">Amigos:<h5>
-                                                <?= $user->drawFriends($_SESSION['dni']); ?>
+                                                <?= $user->drawFriends(); ?>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +150,7 @@ $conn = $security->getConn();
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-3">
                                             <div class="col-md-12">
-                                                <?= $user->showProfile($_SESSION) ?>
+                                                <?= $user->showProfile() ?>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-end">
@@ -165,7 +165,7 @@ $conn = $security->getConn();
                                 <div class="card fondo custom-bg " style="margin-top: 60px">
                                     <div class="card-body">
                                         <h2>Tus eventos: </h2>
-                                        <?= $user->drawUserEvents($_SESSION['dni']); ?>
+                                        <?= $user->drawUserEvents(); ?>
                                     </div>
                                 </div>
                             </div>
