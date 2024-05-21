@@ -3,7 +3,7 @@ class Model extends Connection
 {
     public function getAllEvents()
     {
-        $query = 'SELECT * From Evento';
+        $query = 'SELECT * From Evento order by estado desc';
         $result = mysqli_query($this->conn, $query);
         $events = [];
         while ($row = $result->fetch_assoc()) {
@@ -25,7 +25,7 @@ class Model extends Connection
         foreach ($events as $event) {
             $table .= '<div class="col-lg-6 col-md-6">';
             if ($event->active == '1') {
-                $table .= '<div class="card text-center mb-5 custom-bg">';
+                $table .= '<div class="card text-center mb-5">';
             } else {
                 $table .= '<div class="card bg-dark text-center mb-5">';
             }
@@ -34,14 +34,14 @@ class Model extends Connection
             $table .= '<p class="card-text"><br>Ubicación: ' . $event->location . '</p>';
             $table .= '<div class="row justify-content-start mb-2">';
             $table .= '<div class="col-md-6">';
-            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</span>';
+            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</p>';
             $table .= '</div>';
             $table .= '<div class="col-md-6">';
-            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</span>';
+            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</p>';
             $table .= '</div>';
             $table .= '</div>';
             $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
-            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</span>';
+            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</p>';
             $table .= '</div>';
             $table .= '<p></p>';
             $isAttending = $this->verifyAttendance($event->name, $event->date);
@@ -66,8 +66,9 @@ class Model extends Connection
         return $table;
     }
 
-    public function getUserEvents($dni)
+    public function getUserEvents()
     {
+        $dni = $_SESSION['dni'];
         $query = "SELECT nombre_evento, fecha_hora_evento  from Asiste where dni_usuario = '$dni' ";
         $result = mysqli_query($this->conn, $query);
         $events = [];
@@ -83,16 +84,100 @@ class Model extends Connection
         return $newEvents;
     }
 
-    public function drawUserEvents()
+    public function getCreatedEvents()
     {
         $dni = $_SESSION['dni'];
-        $events = $this->getUserEvents($dni);
+        $query = "SELECT * From Evento where DNI_usuario = '$dni' order by estado desc";
+        $result = mysqli_query($this->conn, $query);
+        $events = [];
+        while ($row = $result->fetch_assoc()) {
+            $events[] = $row;
+        }
+        $result->close();
+        $newEvents = [];
+        foreach ($events as $event) {
+            $object = new Event($event['nombre'], $event['fecha_hora'], $event['ubi'], $event['descripcion'], $event['estado'], $event['DNI_usuario'], $event['puntos_asociados'], $event['imagen']);
+            $newEvents[] = $object;
+        }
+        return $newEvents;
+    }
+
+    public function drawUserEventsBig()
+    {
+        $events = $this->getCreatedEvents();
+        $table = '';
+        foreach ($events as $event) {
+            $table .= '<div class="col-lg-6 col-md-6">';
+            if ($event->active == '1') {
+                $table .= '<div class="card text-center mb-5">';
+            } else {
+                $table .= '<div class="card bg-dark text-center mb-5">';
+            }
+            $table .= '<div class="card-body">';
+            $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
+            $table .= '<p class="card-text"><br>Ubicación: ' . $event->location . '</p>';
+            $table .= '<div class="row justify-content-start mb-2">';
+            $table .= '<div class="col-md-6">';
+            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</p>';
+            $table .= '</div>';
+            $table .= '<div class="col-md-6">';
+            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</p>';
+            $table .= '</div>';
+            $table .= '</div>';
+            $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
+            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</p>';
+            $table .= '</div>';
+            $table .= '<p></p>';
+            $table .= '<a href="deleteEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark mb-3">Eliminar evento</a><br>';
+            $table .= '<a href="editEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Editar</a>';
+            $table .= '</div>';
+            if (!empty($event->picture)) {
+                $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
+            } else {
+                $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="Imagen por defecto">';
+            }
+            $table .= '</div>';
+            $table .= '</div>';
+        }
+        return $table;
+    }
+
+    public function drawUserEventsSmall()
+    {
+        $dni = $_SESSION['dni'];
+        $events = $this->getUserEvents();
         $table = '';
         foreach ($events as $event) {
             $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $event->name . '</span>';
         }
         return $table;
     }
+
+    public function deleteEvent($eventName, $eventDate)
+{
+    $dni = $_SESSION['dni'];
+    
+    $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ?');
+    $stmt->bind_param('ss', $eventName, $eventDate);
+    
+    if ($stmt->execute()) {
+        $stmt->close();
+        
+        $stmt2 = $this->conn->prepare('DELETE FROM Evento WHERE nombre = ? AND fecha_hora = ? AND DNI_usuario = ?');
+        $stmt2->bind_param('sss', $eventName, $eventDate, $dni);
+        
+        if ($stmt2->execute()) {
+            $stmt2->close();
+            header("location: userEvents.php");
+        } else {
+            echo "Error al eliminar el evento.";
+        }
+    } else {
+        echo "Error al eliminar amigo.";
+    }
+}
+
+
     public function getAllFriends()
     {
         $dni = $_SESSION['dni'];
@@ -125,7 +210,7 @@ class Model extends Connection
         return $table;
     }
 
-    public function cardFriends($dni)
+    public function cardFriends()
     {
         $friends = $this->getAllFriends();
         $table = '';
@@ -148,7 +233,7 @@ class Model extends Connection
         return $table;
     }
 
-    public function deleteFriend( $dniFriend)
+    public function deleteFriend($dniFriend)
     {
         $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare('DELETE FROM Amigos WHERE DNI_usuario= ? AND DNI_amigo = ?');
@@ -289,16 +374,36 @@ class Model extends Connection
     public function notGoEvent($eventName, $eventDate)
     {
         $dni = $_SESSION['dni'];
-        $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE DNI_usuario= ? AND nombre_evento = ? AND fecha_hora_evento = ?');
+        $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE DNI_usuario = ? AND nombre_evento = ? AND fecha_hora_evento = ?');
         $stmt->bind_param('sss', $dni, $eventName, $eventDate);
         if ($stmt->execute()) {
-            header("location: events.php");
+            $stmt->close();
+
+            $subquery = $this->conn->prepare('SELECT puntos_asociados FROM Evento WHERE nombre = ? AND fecha_hora = ?');
+            $subquery->bind_param('ss', $eventName, $eventDate);
+            $subquery->execute();
+            $result = $subquery->get_result();
+            if ($result->num_rows > 0) {
+                $points = $result->fetch_assoc()['puntos_asociados'];
+                $subquery->close();
+
+                $updateStmt = $this->conn->prepare('UPDATE Usuario SET puntos = puntos - ? WHERE DNI = ?');
+                $updateStmt->bind_param('is', $points, $dni);
+                if ($updateStmt->execute()) {
+                    header("location: events.php");
+                } else {
+                    echo "Error al actualizar puntos del usuario.";
+                }
+                $updateStmt->close();
+            } else {
+                $subquery->close();
+                echo "Error al obtener puntos asociados al evento.";
+            }
         } else {
             echo "Error al desapuntarse.";
         }
-
-        $stmt->close();
     }
+
 
     public function logrosUsuario()
     {
@@ -361,30 +466,19 @@ class Model extends Connection
         }
     }
 
-    public function guardarDesbloqueos()
-    {
-        $puntos = $_SESSION['points'];
-        if ($puntos !== false) {
-            $logros = $this->getUserGoals($puntos);
-            if (!empty($logros)) {
-                $this->addGoal($logros);
-            }
-        }
-    }
-    public function updateUnlock()
+    public function getAllGoals()
     {
         $query = "SELECT nombre FROM Logros";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
         $goals = [];
-        while ($row = $result->fetch_assoc()['nombre']) {
-            echo $row;
-            $goals[] = $row;
+        while ($row = $result->fetch_assoc()) {
+            $goals[] = $row['nombre'];
         }
         $stmt->close();
-        var_dump($goals);
     }
+
     private function getUserGoals()
     {
         $points = $this->getPoints();
@@ -420,34 +514,6 @@ class Model extends Connection
             $html .= '</div>';
         }
         return $html;
-    }
-
-    // Función para insertar los logros desbloqueados de cada Usuario en la tabla Desbloquea
-    private function addGoal()
-    {
-        $dni = $_SESSION['DNI'];
-        $query = "INSERT INTO Desbloquea (DNI_usuario, nombre_logro) VALUES (?, ?)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ss", $dni, $nombreLogro);
-
-        $goals = $this->getUserGoals();
-        foreach ($goals as $goal) {
-            $name = $goal['nombre'];
-            $query2 = "SELECT COUNT(*) AS count FROM Desbloquea WHERE DNI_usuario = ? AND nombre_logro = ?";
-            $stmt2 = $this->conn->prepare($query2);
-            $stmt2->bind_param("ss", $dni, $name);
-            $stmt2->execute();
-            $countResult = $stmt2->get_result();
-            $countRow = $countResult->fetch_assoc();
-
-            if ($countRow['count'] == 0) {
-                $stmt->execute();
-            }
-
-            $stmt2->close();
-        }
-
-        $stmt->close();
     }
 
     public function getPoints()

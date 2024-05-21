@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
     mail VARCHAR(255),
     ubi VARCHAR(255),
     puntos INT,
-    contrasena VARCHAR(255),
+    contrasena VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS Amigos (
@@ -71,3 +71,38 @@ CREATE TABLE IF NOT EXISTS Desbloquea (
     FOREIGN KEY (DNI_usuario) REFERENCES Usuario(DNI),
     FOREIGN KEY (nombre_logro) REFERENCES Logros(nombre)
 );
+
+DELIMITER //
+
+CREATE TRIGGER after_points_update
+AFTER UPDATE ON Usuario
+FOR EACH ROW
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE logro_nombre VARCHAR(255);
+    DECLARE cur CURSOR FOR
+        SELECT nombre
+        FROM Logros
+        WHERE puntos_necesarios <= NEW.puntos;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    OPEN cur;
+
+    read_loop: LOOP
+        FETCH cur INTO logro_nombre;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+    
+        IF NOT EXISTS (SELECT 1 FROM Desbloquea WHERE DNI_usuario = NEW.DNI AND nombre_logro = logro_nombre) THEN
+            INSERT INTO Desbloquea (DNI_usuario, nombre_logro) VALUES (NEW.DNI, logro_nombre);
+        END IF;
+    END LOOP;
+
+    CLOSE cur;
+END;
+//
+
+DELIMITER ;

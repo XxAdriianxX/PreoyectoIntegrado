@@ -179,7 +179,7 @@ $security = new Security();
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#">Todos</a></li>
+                                    <li><a class="dropdown-item" href="events.php">Todos</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -190,7 +190,7 @@ $security = new Security();
                             </li>
                         </ul>
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
-                        <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
+                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                             <i class="fas fa-user"></i>
                         </a>
                         <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
@@ -222,11 +222,11 @@ $security = new Security();
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
-                            <h1 class="mb-4 mx-auto d-flex justify-content-center" style="width:95%;">EVENTOS PRÓXIMOS</h1>
+                            <h1 class="mb-4 mx-auto d-flex justify-content-center" style="width:95%;">TUS EVENTOS</h1>
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto" style="width:20%">Crear Evento +</a>
                         </div>
                         <div class="row">
-                            <?= $connection->drawEventsList(); ?>
+                            <?= $connection->drawUserEventsBig(); ?>
                         </div>
                         <div class="row">
                             <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3" style="width:20%">Crear Evento +</a>
