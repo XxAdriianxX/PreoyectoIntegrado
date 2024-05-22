@@ -31,19 +31,16 @@ class Model extends Connection
             }
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
-            $table .= '<p class="card-text"><br>Ubicación: ' . $event->location . '</p>';
-            $table .= '<div class="row justify-content-start mb-2">';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</p>';
+            $table .= '<div class="row justify-content-center mb-2">';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-primary">Fecha y hora: ' . $event->date . '</span>';
             $table .= '</div>';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</p>';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '</div>';
-            $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</p>';
-            $table .= '</div>';
-            $table .= '<p></p>';
+            $table .= '<p class="card-text">Descripción: ' . $event->description . '</p>';
+            $table .= '<p class="card-text">Ubicación: ' . $event->location . '</p>';
             $isAttending = $this->verifyAttendance($event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
@@ -55,16 +52,13 @@ class Model extends Connection
                 $table .= '<a href="#" class="btn custom-button border border-dark disabled">Apuntarse</a>';
             }
             $table .= '</div>';
-            if (!empty($event->picture)) {
-                $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
-            } else {
-                $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="Imagen por defecto">';
-            }
+            $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
             $table .= '</div>';
             $table .= '</div>';
         }
         return $table;
     }
+
 
     public function getUserEvents()
     {
@@ -115,32 +109,26 @@ class Model extends Connection
             }
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
-            $table .= '<p class="card-text"><br>Ubicación: ' . $event->location . '</p>';
-            $table .= '<div class="row justify-content-start mb-2">';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</p>';
+            $table .= '<div class="row justify-content-center mb-2">';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-primary">Fecha y hora: ' . $event->date . '</span>';
             $table .= '</div>';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</p>';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '</div>';
-            $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</p>';
-            $table .= '</div>';
-            $table .= '<p></p>';
+            $table .= '<p class="card-text">Descripción: ' . $event->description . '</p>';
+            $table .= '<p class="card-text">Ubicación: ' . $event->location . '</p>';
             $table .= '<a href="deleteEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark mb-3">Eliminar evento</a><br>';
-            $table .= '<a href="editEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Editar</a>';
+            $table .= '<a href="updateEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Editar</a>';
             $table .= '</div>';
-            if (!empty($event->picture)) {
-                $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
-            } else {
-                $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="Imagen por defecto">';
-            }
+            $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
             $table .= '</div>';
             $table .= '</div>';
         }
         return $table;
     }
+
 
     public function drawUserEventsSmall()
     {
@@ -169,49 +157,53 @@ class Model extends Connection
         $location = $data["location"];
         $points = $data['points'];
         $description = $data['description'];
+
         $targetDir = "Assets/event_picture/";
-        $_FILES['imageFile']['name'] = 'prueba.jpg';
-        $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
-        if ($check !== false) {
+        $imagePath = 'Assets/img/albufera.jpg';
+
+        if (!empty($_FILES["imageFile"]["name"])) {
+            $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
             $uploadOk = 1;
-        } else {
-            echo "El archivo no es una imagen.";
-            $uploadOk = 0;
-        }
-        if ($_FILES["imageFile"]["size"] > 5000000) {
-            echo "Lo siento, tu archivo es demasiado grande.";
-            $uploadOk = 0;
-        }
-        if (
-            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
-        ) {
-            echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
-            $uploadOk = 0;
-        }
-        if ($uploadOk == 0) {
-            echo "Lo siento, tu archivo no fue subido.";
-            return;
-        } else {
-            if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
-                $imagePath = $targetFile;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
             } else {
-                echo "Lo siento, hubo un error al subir tu archivo.";
+                echo "El archivo no es una imagen.";
+                $uploadOk = 0;
+            }
+            if ($_FILES["imageFile"]["size"] > 5000000) {
+                echo "Lo siento, tu archivo es demasiado grande.";
+                $uploadOk = 0;
+            }
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+                $uploadOk = 0;
+            }
+            if ($uploadOk == 0) {
+                echo "Lo siento, tu archivo no fue subido.";
                 return;
+            } else {
+                if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                    $imagePath = $targetFile;
+                } else {
+                    echo "Lo siento, hubo un error al subir tu archivo.";
+                    return;
+                }
             }
         }
+
         $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $imagePath);
 
         if (!$stmt->execute()) {
             echo "Error al añadir el evento.";
         } else {
-            header("location: events.php");
+            header("Location: events.php");
+            exit();
         }
     }
+
 
     public function deleteEvent($eventName, $eventDate)
     {
@@ -237,9 +229,78 @@ class Model extends Connection
         }
     }
 
-    public function updateEvent()
+    public function getEvent($eventName, $eventDate)
     {
-        
+        $stmt = $this->conn->prepare('SELECT * From Evento where nombre = ? and fecha_hora = ? order by estado desc');
+        $stmt->bind_param('ss', $eventName, $eventDate);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $event = $result->fetch_assoc();
+        $object = new Event($event['nombre'], $event['fecha_hora'], $event['ubi'], $event['descripcion'], $event['estado'], $event['DNI_usuario'], $event['puntos_asociados'], $event['imagen']);
+        $result->close();
+        return $object;
+    }
+
+    public function updateEvent($data, $eventName, $eventDate)
+    {
+        $event = $this->getEvent($eventName, $eventDate);
+        $name = $data["eventName"];
+        $date = $data["date"];
+        $location = $data["location"];
+        $points = $data["points"];
+
+        $file = $event->picture;
+        if (!empty($_FILES['imageFile']['name'])) {
+            $targetDir = "Assets/event_picture/";
+            $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
+            } else {
+                echo "El archivo no es una imagen.";
+                $uploadOk = 0;
+            }
+            if ($_FILES["imageFile"]["size"] > 5000000) {
+                echo "Lo siento, tu archivo es demasiado grande.";
+                $uploadOk = 0;
+            }
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+                $uploadOk = 0;
+            }
+            if ($uploadOk == 0) {
+                echo "Lo siento, tu archivo no fue subido.";
+                return;
+            } else {
+                if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                    $file = $targetFile;
+                } else {
+                    echo "Lo siento, hubo un error al subir tu archivo.";
+                    return;
+                }
+            }
+        } else if (empty($file)) {
+            $file = 'Assets/img/albufera.jpg';
+        }
+
+        $query = "UPDATE Evento SET nombre = ?, fecha_hora = ?, ubi = ?, puntos_asociados = ?, imagen = ? WHERE nombre = ? AND fecha_hora = ?";
+        $stmt = $this->conn->prepare($query);
+
+        if ($stmt === false) {
+            die("Error en el statement: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("sssisss", $name, $date, $location, $points, $file, $eventName, $eventDate);
+
+        if ($stmt->execute()) {
+            header("Location: userEvents.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+        $stmt->close();
     }
     public function getAllFriends()
     {
