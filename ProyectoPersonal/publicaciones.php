@@ -12,6 +12,7 @@ $data = $con->getConn();
 $imgUser = new PublicacionesUsurario();
 $imgUser->procesarComentario();
 
+
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +76,7 @@ $imgUser->procesarComentario();
         <section class="main-content container">
             <div class="row">
                 <?php
-                $result = mysqli_query($data, 'SELECT contenido, fecha_hora, DNI_usuario FROM Publicacion');
+                $result = mysqli_query($data, 'SELECT contenido, fecha_hora, DNI_usuario, comentario_publicacion FROM Publicacion');
                 while ($row = mysqli_fetch_assoc($result)) {
                     $fecha_hora_publicacion = $row['fecha_hora'];
                     $DNI_usuario_P = $row['DNI_usuario'];
@@ -84,6 +85,7 @@ $imgUser->procesarComentario();
                     <div class="card">
                         <img src="<?php echo $row['contenido']; ?>" class="card-img-top">
                         <div class="card-body">
+                        <?php echo $row['comentario_publicacion']; ?>
                             <h5 class="card-title">Comentarios</h5>
                             <!-- Botón para abrir/cerrar el formulario -->
                             <button class="btn btn-primary btn-toggle-form">Comentar</button>
@@ -125,6 +127,10 @@ $imgUser->procesarComentario();
                     <div class="form-group">
                         <label for="imagen">Selecciona una imagen:</label>
                         <input type="file" class="form-control-file" name="imagen" id="imagen">
+                        <br>
+                        <label for="comentario_publi">Comentario de la Publicacion</label>
+                        <textarea class="form-control" name="comentario_publi" rows="3" required></textarea>
+                        <br>
                     </div>
                     <input type="submit" value="Subir imagen" name="submit" class="btn btn-primary">
                 </form>
