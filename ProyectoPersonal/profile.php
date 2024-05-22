@@ -3,7 +3,8 @@ require_once "autoloader.php";
 $user = new Model();
 $security = new Security();
 $conn = $security->getConn();
-
+$mail = $security->getUserData();
+$imagen = $security->getImage($mail);
 
 
 
@@ -147,7 +148,7 @@ if (isset($_SESSION['dni'])) {
                     <article>
                         <div class="row">
                             <div class="col-lg-2  col-md-6 ms-4 ">
-                                <img src="Assets/img/risa_incontenible.jpg" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
+                                <img src="<?= $imagen ?>" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
                                         <h5 class=" text-light">Amigos:<h5>

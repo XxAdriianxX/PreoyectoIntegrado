@@ -5,54 +5,12 @@ $security = new Security();
 $conn = $security->getConn();
 $mail = $security->getUserData();
 $hola = $security->getUser($mail);
+$imagen = $security->getImage($mail);
 
-$task = $security->changeInfo($_POST); 
-/* var_dump($hola); */
-
-/* if (count($_POST) > 0) {
-    $name = $_POST["username"];
-    $mail = $_POST["email"];
-    $ubi = $_POST["ubi"];
-
-    $query = "UPDATE Usuario SET username = ?, mail = ?, ubi = ? WHERE DNI = ?";
-    $stmt = $conn->prepare($query);
-
-    if ($stmt === false) {
-        die("Error en ek statement: " . $conn->error);
-    }
-
-    $dni = $_SESSION['dni'];
-    $stmt->bind_param("ssss", $name, $mail, $ubi, $dni);
-
-    if ($stmt->execute()) {
-        header("Location: profile.php");
-        exit();
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-
-    $stmt->close();
-} */
-
-/* $conn->close(); */
-/* header("location: profile.php"); */
-
-/* session_start();
-if (isset($_SESSION['dni'])) {
-    $dniUsuario = $_SESSION['dni'];
-    $userData = User::getUserData($dniUsuario);
-
-    // Verificar si el campo 'correo' está definido en $userData
-    $correo = isset($userData['mail']) ? $userData['mail'] : "No disponible";
-
-    // Verificar si el campo 'ubicacion' está definido en $userData
-    $ubicacion = isset($userData['userLocation']) ? $userData['userLocation'] : "No disponible";
-} else {
-    header("Location: login.php");
-    exit();
+// Mover la llamada a changeInfo después de verificar que el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $task = $security->changeInfo($_POST, $_FILES);
 }
- */
 ?>
 <!doctype html>
 <html lang="es">
@@ -101,7 +59,6 @@ if (isset($_SESSION['dni'])) {
 
         .custom-span {
             background-color: rgba(255, 255, 255, 0.5);
-
         }
 
         .cuerpo {
@@ -138,7 +95,7 @@ if (isset($_SESSION['dni'])) {
 
 <body>
     <div class="container-fluid">
-    <header>
+        <header>
             <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -184,7 +141,7 @@ if (isset($_SESSION['dni'])) {
                     <article>
                         <div class="row">
                             <div class="col-lg-2  col-md-6 ms-4 ">
-                                <img src="Assets/img/risa_incontenible.jpg" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
+                                <img src="<?= $imagen ?>" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
                                         <h5 class=" text-light">Amigos:<h5>
@@ -198,48 +155,48 @@ if (isset($_SESSION['dni'])) {
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-3">
                                             <div class="col-md-12">                           
-                                            <form action="edit1.php?id=<?=$_SESSION['mail']?>" method="POST">
-                                            <div class="form-group">
-                                                <label for="username" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario: </h3></label>
-                                                <input type="text" class="form-control rounded-input" id="username" name="username" value="<?= $hola['username']?>" required>
+                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <label for="username" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario: </h3></label>
+                                                        <input type="text" class="form-control rounded-input" id="username" name="username" value="<?= $hola['username']?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px'>Email: </h3></label>
+                                                        <input type="email" class="form-control rounded-input" id="email" name="email" value="<?= $hola['mail']?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="dni" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI: </h3></label>
+                                                        <span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'><?= $hola['DNI']?></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ubi" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación: </h3></label>
+                                                        <input type="text" class="form-control rounded-input" id="ubi" name="ubi" value="<?= $hola['ubi']?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="file" name="imageFile" id="imageFile">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="id" value="12028" />
+                                                        <input class="button_text" type="submit" name="submit" value="Guardar" />
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="email" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px'>Email: </h3></label>
-                                                <input type="email" class="form-control rounded-input" id="email" name="email" value="<?= $hola['mail']?>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="dni" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI: </h3></label>
-                                                <span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'><?= $hola['DNI']?></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="ubi" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación: </h3></label>
-                                                <input type="text" class="form-control rounded-input" id="ubi" name="ubi" value="<?= $hola['ubi']?>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="hidden" name="id" value="12028" />
-                                                <input class="button_text" type="submit" name="submit" value="Guardar" />
-                                            </div>
-                                        </form>
                                         </div>
                                     </div>
                                 </div>
-                                    </div>
-                                </div>
                             </div>
-                            </div>
-                                <div class="col-lg-2 col-md-6 ms-5">
-                                <div class="card fondo custom-bg " style="margin-top: 60px">
-                                    <div class="card-body">
-                                        <h2>Tus eventos: </h2>
-                                        <div class='form-container'>
-                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Fecha:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Hora:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Participantes:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                        </div>                                                  
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="col-lg-2 col-md-6 ms-5">
+                            <div class="card fondo custom-bg " style="margin-top: 60px">
+                                <div class="card-body">
+                                    <h2>Tus eventos: </h2>
+                                    <div class='form-container'>
+                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Fecha:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Hora:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Participantes:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                    </div>                                                  
                                 </div>
                             </div>
                         </div>
