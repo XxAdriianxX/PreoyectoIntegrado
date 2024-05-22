@@ -340,7 +340,7 @@ class Model extends Connection
         $table = '';
         foreach ($friends as $friend) {
             $table .= '<div class="col-lg-6 col-md-6 mb-4">';
-            $table .= '<div class="card text-center custom-bg">';
+            $table .= '<div class="card text-center">';
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $friend['username'] . '</strong></h5>';
             $table .= '<p class="card-text">Ubicación: <span class="badge rounded-pill bg-success">' . $friend['ubi'] . '</span></p>';

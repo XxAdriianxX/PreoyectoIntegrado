@@ -146,7 +146,7 @@ $security = new Security();
                     <h5 class=" text-light mx-auto text-center">Puntos:<h5>
                             <span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
                             <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                                    <?= $connection->drawFriends($_SESSION['dni']); ?>
+                                    <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
             <div class="col-8">
