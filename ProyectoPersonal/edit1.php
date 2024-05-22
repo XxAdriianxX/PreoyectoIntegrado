@@ -22,74 +22,114 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Prueba Felipe</title>
     <style>
-        * {
-            color: white;
-        }
+.custom-bg {
+    background-color: #228B22;
+}
 
-        .custom-bg {
-            background-color: #0E2D40;
-        }
+.pill-bg {
+    background-color: rgba(217, 217, 217, .3);
+}
 
-        .pill-bg {
-            background-color: rgba(217, 217, 217, .3);
-        }
+.custom-button {
+    background-color: rgba(245, 249, 245, 0.7);
+}
 
-        .custom-button {
-            background-color: #00FF00;
-        }
+h1 {
+    color: #343a40;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
 
-        h2 {
-            text-align: center;
-        }
+h2 {
+    text-align: center;
+}
 
-        body {
-            background-color: #D9D9D9;
-        }
+body {
+    background-color: #f8f9fa;
+}
 
-        a {
-            text-decoration: none;
-            color: white;
-        }
+aside {
+    height: 100%;
+    width: 100%;
+}
 
-        .fondo {
-            background-image: url(Assets/img/fondo.jpg);
-            height: 290px;
-            margin-bottom: 20px;
-        }
+a {
+    text-decoration: none;
+    color: white;
+}
 
-        .custom-span {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
+.custom-span {
+    background-color: rgba(255, 255, 255, 0.5);
+}
 
-        .cuerpo {
-            background-image: url("Assets/img/fondo2.jpg")
-        }
+.card {
+    color: black;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    margin-bottom: 20px;
+}
 
-        .rounded-input {
-            border-radius: 20px;
-            width: 400px;
-            height: 30px;
-            border-color: black;    
-        }
-        .form-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
 
-        .form-group {
-            display: flex;
-            align-items: center;
-        }
+.card-img-bottom {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
 
-        .form-group h3 {
-            flex-shrink: 0;
-        }
+.card-body {
+    padding: 20px;
+}
 
-        .form-group span {
-            flex-grow: 1;
-            border-radius:1px;
-        }
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #343a40;
+}
+
+.card-text {
+    color: #343a40;
+}
+
+.custom-bg {
+    background-color: #228B22;
+}
+
+.custom-button {
+    background-color: #00FF00;
+}
+
+
+.fondo {
+    background-image: url(Assets/img/fondo.jpg);
+    height: 290px;
+    margin-bottom: 20px;
+}
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+
+.form-group h3 {
+    flex-shrink: 0;
+}
+
+.form-group span {
+    flex-grow: 1;
+    border-radius: 1px;
+}
     </style>
 </head>
 
@@ -141,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <article>
                         <div class="row">
                             <div class="col-lg-2  col-md-6 ms-4 ">
-                                <img src="<?= $imagen ?>" class="border border-light rounded-circle bg-light m-2 p-2" width="200px" height="180px">
+                            <img src="<?= $imagen ?>" class="border border-dark rounded-circle bg-light m-2 p-2" width="200px" height="180px">
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
                                         <h5 class=" text-light">Amigos:<h5>
@@ -187,18 +227,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </div>
                         </div>
                         <div class="col-lg-2 col-md-6 ms-5">
-                            <div class="card fondo custom-bg " style="margin-top: 60px">
-                                <div class="card-body">
-                                    <h2>Tus eventos: </h2>
-                                    <div class='form-container'>
-                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Fecha:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Hora:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                        <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Participantes:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
-                                    </div>                                                  
+                                <div class="card fondo custom-bg " style="margin-top: 60px">
+                                    <div class="card-body">
+                                        <h2>Tus eventos: </h2>
+                                        <div class=''>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Fecha:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Hora:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                            <div class='form-group'><h5 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Participantes:</h5><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'></span></div>
+                                        </div>                                                  
+                                    </div>
                                 </div>
-                            </div>
+                                </div>
                         </div>
                     </article>
                 </section>
