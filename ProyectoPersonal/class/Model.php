@@ -153,31 +153,94 @@ class Model extends Connection
         return $table;
     }
 
-    public function deleteEvent($eventName, $eventDate)
-{
-    $dni = $_SESSION['dni'];
-    
-    $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ?');
-    $stmt->bind_param('ss', $eventName, $eventDate);
-    
-    if ($stmt->execute()) {
-        $stmt->close();
-        
-        $stmt2 = $this->conn->prepare('DELETE FROM Evento WHERE nombre = ? AND fecha_hora = ? AND DNI_usuario = ?');
-        $stmt2->bind_param('sss', $eventName, $eventDate, $dni);
-        
-        if ($stmt2->execute()) {
-            $stmt2->close();
-            header("location: userEvents.php");
-        } else {
-            echo "Error al eliminar el evento.";
+    public function addEvent($data)
+    {
+        $curdate = new DateTime();
+        $date = $data["date"];
+        $dateFormat = DateTime::createFromFormat('Y-m-d\TH:i', $date);
+        if (!$dateFormat) {
+            echo "Formato de fecha inválido.";
+            return;
         }
-    } else {
-        echo "Error al eliminar amigo.";
+        $dateFormatStr = $dateFormat->format('Y-m-d H:i:s');
+        $dni = $_SESSION['dni'];
+        $active = ($dateFormat > $curdate) ? 1 : 0;
+        $eventName = $data["eventName"];
+        $location = $data["location"];
+        $points = $data['points'];
+        $description = $data['description'];
+        $targetDir = "Assets/event_picture/";
+        $_FILES['imageFile']['name'] = 'prueba.jpg';
+        $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+        $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            echo "El archivo no es una imagen.";
+            $uploadOk = 0;
+        }
+        if ($_FILES["imageFile"]["size"] > 5000000) {
+            echo "Lo siento, tu archivo es demasiado grande.";
+            $uploadOk = 0;
+        }
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+            && $imageFileType != "gif"
+        ) {
+            echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+            $uploadOk = 0;
+        }
+        if ($uploadOk == 0) {
+            echo "Lo siento, tu archivo no fue subido.";
+            return;
+        } else {
+            if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                $imagePath = $targetFile;
+            } else {
+                echo "Lo siento, hubo un error al subir tu archivo.";
+                return;
+            }
+        }
+        $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $imagePath);
+
+        if (!$stmt->execute()) {
+            echo "Error al añadir el evento.";
+        } else {
+            header("location: events.php");
+        }
     }
-}
 
+    public function deleteEvent($eventName, $eventDate)
+    {
+        $dni = $_SESSION['dni'];
 
+        $stmt = $this->conn->prepare('DELETE FROM Asiste WHERE nombre_evento = ? AND fecha_hora_evento = ?');
+        $stmt->bind_param('ss', $eventName, $eventDate);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+
+            $stmt2 = $this->conn->prepare('DELETE FROM Evento WHERE nombre = ? AND fecha_hora = ? AND DNI_usuario = ?');
+            $stmt2->bind_param('sss', $eventName, $eventDate, $dni);
+
+            if ($stmt2->execute()) {
+                $stmt2->close();
+                header("location: userEvents.php");
+            } else {
+                echo "Error al eliminar el evento.";
+            }
+        } else {
+            echo "Error al eliminar amigo.";
+        }
+    }
+
+    public function updateEvent()
+    {
+        
+    }
     public function getAllFriends()
     {
         $dni = $_SESSION['dni'];
@@ -245,65 +308,6 @@ class Model extends Connection
         }
 
         $stmt->close();
-    }
-    public function addEvent($data)
-    {
-        $curdate = new DateTime();
-        $date = $data["date"];
-        $dateFormat = DateTime::createFromFormat('Y-m-d\TH:i', $date);
-        if (!$dateFormat) {
-            echo "Formato de fecha inválido.";
-            return;
-        }
-        $dateFormatStr = $dateFormat->format('Y-m-d H:i:s');
-        $dni = $_SESSION['dni'];
-        $active = ($dateFormat > $curdate) ? 1 : 0;
-        $eventName = $data["eventName"];
-        $location = $data["location"];
-        $points = $data['points'];
-        $description = $data['description'];
-        $targetDir = "Assets/event_picture/";
-        $_FILES['imageFile']['name'] = 'prueba.jpg';
-        $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
-        if ($check !== false) {
-            $uploadOk = 1;
-        } else {
-            echo "El archivo no es una imagen.";
-            $uploadOk = 0;
-        }
-        if ($_FILES["imageFile"]["size"] > 5000000) {
-            echo "Lo siento, tu archivo es demasiado grande.";
-            $uploadOk = 0;
-        }
-        if (
-            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
-        ) {
-            echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
-            $uploadOk = 0;
-        }
-        if ($uploadOk == 0) {
-            echo "Lo siento, tu archivo no fue subido.";
-            return;
-        } else {
-            if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
-                $imagePath = $targetFile;
-            } else {
-                echo "Lo siento, hubo un error al subir tu archivo.";
-                return;
-            }
-        }
-        $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-        $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $imagePath);
-
-        if (!$stmt->execute()) {
-            echo "Error al añadir el evento.";
-        } else {
-            header("location: events.php");
-        }
     }
 
     public function goEvent($eventName, $eventDate)
