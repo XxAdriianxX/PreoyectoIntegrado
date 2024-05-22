@@ -33,7 +33,7 @@ class Model extends Connection
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
             $table .= '<div class="row justify-content-center mb-2">';
             $table .= '<div class="col-auto">';
-            $table .= '<span class="badge rounded-pill bg-primary">Fecha y hora: ' . $event->date . '</span>';
+            $table .= '<span class="badge rounded-pill bg-success">Fecha y hora: ' . $event->date . '</span>';
             $table .= '</div>';
             $table .= '<div class="col-auto">';
             $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $event->points . '</span>';
@@ -111,7 +111,7 @@ class Model extends Connection
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
             $table .= '<div class="row justify-content-center mb-2">';
             $table .= '<div class="col-auto">';
-            $table .= '<span class="badge rounded-pill bg-primary">Fecha y hora: ' . $event->date . '</span>';
+            $table .= '<span class="badge rounded-pill bg-success">Fecha y hora: ' . $event->date . '</span>';
             $table .= '</div>';
             $table .= '<div class="col-auto">';
             $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $event->points . '</span>';
@@ -338,18 +338,18 @@ class Model extends Connection
     {
         $friends = $this->getAllFriends();
         $table = '';
-        for ($i = 0; $i < count($friends); $i++) {
+        foreach ($friends as $friend) {
             $table .= '<div class="col-lg-6 col-md-6 mb-4">';
             $table .= '<div class="card text-center custom-bg">';
             $table .= '<div class="card-body">';
-            $table .= '<h5 class="card-title"><strong>' . $friends[$i]['username'] . '</strong></h5>';
-            $table .= '<p class="card-text">Ubicación: ' . $friends[$i]['ubi'] . '</p>';
+            $table .= '<h5 class="card-title"><strong>' . $friend['username'] . '</strong></h5>';
+            $table .= '<p class="card-text">Ubicación: <span class="badge rounded-pill bg-success">' . $friend['ubi'] . '</span></p>';
             $table .= '<div class="row justify-content-center mb-2">';
             $table .= '<div class="col-auto">';
-            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $friends[$i]['puntos'] . '</span>';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $friend['puntos'] . '</span>';
             $table .= '</div>';
             $table .= '</div>';
-            $table .= '<a href="deleteFriend.php?dniFriend=' . $friends[$i]['DNI'] . '" class="btn custom-button border border-dark">Eliminar amigo</a>';
+            $table .= '<a href="deleteFriend.php?dniFriend=' . $friend['DNI'] . '" class="btn custom-button border border-dark">Eliminar amigo</a>';
             $table .= '</div>';
             $table .= '</div>';
             $table .= '</div>';
@@ -357,13 +357,14 @@ class Model extends Connection
         return $table;
     }
 
+
     public function deleteFriend($dniFriend)
     {
         $dni = $_SESSION['dni'];
         $stmt = $this->conn->prepare('DELETE FROM Amigos WHERE DNI_usuario= ? AND DNI_amigo = ?');
         $stmt->bind_param('ss', $dni, $dniFriend);
         if ($stmt->execute()) {
-            header("location: events.php");
+            header("location: friends.php");
         } else {
             echo "Error al eliminar amigo.";
         }
