@@ -1,0 +1,90 @@
+
+/* Estilos para el cambio de tema claro/oscuro */
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 60px;
+}
+
+.theme-toggle-container i {
+    font-size: 20px;
+    position: absolute;
+}
+
+.theme-toggle-container .fa-sun {
+    left: 5px;
+    color: #f39c12;
+}
+
+.theme-toggle-container .fa-moon {
+    right: 5px;
+    color: #3498db;
+}
+
+.theme-toggle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+body.light-theme .theme-toggle {
+    transform: translateX(-15px);
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+body.dark-theme .theme-toggle {
+    transform: translateX(15px);
+    background-color: #000000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Estilos para el saldo */
+
+.saldo-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.saldo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.saldo {
+    transition: max-height 0.3s, opacity 0.3s;
+    max-height: 200px;
+    opacity: 1;
+    overflow: hidden;
+}
+
+.saldo.hidden {
+    max-height: 0;
+    opacity: 0;
+}

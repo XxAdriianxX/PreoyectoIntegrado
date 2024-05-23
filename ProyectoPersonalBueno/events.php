@@ -152,7 +152,7 @@ $security = new Security();
             color: #343a40;
         }
 
-        /* styles.css */
+/* styles.css */
 
 body {
     transition: background-color 0.3s, color 0.3s;
@@ -168,20 +168,58 @@ body {
     color: #ffffff;
 }
 
-button {
-    margin-left: 10px;
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 60px;  /* Width adjusted to fit both icons and the button */
+}
+
+.theme-toggle-container i {
+    font-size: 20px;
+    position: absolute;
+}
+
+.theme-toggle-container .fa-sun {
+    left: 5px;
+    color: #f39c12;
+}
+
+.theme-toggle-container .fa-moon {
+    right: 5px;
+    color: #3498db;
+}
+
+.theme-toggle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+body.light-theme .theme-toggle {
+    transform: translateX(-15px);
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+body.dark-theme .theme-toggle {
+    transform: translateX(15px);
+    background-color: #000000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 
-        .container-fluid {
-            padding: 0;
-        }
-        
-        footer {
-            padding: 20px 0;
-            color: white;
-        }
-    </style>
+
+</style>
 </head>
 
 <body>
@@ -226,9 +264,11 @@ button {
                     <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                         <i class="fas fa-qrcode"></i>
                     </a>
-                    <button id="theme-toggle" class="btn btn-outline-secondary me-5">
-                        <i id="theme-icon" class="fas fa-moon"></i>
-                    </button>
+                    <div class="theme-toggle-container me-5">
+                        <i class="fas fa-sun"></i>
+                        <button id="theme-toggle" class="theme-toggle"></button>
+                        <i class="fas fa-moon"></i>
+                    </div>
                     <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
@@ -236,6 +276,7 @@ button {
             </div>
         </nav>
     </header>
+    <!--  Script para cambiar entre temas claro y oscuro -->
     <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
@@ -244,8 +285,11 @@ button {
                             <span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
                             <h5 class=" text-light mx-auto text-center">Amigos:<h5>
                                     <?= $connection->drawFriends(); ?>
+                <script src="Assets/js/saldo.js"></script>
                 </aside>
             </div>
+            <!--  Script para mostrar o ocultar saldo-->
+            <script src="Assets/js/saldo.js"></script>
             <div class="col-8">
                 <section>
                     <article>
