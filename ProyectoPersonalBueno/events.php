@@ -151,6 +151,15 @@ $security = new Security();
         .card-text {
             color: #343a40;
         }
+
+        .container-fluid {
+            padding: 0;
+        }
+        
+        footer {
+            padding: 20px 0;
+            color: white;
+        }
     </style>
 </head>
 
