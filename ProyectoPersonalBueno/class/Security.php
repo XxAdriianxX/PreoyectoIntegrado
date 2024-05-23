@@ -87,7 +87,7 @@ class Security extends Connection
         //return ($userPassword === $securePassword);
     }
 
-    private function getUser($mail)
+    public function getUser($mail)
     {
         $sql = "SELECT * FROM Usuario WHERE mail = '$mail'";
         $result = $this->conn->query($sql);
