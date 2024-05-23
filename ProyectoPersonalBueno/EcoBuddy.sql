@@ -23,6 +23,10 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+CREATE DATABASE IF NOT EXISTS EcoBuddy;
+
+USE EcoBuddy;
+
 --
 -- Estructura de tabla para la tabla `Amigos`
 --
