@@ -170,7 +170,6 @@ class Model extends Connection
         $points = $data['points'];
         $description = $data['description'];
         $targetDir = "Assets/event_picture/";
-        $_FILES['imageFile']['name'] = 'prueba.jpg';
         $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));

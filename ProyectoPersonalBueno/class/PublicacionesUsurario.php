@@ -2,13 +2,6 @@
 class PublicacionesUsurario extends Connection
 {
 
-    /*
-    private function usuarioLogueado()
-    {
-        return isset($_SESSION['mail']) && $_SESSION['mail'] === true;
-    }
-    */
-
     private function subirImagenLocal($DNI)
     {
         $directorio = "Assets/imgPublicaciones/";
@@ -53,7 +46,6 @@ class PublicacionesUsurario extends Connection
 
             if ($rutaArchivo) {
                 if ($this->guardarImagenBaseDeDatos($rutaArchivo, $DNI, $comentario, $username)) {
-                    echo "Publicación subida exitosamente.";
                 }
             }
         }

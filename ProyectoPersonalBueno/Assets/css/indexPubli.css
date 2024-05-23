@@ -26,7 +26,9 @@
             background-image: url('../img/fondo.jpg');
             background-size: cover; 
             background-position: center; 
-        }
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            }
         
 
         a {
@@ -47,10 +49,12 @@
             transition: box-shadow 0.3s ease-in-out;
             margin-bottom: 20px;
             overflow: hidden;
+            transition: transform 0.3s ease-in-out;
         }
 
         .card:hover {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
         }
 
         .card-img-bottom {
@@ -112,4 +116,11 @@
             padding: 20px;
             margin-top: 20px;
         }
+
+        .container-fluid {
+            padding: 0;
+        }
         
+        footer {
+            padding: 20px 0;
+        }

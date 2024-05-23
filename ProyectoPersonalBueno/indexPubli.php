@@ -1,13 +1,24 @@
 <?php
 require_once "autoloader.php";
-/* session_start();  */ // Inicia la sesión en la página de inicio
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
 
 $security->checkLoggedIn();
 $imgUser = new PublicacionesUsurario();
-$imgUser->procesarComentario();
+
+//Es necesario porque si no al recargar al pagina se van añadiendo cards y comentarios 
+//Se encarga de redirigir a la misma pagina una vez se ha insertado un comentario o una publicacion
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {
+    $imgUser->procesarComentario();
+    header("Location: {$_SERVER['PHP_SELF']}");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    $imgUser->insertarImg();
+    header("Location: {$_SERVER['PHP_SELF']}");
+    exit();
+}
 ?>
 <!doctype html>
 <html lang="es">
@@ -19,7 +30,6 @@ $imgUser->procesarComentario();
     <link rel="stylesheet" href="">
     <title>Prueba Felipe</title>
     <link rel="stylesheet" href="Assets/css/indexPubli.css">
-
 </head>
 
 <body>
@@ -103,9 +113,7 @@ $imgUser->procesarComentario();
                             </div>
                             <input type="submit" value="Subir imagen" name="submit" class="btn btn-primary">
                         </form>
-                        <?php
-                        $imgUser->insertarImg();
-                        ?>
+
                     </div>
                 </article>
             <div class="row">
@@ -151,6 +159,7 @@ $imgUser->procesarComentario();
                         </div>
                     </div>
                 </div>
+                
                 <?php } ?>
             </div>
         </section>
