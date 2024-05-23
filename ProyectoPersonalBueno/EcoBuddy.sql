@@ -221,7 +221,8 @@ CREATE TABLE `Usuario` (
   `mail` varchar(255) DEFAULT NULL,
   `ubi` varchar(255) DEFAULT NULL,
   `puntos` int DEFAULT NULL,
-  `contrasena` varchar(255) DEFAULT NULL
+  `contrasena` varchar(255) DEFAULT NULL,
+  'img' varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --

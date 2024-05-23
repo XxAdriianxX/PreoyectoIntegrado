@@ -135,4 +135,102 @@ class Security extends Connection
             echo "Usuario no autenticado.";
         }
     }
+
+    public function changeInfo($data)
+{
+    // Check if the input data is valid
+    if (count($data) > 0) {
+        // Extract user data from the input array
+        $name = $data["username"];
+        $mail = $data["email"];
+        $ubi = $data["ubi"];
+
+        // Update session variables
+        $_SESSION['username'] = $name;
+        $_SESSION['mail'] = $mail;
+        $_SESSION['ubi'] = $ubi;
+
+        // Get the current image path from the database
+        $dni = $_SESSION['dni'];
+        $query = "SELECT img FROM Usuario WHERE DNI = ?";
+        $stmt = $this->conn->prepare($query);
+        if ($stmt === false) {
+            die("Error en el statement: " . $this->conn->error);
+        }
+        $stmt->bind_param("s", $dni);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $currentImagePath = $row['img'];
+        $stmt->close();
+
+        $targetDir = "Assets/img/profile/";
+        $imagePath = $currentImagePath; // Initialize image path with the current image path
+
+        // Check if a file is uploaded
+        if (!empty($_FILES["imageFile"]["name"])) {
+            $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
+            } else {
+                echo "El archivo no es una imagen.";
+                $uploadOk = 0;
+            }
+            if ($_FILES["imageFile"]["size"] > 5000000) {
+                echo "Lo siento, tu archivo es demasiado grande.";
+                $uploadOk = 0;
+            }
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+                $uploadOk = 0;
+            }
+            if ($uploadOk == 0) {
+                echo "Lo siento, tu archivo no fue subido.";
+                return;
+            } else {
+                if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                    $imagePath = $targetFile;
+                } else {
+                    echo "Lo siento, hubo un error al subir tu archivo.";
+                    return;
+                }
+            }
+        }
+
+        // Construct the SQL query
+        $query = "UPDATE Usuario SET username = ?, mail = ?, ubi = ?, img = ? WHERE DNI = ?";
+        $stmt = $this->conn->prepare($query);
+
+        // Check if the statement was prepared successfully
+        if ($stmt === false) {
+            die("Error en el statement: " . $this->conn->error);
+        }
+
+        // Bind parameters to the SQL query
+        $stmt->bind_param("sssss", $name, $mail, $ubi, $imagePath, $dni);
+
+        // Execute the query and handle potential errors
+        if ($stmt->execute()) {
+            header("Location: profile.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+}
+
+
+    public function getImage($mail){
+        $sql = "SELECT img FROM Usuario WHERE mail = '$mail'";
+        $result = $this->conn->query($sql);
+        foreach ($result->fetch_assoc() as $line){
+        }
+        return $line;
+    }
 }
