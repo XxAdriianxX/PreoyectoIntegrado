@@ -151,64 +151,83 @@ $security = new Security();
         .card-text {
             color: #343a40;
         }
+
+        /* styles.css */
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+button {
+    margin-left: 10px;
+}
+
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
-                        <img src="Assets/img/logop.png" style="width: 60px;">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
+                    <img src="Assets/img/logop.png" style="width: 60px;">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Eventos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="userEvents.php">Tus eventos</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="events.php">Todos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="premios.php">Premios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="friends.php">Amigos</a>
+                        </li>
+                    </ul>
+                    <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                    <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
+                        <i class="fas fa-user"></i>
                     </a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Eventos
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="userEvents.php">Tus eventos</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="events.php">Todos</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="premios.php">Premios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="friends.php">Amigos</a>
-                            </li>
-                        </ul>
-                        <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
-                        <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
-                            <i class="fas fa-qrcode"></i>
-                        </a>
-                        <form class="d-flex">
-                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
-                    </div>
+                    <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                        <i class="fas fa-qrcode"></i>
+                    </a>
+                    <button id="theme-toggle" class="btn btn-outline-secondary me-5">
+                        <i id="theme-icon" class="fas fa-moon"></i>
+                    </button>
+                    <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
+    <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
                 <aside>
