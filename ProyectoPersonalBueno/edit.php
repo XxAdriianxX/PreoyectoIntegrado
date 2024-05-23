@@ -4,25 +4,13 @@ $user = new Model();
 $security = new Security();
 $conn = $security->getConn();
 $mail = $security->getUserData();
+$hola = $security->getUser($mail);
 $imagen = $security->getImage($mail);
 
-
-
-/* session_start();
-if (isset($_SESSION['dni'])) {
-    $dniUsuario = $_SESSION['dni'];
-    $userData = User::getUserData($dniUsuario);
-
-    // Verificar si el campo 'correo' está definido en $userData
-    $correo = isset($userData['mail']) ? $userData['mail'] : "No disponible";
-
-    // Verificar si el campo 'ubicacion' está definido en $userData
-    $ubicacion = isset($userData['userLocation']) ? $userData['userLocation'] : "No disponible";
-} else {
-    header("Location: login.php");
-    exit();
+// Mover la llamada a changeInfo después de verificar que el formulario ha sido enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $task = $security->changeInfo($_POST, $_FILES);
 }
- */
 ?>
 <!doctype html>
 <html lang="es">
@@ -34,7 +22,6 @@ if (isset($_SESSION['dni'])) {
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Prueba Felipe</title>
     <style>
-
 .custom-bg {
     background-color: #228B22;
 }
@@ -143,13 +130,12 @@ a {
     flex-grow: 1;
     border-radius: 1px;
 }
-
     </style>
 </head>
 
 <body>
     <div class="container-fluid">
-    <header>
+        <header>
             <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -195,7 +181,7 @@ a {
                     <article>
                         <div class="row">
                             <div class="col-lg-2  col-md-6 ms-4 ">
-                                <img src="<?= $imagen ?>" class="border border-dark rounded-circle bg-light m-2 p-2" width="200px" height="180px">
+                            <img src="<?= $imagen ?>" class="border border-dark rounded-circle bg-light m-2 p-2" width="200px" height="180px">
                                 <div class="card fondo custom-bg">
                                     <div class="card-body">
                                         <h5 class=" text-light">Amigos:<h5>
@@ -209,16 +195,38 @@ a {
                                     <div class="card-body">
                                         <div class="row justify-content-start mb-3">
                                             <div class="col-md-12">                           
-                                                <?= $user->mostrarUsuario() ?>
+                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                    <div class="form-group">
+                                                        <label for="username" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario: </h3></label>
+                                                        <input type="text" class="form-control rounded-input" id="username" name="username" value="<?= $hola['username']?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px'>Email: </h3></label>
+                                                        <input type="email" class="form-control rounded-input" id="email" name="email" value="<?= $hola['mail']?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="dni" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI: </h3></label>
+                                                        <span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'><?= $hola['DNI']?></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="ubi" class="form-label"><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación: </h3></label>
+                                                        <input type="text" class="form-control rounded-input" id="ubi" name="ubi" value="<?= $hola['ubi']?>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="file" name="imageFile" id="imageFile">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="id" value="12028" />
+                                                        <input class="button_text" type="submit" name="submit" value="Guardar" />
+                                                    </div>
+                                                </form>
                                             </div>
-                                        </div>
-                                        <div class="d-flex justify-content-end">
-                                            <a href="edit.php" class="btn custom-button border border-dark text-dark bg-light" style="width: 150px">Editar<img src='Assets/img/edit.png' width='25'></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                                <div class="col-lg-2 col-md-6 ms-5">
+                        </div>
+                        <div class="col-lg-2 col-md-6 ms-5">
                                 <div class="card fondo custom-bg " style="margin-top: 60px">
                                     <div class="card-body">
                                         <h2>Tus eventos: </h2>
@@ -232,7 +240,6 @@ a {
                                     </div>
                                 </div>
                                 </div>
-                            </div>
                         </div>
                     </article>
                 </section>

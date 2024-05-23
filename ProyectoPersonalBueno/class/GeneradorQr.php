@@ -1,6 +1,6 @@
 <?php
 require_once 'Assets/vendor/phpQrCode/qrlib.php';
-require_once 'conexion.php';
+require_once 'Connection.php';
 
 class GeneradorQR {
     private $conexion;
@@ -10,35 +10,34 @@ class GeneradorQR {
     }
 
     public function generarQR($datos, $nombreArchivo) {
-        // Tamaño del código QR
         $tamaño = 10; // Tamaño del código QR (1-10)
         $nivelCorreccion = 'L'; // Nivel de corrección de errores (L, M, Q, H)
 
         try {
-            // Genera el código QR y lo guarda en un archivo
             QRcode::png($datos, $nombreArchivo, $nivelCorreccion, $tamaño);
             return true;
         } catch (Exception $e) {
-            // Si ocurre un error, muestra un mensaje de error
             echo "Error al generar el código QR: " . $e->getMessage();
             return false;
         }
     }
 
     public function generarQRUsuario($dniUsuario) {
-        // Datos que quieres codificar en el código QR (en este caso, el DNI del usuario)
         $datosQR = $dniUsuario;
+        // Ruta relativa desde el directorio actual hasta la carpeta qr_codes
+        $ruta = 'Assets/vendor/qr_codes/';
+        // Ruta absoluta al directorio qr_codes
+        /* $ruta = realpath(__DIR__ . '/../../..') . $rutaRelativa; */
 
-        // Ruta absoluta donde se guardará el código QR
-        $rutaCompleta = __DIR__ . "/../../assets/vendor/phpQrCode/qr_codes/";
-        $nombreArchivo = $rutaCompleta . "usuario_$dniUsuario.png";
+        if (!is_dir($ruta)) {
+            mkdir($ruta, 0777, true);
+        }
 
-        // Genera el código QR y verifica si se generó correctamente
+        $nombreArchivo = $ruta . "usuario_$dniUsuario.png";
+
         if ($this->generarQR($datosQR, $nombreArchivo)) {
-            // Si el código QR se generó correctamente, devuelve el nombre del archivo generado
             return $nombreArchivo;
         } else {
-            // Si hubo un error al generar el código QR, devuelve false
             return false;
         }
     }
