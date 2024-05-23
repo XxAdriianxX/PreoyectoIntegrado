@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
                             <i class="fas fa-user"></i>
                         </a>
-                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                        <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                             <i class="fas fa-qrcode"></i>
                         </a>
                         <form class="d-flex">
