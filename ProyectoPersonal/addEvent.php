@@ -1,13 +1,11 @@
 <?php
 require_once "autoloader.php";
-$security = new Security;
 $connection = new Model();
 $conn = $connection->getConn();
+$security = new Security();
 if (count($_POST) > 0) {
-    $connection->addEvent($_POST, $_SESSION['dni']);
-    header("location: events.php");
+    $connection->addEvent($_POST);
 }
-
 
 ?>
 <!doctype html>
@@ -43,22 +41,21 @@ if (count($_POST) > 0) {
                                 <a class="nav-link" aria-current="page" href="events.php">Inicio</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Eventos</a>
+                                <a class="nav-link" href="events.php">Eventos</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Iniciar sesión/ Registrarse
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="#">Iniciar sesión</a></li>
-                                    <li><a class="dropdown-item" href="#">Registrarse</a></li>
-                                </ul>
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Premios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="friends.php">Amigos</a>
                             </li>
                         </ul>
-                        <a href="#" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                        <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                             <i class="fas fa-user"></i>
+                        </a>
+                        <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                            <i class="fas fa-qrcode"></i>
                         </a>
                         <form class="d-flex">
                             <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
@@ -78,7 +75,7 @@ if (count($_POST) > 0) {
             <div class="col-2">
                 <aside>
                     <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                            <?= $connection->drawFriends(123456789); ?>
+                            <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
             <div class="col-10">
@@ -86,7 +83,7 @@ if (count($_POST) > 0) {
                     <article>
                         <div class="row">
                             <div class="col-9 mb-5 mx-auto">
-                                <form method="post">
+                                <form method="post" enctype="multipart/form-data">
                                     <div class="form-group border custom-bg m-3 p-3 rounded">
                                         <h4>Crea un evento</h4>
                                         <p>Introduce la información solicitada</p>
@@ -99,8 +96,8 @@ if (count($_POST) > 0) {
                                                         name="eventName" placeholder="Nombre único">
                                                     <label for="points" class="form-label">
                                                         Puntos por asistir:</label>
-                                                    <input type="number" placeholder="50"
-                                                        class="form-control" id="points" name="points">
+                                                    <input type="number" placeholder="50" class="form-control"
+                                                        id="points" name="points">
                                                 </div>
                                             </div>
                                             <div class="col-md-4 offset-2">
@@ -122,6 +119,7 @@ if (count($_POST) > 0) {
                                                     Descripción:</label>
                                                 <textarea class="form-control" rows="3" id="description"
                                                     name="description" placeholder="Describe tu evento"></textarea>
+                                                <input type="file" name="imageFile" id="imageFile">
                                             </div>
                                             <div class="col-md-4 offste-2 align-self-end">
                                                 <button type="submit" class="btn border submit text-white rounded">Crear

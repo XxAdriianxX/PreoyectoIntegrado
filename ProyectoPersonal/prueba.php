@@ -1,6 +1,6 @@
 <?php
 require_once "autoloader.php";
-$connection = new EventList();
+$connection = new Model();
 $conn = $connection->getConn();
-$connection->getAllFriends(123456789); 
+$connection->updateUnlock();
  

@@ -1,6 +1,5 @@
 <?php
 require_once "autoloader.php";
-session_start(); // Inicia la sesión en la página de inicio
 
 $security = new Security();
 

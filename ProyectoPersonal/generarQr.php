@@ -5,18 +5,18 @@ require_once 'autoloader.php';
 session_start();
 
 // Verificar si el DNI del usuario está en la sesión
-if (isset($_SESSION['DNI'])) {
+if (isset($_SESSION['dni'])) {
     // Obtener el DNI del usuario de la sesión
-    $dniUsuario = $_SESSION['DNI'];
+    $dniUsuario = $_SESSION['dni'];
 
     // Creamos una instancia de la clase GeneradorQR pasando una instancia de Conexion
-    $generadorQR = new GeneradorQR(new Conexion());
-
-    // Definir la ruta completa del archivo QR
-    $nombreArchivo = __DIR__ . "/../../assets/vendor/phpQrCode/qr_codes/usuario_$dniUsuario.png";
+    $generadorQR = new GeneradorQR(new Connection());
 
     // Generar el código QR del usuario
-    if ($generadorQR->generarQRUsuario($dniUsuario)) {
+    $nombreArchivo = $generadorQR->generarQRUsuario($dniUsuario);
+
+    // Verificar si se generó correctamente
+    if ($nombreArchivo) {
         // Mostrar el código QR generado si se generó correctamente
         echo "Código QR generado para el usuario $dniUsuario: <img src='$nombreArchivo' alt='Código QR del usuario'>";
     } else {
@@ -27,8 +27,8 @@ if (isset($_SESSION['DNI'])) {
     // Si el DNI del usuario no está en la sesión, terminar el script
     exit;
 }
+header('location: mostrar_Qr.php')
 ?>
-
 
 
 
