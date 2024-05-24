@@ -29,22 +29,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./Assets/css/prueba.css">
     <title>Prueba Felipe</title>
-    <link rel="stylesheet" href="Assets/css/indexPubli.css">
 </head>
 
 <body>
-    <div class="container-fluid">
+<div class="container-fluid">
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
-                    <img src="Assets/img/logop.png" style="width: 60px;">
-                </a>
+                <img src="Assets/img/logop.png" style="width: 80px;">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -70,17 +67,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         </li>
                     </ul>
                     <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                    <!-- Botón de usuario -->
                     <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
                         <i class="fas fa-user"></i>
                     </a>
+                    <!-- Botón para generar código QR -->
                     <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                         <i class="fas fa-qrcode"></i>
                     </a>
+                    <!-- Botón para cambiar entre temas claro y oscuro -->
                     <div class="theme-toggle-container me-5">
                         <i class="fas fa-sun"></i>
                         <button id="theme-toggle" class="theme-toggle"></button>
                         <i class="fas fa-moon"></i>
                     </div>
+                    <!-- Botón para salir -->
                     <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
@@ -88,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             </div>
         </nav>
     </header>
+    <!--  Script para cambiar entre temas claro y oscuro -->
     <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
@@ -177,8 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2"
-                        width="150px">
+                    <img src="Assets/img/logop.png" width="150px">
                 </div>
                 <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">

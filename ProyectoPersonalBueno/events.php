@@ -82,7 +82,6 @@ $security = new Security();
                             <span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
                             <h5 class=" text-light mx-auto text-center">Amigos:<h5>
                                     <?= $connection->drawFriends(); ?>
-                <script src="Assets/js/saldo.js"></script>
                 </aside>
             </div>
             <!--  Script para mostrar o ocultar saldo-->
@@ -120,7 +119,7 @@ $security = new Security();
         <footer class="footer text-black">
     <div class="row">
         <div class="col-md-4">
-            <img src="Assets/img/logop.png" alt="Logo" width="150px">
+            <img src="Assets/img/logop.png" width="150px">
         </div>
         <div class="col-md-4 text-center social-icons">
             <ul class="list-unstyled list-inline">

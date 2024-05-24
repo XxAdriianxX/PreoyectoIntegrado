@@ -15,215 +15,69 @@ $security = new Security();
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./Assets/css/prueba.css">
     <title>Prueba Felipe</title>
-    <style>
-        .custom-bg {
-            background-color: #228B22;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .pill-bg {
-            background-color: rgba(217, 217, 217, .3);
-        }
-
-        .custom-button {
-            background-color: rgba(245, 249, 245, 0.7);
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        aside {
-            height: 100%;
-            width: 100%;
-            background-image: url(Assets/img/fondo.jpg);
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .custom-span {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .card {
-            color: black;
-            background-color: #fff;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-            margin-bottom: 20px;
-        }
-
-        .card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-img-bottom {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #343a40;
-        }
-
-        .card-text {
-            color: #343a40;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .pill-bg {
-            background-color: rgba(217, 217, 217, .3);
-        }
-
-        .custom-button {
-            background-color: rgba(245, 249, 245, 0.7);
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        aside {
-            height: 100%;
-            width: 100%;
-            background-image: url(Assets/img/fondo.jpg);
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .custom-span {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .card {
-            color: black;
-            background-color: #fff;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-            margin-bottom: 20px;
-        }
-
-        .card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-img-bottom {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #343a40;
-        }
-
-        .card-text {
-            color: #343a40;
-        }
-
-        .container-fluid {
-            padding: 0;
-        }
-
-        footer {
-            padding: 20px 0;
-            color: white;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
-                        <img src="Assets/img/logop.png" style="width: 60px;">
+<div class="container-fluid">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <img src="Assets/img/logop.png" style="width: 80px;">
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Eventos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="userEvents.php">Tus eventos</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="events.php">Todos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="premios.php">Premios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="friends.php">Amigos</a>
+                        </li>
+                    </ul>
+                    <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                    <!-- Botón de usuario -->
+                    <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
+                        <i class="fas fa-user"></i>
                     </a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    Eventos
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="userEvents.php">Tus eventos</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="events.php">Todos</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="premios.php">Premios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="friends.php">Amigos</a>
-                            </li>
-                        </ul>
-                        <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
-                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <a href="profile.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
-                            <i class="fas fa-qrcode"></i>
-                        </a>
-                        <form class="d-flex">
-                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
-                                aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
+                    <!-- Botón para generar código QR -->
+                    <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                        <i class="fas fa-qrcode"></i>
+                    </a>
+                    <!-- Botón para cambiar entre temas claro y oscuro -->
+                    <div class="theme-toggle-container me-5">
+                        <i class="fas fa-sun"></i>
+                        <button id="theme-toggle" class="theme-toggle"></button>
+                        <i class="fas fa-moon"></i>
                     </div>
+                    <!-- Botón para salir -->
+                    <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
+    <!--  Script para cambiar entre temas claro y oscuro -->
+    <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
                 <aside>
@@ -266,11 +120,10 @@ $security = new Security();
             </div>
         </div>
 
-        <footer class="custom-bg text-black">
+        <footer class="footer text-black">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2"
-                        width="150px">
+                    <img src="Assets/img/logop.png" width="150px">
                 </div>
                 <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">

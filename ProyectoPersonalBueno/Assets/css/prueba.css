@@ -101,10 +101,20 @@ header img {
     filter: invert(0.9) sepia(1) saturate(5) hue-rotate(90deg) brightness(80%) contrast(120%);
 }
 
-/* Otros estilos generales */
-.custom-bg {
-    background-color: #228B22;
+footer img {
+    max-width: 150px;
+    transition: filter 0.3s ease; /* Transición suave para el cambio de color */
 }
+
+.light-theme footer img {
+    filter: invert(0); /* Mantener el color original del logo en modo claro */
+}
+
+.dark-theme footer img {
+    filter: invert(0.9) sepia(1) saturate(5) hue-rotate(90deg) brightness(80%) contrast(120%);
+}
+
+/* Otros estilos generales */
 
 h1 {
     color: #343a40;
