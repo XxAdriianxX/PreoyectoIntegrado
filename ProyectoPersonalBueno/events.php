@@ -13,215 +13,9 @@ $security = new Security();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="./Assets/css/prueba.css">
     <title>Prueba Felipe</title>
-    <style>
-        .custom-bg {
-            background-color: #228B22;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .pill-bg {
-            background-color: rgba(217, 217, 217, .3);
-        }
-
-        .custom-button {
-            background-color: rgba(245, 249, 245, 0.7);
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        aside {
-            height: 100%;
-            width: 100%;
-            background-image: url(Assets/img/fondo.jpg);
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .custom-span {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .card {
-            color: black;
-            background-color: #fff;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-            margin-bottom: 20px;
-        }
-
-        .card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-img-bottom {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #343a40;
-        }
-
-        .card-text {
-            color: #343a40;
-        }
-
-        h1 {
-            color: #343a40;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-
-        .pill-bg {
-            background-color: rgba(217, 217, 217, .3);
-        }
-
-        .custom-button {
-            background-color: rgba(245, 249, 245, 0.7);
-        }
-
-        body {
-            background-color: #f8f9fa;
-        }
-
-        aside {
-            height: 100%;
-            width: 100%;
-            background-image: url(Assets/img/fondo.jpg);
-        }
-
-        a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .custom-span {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .card {
-            color: black;
-            background-color: #fff;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease-in-out;
-            margin-bottom: 20px;
-        }
-
-        .card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-img-bottom {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #343a40;
-        }
-
-        .card-text {
-            color: #343a40;
-        }
-
-/* styles.css */
-
-body {
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.light-theme {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-.dark-theme {
-    background-color: #000000;
-    color: #ffffff;
-}
-
-.theme-toggle-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    width: 60px;  /* Width adjusted to fit both icons and the button */
-}
-
-.theme-toggle-container i {
-    font-size: 20px;
-    position: absolute;
-}
-
-.theme-toggle-container .fa-sun {
-    left: 5px;
-    color: #f39c12;
-}
-
-.theme-toggle-container .fa-moon {
-    right: 5px;
-    color: #3498db;
-}
-
-.theme-toggle {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    background-color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-}
-
-body.light-theme .theme-toggle {
-    transform: translateX(-15px);
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-body.dark-theme .theme-toggle {
-    transform: translateX(15px);
-    background-color: #000000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-
-
-</style>
 </head>
-
 <body>
     <div class="container-fluid">
     <header>
@@ -230,9 +24,8 @@ body.dark-theme .theme-toggle {
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
-                    <img src="Assets/img/logop.png" style="width: 60px;">
-                </a>
+                <img src="Assets/img/logop.png" style="width: 80px;">
+                
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -324,46 +117,45 @@ body.dark-theme .theme-toggle {
             </div>
         </div>
 
-        <footer class="custom-bg text-black">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2" width="150px">
-                </div>
-                <div class="col-md-4 text-center social-icons">
-                    <ul class="list-unstyled list-inline">
-                        <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-4">
-                    <h4>Enlaces útiles</h4>
-                    <ul>
-                        <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
-                        <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
-                        <li><a href="Contacto.php">Contacto</a></li>
-                        <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright text-center">
-                <p>&copy; 2024 ECOBUDDY. Todos los derechos reservados.</p>
-            </div>
-        </footer>
+        <footer class="footer text-black">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="Assets/img/logop.png" alt="Logo" width="150px">
+        </div>
+        <div class="col-md-4 text-center social-icons">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-4">
+            <h4>Enlaces útiles</h4>
+            <ul>
+                <li><a href="./Assets/html/TYC.html">Términos y condiciones</a></li>
+                <li><a href="./Assets/html/PP.html">Política de privacidad</a></li>
+                <li><a href="Contacto.php">Contacto</a></li>
+                <li><a href="./Assets/html/Conocenos.html">Conócenos</a></li>
+            </ul>
+        </div>
     </div>
-    <script src="js/index.js"></script>
+    <div class="copyright text-center">
+        <p>&copy; 2024 ECOBUDDY. Todos los derechos reservados.</p>
+    </div>
+</footer>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
