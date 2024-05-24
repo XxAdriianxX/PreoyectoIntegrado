@@ -156,16 +156,6 @@ $security = new Security();
             color: #343a40;
         }
 
-<<<<<<< HEAD
-        .container-fluid {
-            padding: 0;
-        }
-        
-        footer {
-            padding: 20px 0;
-        }
-    </style>
-=======
 /* styles.css */
 
 body {
@@ -234,7 +224,6 @@ body.dark-theme .theme-toggle {
 
 
 </style>
->>>>>>> 0b473f8b3de295795d4ee26fbe389b0b3776bdaa
 </head>
 
 <body>
