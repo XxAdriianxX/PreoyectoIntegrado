@@ -156,6 +156,7 @@ $security = new Security();
             color: #343a40;
         }
 
+<<<<<<< HEAD
         .container-fluid {
             padding: 0;
         }
@@ -164,63 +165,134 @@ $security = new Security();
             padding: 20px 0;
         }
     </style>
+=======
+/* styles.css */
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 60px;  /* Width adjusted to fit both icons and the button */
+}
+
+.theme-toggle-container i {
+    font-size: 20px;
+    position: absolute;
+}
+
+.theme-toggle-container .fa-sun {
+    left: 5px;
+    color: #f39c12;
+}
+
+.theme-toggle-container .fa-moon {
+    right: 5px;
+    color: #3498db;
+}
+
+.theme-toggle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+body.light-theme .theme-toggle {
+    transform: translateX(-15px);
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+body.dark-theme .theme-toggle {
+    transform: translateX(15px);
+    background-color: #000000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+
+</style>
+>>>>>>> 0b473f8b3de295795d4ee26fbe389b0b3776bdaa
 </head>
 
 <body>
     <div class="container-fluid">
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
-                        <img src="Assets/img/logop.png" style="width: 60px;">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
+                    <img src="Assets/img/logop.png" style="width: 60px;">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Eventos
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="userEvents.php">Tus eventos</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="events.php">Todos</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="premios.php">Premios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="friends.php">Amigos</a>
+                        </li>
+                    </ul>
+                    <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                    <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
+                        <i class="fas fa-user"></i>
                     </a>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Eventos
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="userEvents.php">Tus eventos</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="events.php">Todos</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="premios.php">Premios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="friends.php">Amigos</a>
-                            </li>
-                        </ul>
-                        <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
-                        <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
-                            <i class="fas fa-qrcode"></i>
-                        </a>
-                        <form class="d-flex">
-                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </form>
-                        <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
+                    <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
+                        <i class="fas fa-qrcode"></i>
+                    </a>
+                    <div class="theme-toggle-container me-5">
+                        <i class="fas fa-sun"></i>
+                        <button id="theme-toggle" class="theme-toggle"></button>
+                        <i class="fas fa-moon"></i>
                     </div>
+                    <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
+    <!--  Script para cambiar entre temas claro y oscuro -->
+    <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
                 <aside>
@@ -228,8 +300,11 @@ $security = new Security();
                             <span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
                             <h5 class=" text-light mx-auto text-center">Amigos:<h5>
                                     <?= $connection->drawFriends(); ?>
+                <script src="Assets/js/saldo.js"></script>
                 </aside>
             </div>
+            <!--  Script para mostrar o ocultar saldo-->
+            <script src="Assets/js/saldo.js"></script>
             <div class="col-8">
                 <section>
                     <article>

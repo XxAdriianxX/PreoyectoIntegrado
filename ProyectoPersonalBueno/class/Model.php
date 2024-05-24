@@ -31,19 +31,16 @@ class Model extends Connection
             }
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
-            $table .= '<p class="card-text"><br>Ubicación: ' . $event->location . '</p>';
-            $table .= '<div class="row justify-content-start mb-2">';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</p>';
+            $table .= '<div class="row justify-content-center mb-2">';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-success">Fecha y hora: ' . $event->date . '</span>';
             $table .= '</div>';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</p>';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '</div>';
-            $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</p>';
-            $table .= '</div>';
-            $table .= '<p></p>';
+            $table .= '<p class="card-text">Descripción: ' . $event->description . '</p>';
+            $table .= '<p class="card-text">Ubicación: ' . $event->location . '</p>';
             $isAttending = $this->verifyAttendance($event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
@@ -55,11 +52,7 @@ class Model extends Connection
                 $table .= '<a href="#" class="btn custom-button border border-dark disabled">Apuntarse</a>';
             }
             $table .= '</div>';
-            if (!empty($event->picture)) {
-                $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
-            } else {
-                $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="Imagen por defecto">';
-            }
+            $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
             $table .= '</div>';
             $table .= '</div>';
         }
@@ -115,27 +108,20 @@ class Model extends Connection
             }
             $table .= '<div class="card-body">';
             $table .= '<h5 class="card-title"><strong>' . $event->name . '</strong></h5>';
-            $table .= '<p class="card-text"><br>Ubicación: ' . $event->location . '</p>';
-            $table .= '<div class="row justify-content-start mb-2">';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Fecha: ' . $event->date . '</p>';
+            $table .= '<div class="row justify-content-center mb-2">';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-success">Fecha y hora: ' . $event->date . '</span>';
             $table .= '</div>';
-            $table .= '<div class="col-md-6">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2">Hora: ' . $event->date . '</p>';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $event->points . '</span>';
             $table .= '</div>';
             $table .= '</div>';
-            $table .= '<div class="row justify-content-center mx-auto" style="width: 50%;">';
-            $table .= '<p class="card-text badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $event->points . '</p>';
-            $table .= '</div>';
-            $table .= '<p></p>';
+            $table .= '<p class="card-text">Descripción: ' . $event->description . '</p>';
+            $table .= '<p class="card-text">Ubicación: ' . $event->location . '</p>';
             $table .= '<a href="deleteEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark mb-3">Eliminar evento</a><br>';
-            $table .= '<a href="editEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Editar</a>';
+            $table .= '<a href="updateEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Editar</a>';
             $table .= '</div>';
-            if (!empty($event->picture)) {
-                $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
-            } else {
-                $table .= '<img src="Assets/img/albufera.jpg" class="card-img-bottom rounded-3" alt="Imagen por defecto">';
-            }
+            $table .= '<img src="' . $event->picture . '" class="card-img-bottom rounded-3" alt="...">';
             $table .= '</div>';
             $table .= '</div>';
         }
@@ -238,7 +224,7 @@ class Model extends Connection
 
     public function updateEvent()
     {
-        
+
     }
     public function getAllFriends()
     {
@@ -276,18 +262,18 @@ class Model extends Connection
     {
         $friends = $this->getAllFriends();
         $table = '';
-        for ($i = 0; $i < count($friends); $i++) {
+        foreach ($friends as $friend) {
             $table .= '<div class="col-lg-6 col-md-6 mb-4">';
-            $table .= '<div class="card text-center custom-bg">';
+            $table .= '<div class="card text-center">';
             $table .= '<div class="card-body">';
-            $table .= '<h5 class="card-title"><strong>' . $friends[$i]['username'] . '</strong></h5>';
-            $table .= '<p class="card-text">Ubicación: ' . $friends[$i]['ubi'] . '</p>';
+            $table .= '<h5 class="card-title"><strong>' . $friend['username'] . '</strong></h5>';
+            $table .= '<p class="card-text">Ubicación: <span class="badge rounded-pill bg-success">' . $friend['ubi'] . '</span></p>';
             $table .= '<div class="row justify-content-center mb-2">';
             $table .= '<div class="col-auto">';
-            $table .= '<span class="badge rounded-pill pill-bg border border-dark d-block mb-2 mx-auto">Puntos: ' . $friends[$i]['puntos'] . '</span>';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $friend['puntos'] . '</span>';
             $table .= '</div>';
             $table .= '</div>';
-            $table .= '<a href="deleteFriend.php?dniFriend=' . $friends[$i]['DNI'] . '" class="btn custom-button border border-dark">Eliminar amigo</a>';
+            $table .= '<a href="deleteFriend.php?dniFriend=' . $friend['DNI'] . '" class="btn custom-button border border-dark">Eliminar amigo</a>';
             $table .= '</div>';
             $table .= '</div>';
             $table .= '</div>';
@@ -531,7 +517,7 @@ class Model extends Connection
     }
 
     public function mostrarUsuario()
-    { 
+    {
         $data = $_SESSION;
         $form = "<div class='form-container'>";
         $form .= "<div class='form-group'><h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3><span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['username'] . "</span></div>";
