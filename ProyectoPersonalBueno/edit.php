@@ -18,10 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <title>Prueba Felipe</title>
     <style>
         .custom-bg {
@@ -136,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .container-fluid {
             padding: 0;
         }
-        
+
         footer {
             padding: 20px 0;
             color: white;
@@ -149,9 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <header>
             <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <a class="navbar-brand border border-light rounded-circle bg-light" href="#">
@@ -163,8 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <a class="nav-link" aria-current="page" href="indexPubli.php">Inicio</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Eventos
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -190,8 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <i class="fas fa-qrcode"></i>
                         </a>
                         <form class="d-flex">
-                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar"
-                                aria-label="Search">
+                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Buscar" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -209,14 +203,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <article>
                         <div class="row">
                             <div class="col-lg-2 col-md-6 ms-4 ">
-                                <img src="<?= $imagen ?>" class="border border-dark rounded-circle bg-light m-2 p-2"
-                                    width="200px" height="180px">
-                                <div class="card fondo custom-bg">
-                                    <div class="card-body">
-                                        <h5 class="text-light">Amigos:</h5>
-                                        <?= $user->drawFriends(); ?>
-                                    </div>
-                                </div>
+                                <aside style="margin-top: 60px">
+                                    <img src="<?= $imagen ?>" class="border border-dark rounded-circle bg-light m-2 p-2" width="200px" height="180px">
+                                    <?= $user->drawPoints() ?>
+                                    <?= $user->drawFriends() ?>
+                                </aside>
                             </div>
                             <div class="col-lg-6 col-md-6 offset-1">
                                 <h2 class="mb-4 mx-auto">TU PERFIL</h2>
@@ -230,34 +221,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                             <h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>
                                                                 Nombre de usuario: </h3>
                                                         </label>
-                                                        <input type="text" class="form-control rounded-input"
-                                                            id="username" name="username"
-                                                            value="<?= $hola['username'] ?>" required>
+                                                        <input type="text" class="form-control rounded-input" id="username" name="username" value="<?= $hola['username'] ?>" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="email" class="form-label">
                                                             <h3 class='mt-3 me-2 text-nowrap' style='width: 280px'>
                                                                 Email: </h3>
                                                         </label>
-                                                        <input type="email" class="form-control rounded-input"
-                                                            id="email" name="email" value="<?= $hola['mail'] ?>"
-                                                            required>
+                                                        <input type="email" class="form-control rounded-input" id="email" name="email" value="<?= $hola['mail'] ?>" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="dni" class="form-label">
                                                             <h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI:
                                                             </h3>
                                                         </label>
-                                                        <span
-                                                            class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'><?= $hola['DNI'] ?></span>
+                                                        <span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'><?= $hola['DNI'] ?></span>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="ubi" class="form-label">
                                                             <h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>
                                                                 Ubicación: </h3>
                                                         </label>
-                                                        <input type="text" class="form-control rounded-input" id="ubi"
-                                                            name="ubi" value="<?= $hola['ubi'] ?>" required>
+                                                        <input type="text" class="form-control rounded-input" id="ubi" name="ubi" value="<?= $hola['ubi'] ?>" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="imageFile" class="form-label">
@@ -268,8 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                     </div>
                                                     <div class="form-group">
                                                         <input type="hidden" name="id" value="12028" />
-                                                        <input class="button_text" type="submit" name="submit"
-                                                            value="Guardar" />
+                                                        <input class="button_text" type="submit" name="submit" value="Guardar" />
                                                     </div>
                                                 </form>
                                             </div>
@@ -300,30 +284,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <footer class="custom-bg text-black">
         <div class="row">
             <div class="col-md-4">
-                <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2"
-                    width="150px">
+                <img src="Assets/img/logop.png" class="border border-light rounded-circle bg-light m-2 p-2" width="150px">
             </div>
             <div class="col-md-4 text-center social-icons">
                 <ul class="list-unstyled list-inline">
                     <li class="list-inline-item">
-                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                class="fab fa-facebook"></i></a>
+                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                class="fab fa-linkedin"></i></a>
+                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i
-                                class="fab fa-youtube"></i></a>
+                        <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
                     </li>
                 </ul>
             </div>
@@ -342,9 +320,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </footer>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="Assets/js/saldo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
 </html>
