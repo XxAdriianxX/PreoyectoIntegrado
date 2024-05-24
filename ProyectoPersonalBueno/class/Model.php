@@ -224,7 +224,6 @@ class Model extends Connection
 
     public function updateEvent()
     {
-
     }
     public function getAllFriends()
     {
@@ -249,18 +248,18 @@ class Model extends Connection
     }
 
     public function drawFriends()
-{
-    $friends = $this->getAllFriends();
-    $card = '<div class="card">';
-    $card .= '<div class="card-body">';
-    $card .= '<h5 class="card-title">Amigos</h5>';
-    for ($i = 0; $i < count($friends); $i++) {
-        $card .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i]['username'] . '</span>';
+    {
+        $friends = $this->getAllFriends();
+        $card = '<div class="card">';
+        $card .= '<div class="card-body">';
+        $card .= '<h5 class="card-title">Amigos</h5>';
+        for ($i = 0; $i < count($friends); $i++) {
+            $card .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i]['username'] . '</span>';
+        }
+        $card .= '</div>';
+        $card .= '</div>';
+        return $card;
     }
-    $card .= '</div>'; 
-    $card .= '</div>'; 
-    return $card;
-}
 
 
     public function cardFriends()
@@ -351,19 +350,120 @@ class Model extends Connection
     public function showProfile()
     {
 
-        $form = "";
-        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['username'] . "</span>";
-        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>E-mail:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['mail'] . "</span>";
-        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['dni'] . "</span>";
-        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['ubi'] . "</span>";
-        $form .= "<h3 class='mb-0 me-2 text-nowrap' style='width: 280px;'>Puntos:</h3>";
-        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $_SESSION['puntos'] . "</span>";
+        $data = $_SESSION;
+
+        $form = "<div class='card cuerpo'>";
+        $form .= "<div class='card-body'>";
+        $form .= "<div class='row justify-content-start mb-3'>";
+        $form .= "<div class='col-md-12'>";
+        $form .= "<form action='' method='POST' enctype='multipart/form-data'>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='username' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='text' class='form-control rounded-input' id='username' name='username' value='" . $data['username'] . "' required>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='email' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Email:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='email' class='form-control rounded-input' id='email' name='email' value='" . $data['mail'] . "' required>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='dni' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
+        $form .= "</label>";
+        $form .= "<span class='badge rounded-pill bg-light border border-dark flex-grow-1 text-dark text-start fs-6'>" . $data['dni'] . "</span>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='ubi' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $data['ubi'] . "' required>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='imageFile' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Foto de perfil:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='file' name='imageFile' id='imageFile'>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<input type='hidden' name='id' value='12028' />";
+        $form .= "<input class='button_text' type='submit' name='submit' value='Guardar' />";
+        $form .= "</div>";
+
+        $form .= "</form>";
+        $form .= "</div>";
+        $form .= "</div>";
+        $form .= "</div>";
+        $form .= "</div>";
+
         return $form;
     }
+
+    public function generateFormWithData()
+{
+    $_SESSION;
+    $form = "<div class='card cuerpo'>";
+    $form .= "<div class='card-body'>";
+    $form .= "<div class='row justify-content-start mb-3'>";
+    $form .= "<div class='col-md-12'>";
+    $form .= "<form action='' method='POST' enctype='multipart/form-data'>";
+    
+    $form .= "<div class='form-group'>";
+    $form .= "<label for='username' class='form-label'>";
+    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
+    $form .= "</label>";
+    $form .= "<input type='text' class='form-control rounded-input' id='username' name='username' value='" . $_SESSION['username'] . "' required>";
+    $form .= "</div>";
+    
+    $form .= "<div class='form-group'>";
+    $form .= "<label for='email' class='form-label'>";
+    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Email:</h3>";
+    $form .= "</label>";
+    $form .= "<input type='email' class='form-control rounded-input' id='email' name='email' value='" . $_SESSION['mail'] . "' required>";
+    $form .= "</div>";
+    
+    $form .= "<div class='form-group'>";
+    $form .= "<label for='dni' class='form-label'>";
+    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
+    $form .= "</label>";
+    $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $_SESSION['dni'] . "'readonly>";
+    $form .= "</div>";
+    
+    $form .= "<div class='form-group'>";
+    $form .= "<label for='ubi' class='form-label'>";
+    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
+    $form .= "</label>";
+    $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $_SESSION['ubi'] . "' required>";
+    $form .= "</div>";
+    
+    $form .= "<div class='form-group'>";
+    $form .= "<label for='imageFile' class='form-label'>";
+    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Foto de perfil:</h3>";
+    $form .= "</label>";
+    $form .= "<input type='file' name='imageFile' id='imageFile'>";
+    $form .= "</div>";
+    
+    $form .= "<div class='form-group'>";
+    $form .= "<input type='hidden' name='id' value='12028' />";
+    $form .= "<input class='button_text' type='submit' name='submit' value='Guardar' />";
+    $form .= "</div>";
+    
+    $form .= "</form>";
+    $form .= "</div>";
+    $form .= "</div>";
+    $form .= "</div>";
+    $form .= "</div>";
+
+    return $form;
+}
 
     public function notGoEvent($eventName, $eventDate)
     {
@@ -515,11 +615,25 @@ class Model extends Connection
         $dni = $_SESSION['dni'];
         $query = "SELECT puntos FROM Usuario WHERE DNI = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $dni);
+
+        if ($stmt === false) {
+            die("Error en la preparación de la consulta: " . $this->conn->error);
+        }
+
+        $stmt->bind_param("s", $dni);
         $stmt->execute();
-        $result = $stmt->get_result()->fetch_assoc()['puntos'];
-        return $result;
+
+        if ($stmt->errno) {
+            die("Error en la ejecución de la consulta: " . $stmt->error);
+        }
+
+        $stmt->bind_result($puntos);
+        $stmt->fetch();
+
+        $stmt->close();
+        return $puntos;
     }
+
 
     public function drawPoints()
     {
@@ -528,13 +642,13 @@ class Model extends Connection
         $card = '<div class="card" id="saldo">';
         $card .= '<div class="card-body d-flex justify-content-between">';
         $card .= '<h5 class="card-title">Puntos:</h5>';
-        $card .= ''; 
-        $card .= '</div>'; 
+        $card .= '';
+        $card .= '</div>';
         $card .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $points . '</span>';
-        $card .= '</div>'; 
+        $card .= '</div>';
         return $button . $card;
     }
-    
+
 
 
 

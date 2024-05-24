@@ -2,8 +2,9 @@
 class PublicacionesUsurario extends Connection
 {
 
-    private function subirImagenLocal($DNI)
+    private function subirImagenLocal()
     {
+        $DNI = $_SESSION['dni'];
         $directorio = "Assets/imgPublicaciones/";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["imagen"])) {
@@ -20,9 +21,9 @@ class PublicacionesUsurario extends Connection
         return false;
     }
 
-    private function guardarImagenBaseDeDatos($rutaArchivo, $DNI, $comentario, $username)
+    private function guardarImagenBaseDeDatos($rutaArchivo, $DNI, $comentario)
     {
-        $sql = "INSERT INTO Publicacion (Contenido, DNI_usuario, fecha_hora, comentario_publicacion) VALUES (?, ?, NOW(), ?)";
+        $sql = "INSERT INTO Publicacion (contenido, DNI_usuario, fecha_hora, comentario_publicacion) VALUES (?, ?, NOW(), ?)";
     
         if ($stmt = $this->conn->prepare($sql)) {
             $stmt->bind_param("sss", $rutaArchivo, $DNI, $comentario);
@@ -40,12 +41,11 @@ class PublicacionesUsurario extends Connection
         public function insertarImg()
         {
             $DNI = $_SESSION['dni'];
-            $username = $_SESSION['username'];
             $comentario = isset($_POST['comentario_publi']) ? $_POST['comentario_publi'] : '';
-            $rutaArchivo = $this->subirImagenLocal($DNI);
+            $rutaArchivo = $this->subirImagenLocal();
 
             if ($rutaArchivo) {
-                if ($this->guardarImagenBaseDeDatos($rutaArchivo, $DNI, $comentario, $username)) {
+                if ($this->guardarImagenBaseDeDatos($rutaArchivo, $DNI, $comentario)) {
                 }
             }
         }
