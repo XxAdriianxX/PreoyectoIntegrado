@@ -13,14 +13,17 @@ $security = new Security();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="./Assets/css/prueba.css">
+    <link rel="stylesheet" href="Assets/css/prueba.css">
     <title>Prueba Felipe</title>
+    <style>
+
+    </style>
 </head>
 
 <body>
     <div class="container-fluid">
         <header>
-            <nav class="navbar navbar-expand-sm mb-4">
+        <nav class="navbar navbar-expand-sm mb-4">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -83,29 +86,21 @@ $security = new Security();
                 </div>
             </nav>
         </header>
-        <!--  Script para cambiar entre temas claro y oscuro -->
-        <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
-                <aside style="margin-top: 60px">
-                    <?= $connection->drawPoints() ?>
-                    <?= $connection->drawFriends() ?>
+                <aside>
+                    <?= $connection->drawPoints(); ?>
+                    <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
-            <!--  Script para mostrar o ocultar saldo-->
-
             <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
-                            <h2 class="mb-4 mx-auto d-flex justify-content-center" style="width:95%;">EVENTOS</h2>
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto bg-success text-white" style="width:20%">Crear Evento +</a>
+                            <h1 class="mb-4 mx-auto d-flex justify-content-center">TODOS LOS USUARIOS</h1>
                         </div>
-                        <div class="row">
-                            <?= $connection->drawEventsList(); ?>
-                        </div>
-                        <div class="row">
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3 bg-success text-white" style="width:20%">Crear Evento +</a>
+                        <div class="row text-black">
+                            <?= $connection->cardUsers(); ?>
                         </div>
                     </article>
                 </section>
@@ -113,33 +108,38 @@ $security = new Security();
             <div class="col-2">
                 <section>
                     <article>
-                        <?= $connection->drawUserEventsSmall(); ?>
+                        <div class="card fondo" style="margin-top: 60px">
+                            <div class="card-body">
+                                <h2 class="text-dark text-center">Tus eventos: </h2>
+                                <?= $connection->drawUserEventsSmall(); ?>
+                            </div>
+                        </div>
                     </article>
                 </section>
             </div>
         </div>
 
-        <footer class="footer text-black">
+        <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="Assets/img/logop.png" width="150px">
+                    <img src="Assets/img/logop.png" class="" width="150px">
                 </div>
                 <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -159,6 +159,7 @@ $security = new Security();
         </footer>
     </div>
     <script src="Assets/js/saldo.js"></script>
+    <script src="Assets/js/ClaroOscuro.js"></script>
     <script src="Assets/js/events.js"></script>
     <script src="Assets/js/friends.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

@@ -130,14 +130,20 @@ class Model extends Connection
 
     public function drawUserEventsSmall()
     {
-        $dni = $_SESSION['dni'];
         $events = $this->getUserEvents();
-        $table = '';
+        $button = '<div class="btn mb-3 border border-dark bg-light" id="toggle-events-button" onclick="toggleUserEvents()"><i id="toggle-icon-events" class="fas fa-eye"></i></div>';
+        $card = '<div class="card" id="user-events">';
+        $card .= '<div class="card-body d-flex justify-content-between">';
+        $card .= '<h5 class="card-title">Eventos del Usuario</h5>';
+        $card .= '';
+        $card .= '</div>';
         foreach ($events as $event) {
-            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $event->name . '</span>';
+            $card .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $event->name . '</span>';
         }
-        return $table;
+        $card .= '</div>';
+        return $button . $card;
     }
+
 
     public function addEvent($data)
     {
@@ -155,46 +161,160 @@ class Model extends Connection
         $location = $data["location"];
         $points = $data['points'];
         $description = $data['description'];
+
         $targetDir = "Assets/event_picture/";
-        $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
-        if ($check !== false) {
+        $imagePath = 'Assets/img/albufera.jpg';
+
+        if (!empty($_FILES["imageFile"]["name"])) {
+            $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
             $uploadOk = 1;
-        } else {
-            echo "El archivo no es una imagen.";
-            $uploadOk = 0;
-        }
-        if ($_FILES["imageFile"]["size"] > 5000000) {
-            echo "Lo siento, tu archivo es demasiado grande.";
-            $uploadOk = 0;
-        }
-        if (
-            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-            && $imageFileType != "gif"
-        ) {
-            echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
-            $uploadOk = 0;
-        }
-        if ($uploadOk == 0) {
-            echo "Lo siento, tu archivo no fue subido.";
-            return;
-        } else {
-            if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
-                $imagePath = $targetFile;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
             } else {
-                echo "Lo siento, hubo un error al subir tu archivo.";
+                echo "El archivo no es una imagen.";
+                $uploadOk = 0;
+            }
+            if ($_FILES["imageFile"]["size"] > 5000000) {
+                echo "Lo siento, tu archivo es demasiado grande.";
+                $uploadOk = 0;
+            }
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+                $uploadOk = 0;
+            }
+            if ($uploadOk == 0) {
+                echo "Lo siento, tu archivo no fue subido.";
                 return;
+            } else {
+                if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                    $imagePath = $targetFile;
+                } else {
+                    echo "Lo siento, hubo un error al subir tu archivo.";
+                    return;
+                }
             }
         }
+
         $stmt = $this->conn->prepare('INSERT INTO Evento (nombre, fecha_hora, ubi, estado, DNI_usuario, puntos_asociados, descripcion, imagen) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         $stmt->bind_param('sssssiss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $imagePath);
 
         if (!$stmt->execute()) {
             echo "Error al añadir el evento.";
         } else {
-            header("location: events.php");
+            header("Location: events.php");
+            exit();
+        }
+    }
+
+    public function getEvent($eventName, $eventDate)
+    {
+        $query = "SELECT * FROM Evento WHERE nombre = ? AND fecha_hora = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ss', $eventName, $eventDate);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                $event = $result->fetch_assoc();
+                $result->close();
+                return new Event(
+                    $event['nombre'],
+                    $event['fecha_hora'],
+                    $event['ubi'],
+                    $event['estado'],
+                    $event['DNI_usuario'],
+                    $event['puntos_asociados'],
+                    $event['descripcion'],
+                    $event['imagen']
+                );
+            } else {
+                echo "No se encontró ningún evento con esos datos.";
+                return null;
+            }
+        } else {
+            echo "Error al obtener el evento.";
+            return null;
+        }
+    }
+    public function updateEvent($data, $originalEventName, $originalEventDate)
+    {
+        $curdate = new DateTime();
+        $date = $data["date"];
+        $dateFormat = DateTime::createFromFormat('Y-m-d\TH:i', $date);
+        if (!$dateFormat) {
+            echo "Formato de fecha inválido.";
+            return;
+        }
+        $dateFormatStr = $dateFormat->format('Y-m-d H:i:s');
+
+        $originalDateFormat = DateTime::createFromFormat('Y-m-d H:i:s', $originalEventDate);
+        if (!$originalDateFormat) {
+            echo "Formato de fecha original inválido.";
+            return;
+        }
+        $originalDateFormatStr = $originalDateFormat->format('Y-m-d H:i:s');
+
+        $dni = $_SESSION['dni'];
+        $active = ($dateFormat > $curdate) ? 1 : 0;
+        $eventName = $data["eventName"];
+        $location = $data["location"];
+        $points = $data['points'];
+        $description = $data['description'];
+        $imagePath = null;
+
+        if (isset($_FILES["imageFile"]) && $_FILES["imageFile"]["error"] == UPLOAD_ERR_OK) {
+            $targetDir = "Assets/event_picture/";
+            $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            $check = getimagesize($_FILES["imageFile"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
+            } else {
+                echo "El archivo no es una imagen.";
+                $uploadOk = 0;
+            }
+            if ($_FILES["imageFile"]["size"] > 5000000) {
+                echo "Lo siento, tu archivo es demasiado grande.";
+                $uploadOk = 0;
+            }
+            if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+                echo "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+                $uploadOk = 0;
+            }
+            if ($uploadOk == 0) {
+                echo "Lo siento, tu archivo no fue subido.";
+                return;
+            } else {
+                if (move_uploaded_file($_FILES["imageFile"]["tmp_name"], $targetFile)) {
+                    $imagePath = $targetFile;
+                } else {
+                    echo "Lo siento, hubo un error al subir tu archivo.";
+                    return;
+                }
+            }
+        }
+
+        $query = 'UPDATE Evento SET nombre = ?, fecha_hora = ?, ubi = ?, estado = ?, DNI_usuario = ?, puntos_asociados = ?, descripcion = ?';
+        if ($imagePath) {
+            $query .= ', imagen = ?';
+        }
+        $query .= ' WHERE nombre = ? AND fecha_hora = ?';
+
+        if ($imagePath) {
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('sssssiissss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $imagePath, $originalEventName, $originalDateFormatStr);
+        } else {
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('sssssisss', $eventName, $dateFormatStr, $location, $active, $dni, $points, $description, $originalEventName, $originalDateFormatStr);
+        }
+
+        if (!$stmt->execute()) {
+            echo "Error al actualizar el evento.";
+        } else {
+            header("location: userEvents.php");
         }
     }
 
@@ -222,9 +342,6 @@ class Model extends Connection
         }
     }
 
-    public function updateEvent()
-    {
-    }
     public function getAllFriends()
     {
         $dni = $_SESSION['dni'];
@@ -250,7 +367,8 @@ class Model extends Connection
     public function drawFriends()
     {
         $friends = $this->getAllFriends();
-        $card = '<div class="card">';
+        $button = '<div class="btn mb-3 border border-dark bg-light" id="toggle-friends-button" onclick="toggleFriends()"><i id="toggle-icon-friends" class="fas fa-eye"></i></div>';
+        $card = '<div class="card" id="friends">';
         $card .= '<div class="card-body">';
         $card .= '<h5 class="card-title">Amigos</h5>';
         for ($i = 0; $i < count($friends); $i++) {
@@ -258,8 +376,9 @@ class Model extends Connection
         }
         $card .= '</div>';
         $card .= '</div>';
-        return $card;
+        return $button . $card;
     }
+
 
 
     public function cardFriends()
@@ -291,7 +410,7 @@ class Model extends Connection
         $stmt = $this->conn->prepare('DELETE FROM Amigos WHERE DNI_usuario= ? AND DNI_amigo = ?');
         $stmt->bind_param('ss', $dni, $dniFriend);
         if ($stmt->execute()) {
-            header("location: events.php");
+            header("location: friends.php");
         } else {
             echo "Error al eliminar amigo.";
         }
@@ -408,62 +527,62 @@ class Model extends Connection
     }
 
     public function generateFormWithData()
-{
-    $_SESSION;
-    $form = "<div class='card cuerpo'>";
-    $form .= "<div class='card-body'>";
-    $form .= "<div class='row justify-content-start mb-3'>";
-    $form .= "<div class='col-md-12'>";
-    $form .= "<form action='' method='POST' enctype='multipart/form-data'>";
-    
-    $form .= "<div class='form-group'>";
-    $form .= "<label for='username' class='form-label'>";
-    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
-    $form .= "</label>";
-    $form .= "<input type='text' class='form-control rounded-input' id='username' name='username' value='" . $_SESSION['username'] . "' required>";
-    $form .= "</div>";
-    
-    $form .= "<div class='form-group'>";
-    $form .= "<label for='email' class='form-label'>";
-    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Email:</h3>";
-    $form .= "</label>";
-    $form .= "<input type='email' class='form-control rounded-input' id='email' name='email' value='" . $_SESSION['mail'] . "' required>";
-    $form .= "</div>";
-    
-    $form .= "<div class='form-group'>";
-    $form .= "<label for='dni' class='form-label'>";
-    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
-    $form .= "</label>";
-    $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $_SESSION['dni'] . "'readonly>";
-    $form .= "</div>";
-    
-    $form .= "<div class='form-group'>";
-    $form .= "<label for='ubi' class='form-label'>";
-    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
-    $form .= "</label>";
-    $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $_SESSION['ubi'] . "' required>";
-    $form .= "</div>";
-    
-    $form .= "<div class='form-group'>";
-    $form .= "<label for='imageFile' class='form-label'>";
-    $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Foto de perfil:</h3>";
-    $form .= "</label>";
-    $form .= "<input type='file' name='imageFile' id='imageFile'>";
-    $form .= "</div>";
-    
-    $form .= "<div class='form-group'>";
-    $form .= "<input type='hidden' name='id' value='12028' />";
-    $form .= "<input class='button_text' type='submit' name='submit' value='Guardar' />";
-    $form .= "</div>";
-    
-    $form .= "</form>";
-    $form .= "</div>";
-    $form .= "</div>";
-    $form .= "</div>";
-    $form .= "</div>";
+    {
+        $_SESSION;
+        $form = "<div class='card cuerpo'>";
+        $form .= "<div class='card-body'>";
+        $form .= "<div class='row justify-content-start mb-3'>";
+        $form .= "<div class='col-md-12'>";
+        $form .= "<form action='' method='POST' enctype='multipart/form-data'>";
 
-    return $form;
-}
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='username' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Nombre de usuario:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='text' class='form-control rounded-input' id='username' name='username' value='" . $_SESSION['username'] . "' required>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='email' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Email:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='email' class='form-control rounded-input' id='email' name='email' value='" . $_SESSION['mail'] . "' required>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='dni' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>DNI:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $_SESSION['dni'] . "'readonly>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='ubi' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Ubicación:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='text' class='form-control rounded-input' id='ubi' name='ubi' value='" . $_SESSION['ubi'] . "' required>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<label for='imageFile' class='form-label'>";
+        $form .= "<h3 class='mt-3 me-2 text-nowrap' style='width: 280px;'>Foto de perfil:</h3>";
+        $form .= "</label>";
+        $form .= "<input type='file' name='imageFile' id='imageFile'>";
+        $form .= "</div>";
+
+        $form .= "<div class='form-group'>";
+        $form .= "<input type='hidden' name='id' value='12028' />";
+        $form .= "<input class='button_text' type='submit' name='submit' value='Guardar' />";
+        $form .= "</div>";
+
+        $form .= "</form>";
+        $form .= "</div>";
+        $form .= "</div>";
+        $form .= "</div>";
+        $form .= "</div>";
+
+        return $form;
+    }
 
     public function notGoEvent($eventName, $eventDate)
     {
@@ -649,10 +768,49 @@ class Model extends Connection
         return $button . $card;
     }
 
+    public function getUsers()
+    {
+        $dni = $_SESSION['dni'];
+        $query = "SELECT * FROM Usuario  WHERE DNI <> '$dni' AND DNI NOT IN (SELECT DNI_amigo FROM Amigos);";
+        $result = mysqli_query($this->conn, $query);
+        $users = [];
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+        $result->close();
+        return $users;
+    }
 
+    public function addFriends($dni2)
+    {
+        $dni = $_SESSION['dni'];
+        $query = "INSERT INTO Amigos (DNI_usuario, DNI_amigo) VALUES ('$dni', '$dni2')";
+        $result = mysqli_query($this->conn, $query);
+        header('location: addFriends.php');
+    }
 
-
-
+    public function cardUsers()
+    {
+        $users = $this->getUsers();
+        $table = '';
+        foreach ($users as $friend) {
+            $table .= '<div class="col-lg-6 col-md-6 mb-4">';
+            $table .= '<div class="card text-center">';
+            $table .= '<div class="card-body text-black">';
+            $table .= '<h5 class="card-title"><strong>' . $friend['username'] . '</strong></h5>';
+            $table .= '<p class="card-text">Ubicación: <span class="badge rounded-pill bg-success">' . $friend['ubi'] . '</span></p>';
+            $table .= '<div class="row justify-content-center mb-2">';
+            $table .= '<div class="col-auto">';
+            $table .= '<span class="badge rounded-pill bg-secondary">Puntos: ' . $friend['puntos'] . '</span>';
+            $table .= '</div>';
+            $table .= '</div>';
+            $table .= '<a href="addUser.php?dniFriend=' . $friend['DNI'] . '" class="btn custom-button border border-dark">Añadir amigo</a>';
+            $table .= '</div>';
+            $table .= '</div>';
+            $table .= '</div>';
+        }
+        return $table;
+    }
 
     public function mostrarUsuario()
     {

@@ -50,8 +50,17 @@ if (count($_POST) > 0) {
                             <li class="nav-item">
                                 <a class="nav-link" href="premios.php">Premios</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="friends.php">Amigos</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Amigos
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="friends.php">Tus amigos</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="addFriends.php">Añadir amigos</a></li>
+                                </ul>
                             </li>
                         </ul>
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
@@ -100,7 +109,7 @@ if (count($_POST) > 0) {
                                                 <div class="mb-3">
                                                     <label for="eventName" class="form-label">
                                                         Nombre:</label>
-                                                    <input type="text" class="form-control mb-3" id="eventName" name="eventName" placeholder="Nombre único">
+                                                    <input type="text" class="form-control mb-3" id="eventName" name="eventName" placeholder="Nombre único" required>
                                                     <label for="points" class="form-label">
                                                         Puntos por asistir:</label>
                                                     <input type="number" placeholder="50" class="form-control" id="points" name="points">
@@ -110,7 +119,7 @@ if (count($_POST) > 0) {
                                                 <div class="mb-3">
                                                     <label for="date" class="form-label">
                                                         Fecha:</label>
-                                                    <input type="datetime-local" class="form-control mb-3" id="date" name="date">
+                                                    <input type="datetime-local" class="form-control mb-3" id="date" name="date" required>
                                                     <label for="location" class="form-label">
                                                         Ubicación:</label>
                                                     <input type="text" class="form-control" id="location" name="location" placeholder="Ubicación del evento">
@@ -125,7 +134,7 @@ if (count($_POST) > 0) {
                                                 <input type="file" name="imageFile" id="imageFile">
                                             </div>
                                             <div class="col-md-4 offste-2 align-self-end">
-                                                <button type="submit" class="btn border submit text-white rounded">Crear
+                                                <button type="submit" class="btn border submit  rounded">Crear
                                                     evento</button>
                                             </div>
                                         </div>
@@ -182,6 +191,8 @@ if (count($_POST) > 0) {
         </footer>
     </div>
     <script src="Assets/js/saldo.js"></script>
+    <script src="Assets/js/events.js"></script>
+    <script src="Assets/js/friends.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

@@ -1,9 +1,17 @@
 <?php
 require_once "autoloader.php";
-/* session_start();  */ // Inicia la sesión en la página de inicio
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
+$eventName = isset($_GET['eventName']) ? $_GET['eventName'] : null;
+$eventDate = isset($_GET['eventDate']) ? $_GET['eventDate'] : null;
+$eventDate = DateTime::createFromFormat('Y-m-d H:i:s', $eventDate)->format('Y-m-d H:i:s');
+$event = $connection->getEvent($eventName, $eventDate);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $connection->updateEvent($_POST, $eventName, $eventDate);
+}
+
+
 ?>
 <!doctype html>
 <html lang="es">
@@ -13,8 +21,8 @@ $security = new Security();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="./Assets/css/prueba.css">
-    <title>Prueba Felipe</title>
+    <link rel="stylesheet" href="Assets/css/prueba.css">
+    <title>Añadir Evento</title>
 </head>
 
 <body>
@@ -83,63 +91,91 @@ $security = new Security();
                 </div>
             </nav>
         </header>
-        <!--  Script para cambiar entre temas claro y oscuro -->
         <script src="Assets/js/ClaroOscuro.js"></script>
+
         <div class="row">
             <div class="col-2">
-                <aside style="margin-top: 60px">
-                    <?= $connection->drawPoints() ?>
-                    <?= $connection->drawFriends() ?>
+                <aside>
+                    <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
-            <!--  Script para mostrar o ocultar saldo-->
+            <div class="col-10">
+                <section>
+                    <article>
+                        <div class="row">
+                            <div class="col-9 mb-5 mx-auto">
+                                <form method="post" enctype="multipart/form-data">
+                                    <div class="form-group border m-3 p-3 rounded">
+                                        <h4>Actualiza tu evento</h4>
+                                        <p>Introduce la información solicitada</p>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mb-3">
+                                                    <label for="eventName" class="form-label">
+                                                        Nombre:</label>
+                                                    <input type="text" class="form-control mb-3" id="eventName" name="eventName" value="<?php $event->name ?>">
+                                                    <label for="points" class="form-label">
+                                                        Puntos por asistir:</label>
+                                                    <input type="number" class="form-control" id="points" name="points" value="<?= $event->points ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 offset-2">
+                                                <div class="mb-3">
+                                                    <label for="date" class="form-label">
+                                                        Fecha:</label>
+                                                    <input type="datetime-local" class="form-control mb-3" id="date" name="date" value="<?= $event->date ?>">
+                                                    <label for="location" class="form-label">
+                                                        Ubicación:</label>
+                                                    <input type="text" class="form-control" id="location" name="location" value="<?= $event->location ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <label for="description" class="form-label">
+                                                    Descripción:</label>
+                                                <textarea class="form-control" rows="3" id="description" name="description" placeholder="<?= $event->description ?>"></textarea>
+                                                <input type="file" name="imageFile" id="imageFile" value="">
+                                            </div>
+                                            <div class="col-md-4 offste-2 align-self-end">
+                                                <button type="submit" class="btn border submit  rounded">Actualizar
+                                                    evento</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
 
-            <div class="col-8">
-                <section>
-                    <article>
-                        <div class="row mx-auto mb-3">
-                            <h2 class="mb-4 mx-auto d-flex justify-content-center" style="width:95%;">EVENTOS</h2>
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto bg-success text-white" style="width:20%">Crear Evento +</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="row">
-                            <?= $connection->drawEventsList(); ?>
-                        </div>
-                        <div class="row">
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3 bg-success text-white" style="width:20%">Crear Evento +</a>
-                        </div>
-                    </article>
-                </section>
-            </div>
-            <div class="col-2">
-                <section>
-                    <article>
-                        <?= $connection->drawUserEventsSmall(); ?>
                     </article>
                 </section>
             </div>
         </div>
-
-        <footer class="footer text-black">
+        <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">
-                    <img src="Assets/img/logop.png" width="150px">
+                    <img src="Assets/img/logop.png" class="" width="150px">
                 </div>
                 <div class="col-md-4 text-center social-icons">
                     <ul class="list-unstyled list-inline">
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-linkedin"></i></a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="#" class="btn-floating btn-sm" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="btn-floating btn-sm text-black" style="font-size: 23px;"><i class="fab fa-youtube"></i></a>
                         </li>
                     </ul>
                 </div>

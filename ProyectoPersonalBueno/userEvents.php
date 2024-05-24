@@ -47,8 +47,17 @@ $security = new Security();
                             <li class="nav-item">
                                 <a class="nav-link" href="premios.php">Premios</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="friends.php">Amigos</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Amigos
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="friends.php">Tus amigos</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="addFriends.php">Añadir amigos</a></li>
+                                </ul>
                             </li>
                         </ul>
                         <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
@@ -101,13 +110,8 @@ $security = new Security();
             </div>
             <div class="col-2">
                 <section>
-                    <article>
-                        <div class="card fondo" style="margin-top: 60px">
-                            <div class="card-body">
-                                <h2 class="text-dark text-center">Tus eventos: </h2>
-                                <?= $connection->drawUserEventsSmall(); ?>
-                            </div>
-                        </div>
+                    <article style="margin-top: 60px">
+                        <?= $connection->drawUserEventsSmall(); ?>
                     </article>
                 </section>
             </div>
@@ -153,6 +157,8 @@ $security = new Security();
         </footer>
     </div>
     <script src="Assets/js/saldo.js"></script>
+    <script src="Assets/js/events.js"></script>
+    <script src="Assets/js/friends.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 
