@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: db
--- Tiempo de generación: 23-05-2024 a las 06:37:44
+-- Tiempo de generación: 24-05-2024 a las 18:25:22
 -- Versión del servidor: 8.3.0
 -- Versión de PHP: 8.2.16
 
@@ -18,14 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `EcoBuddy`
+-- Base de datos: `EcoBuddy2`
 --
 
 -- --------------------------------------------------------
-
-CREATE DATABASE IF NOT EXISTS EcoBuddy;
-
-USE EcoBuddy;
 
 --
 -- Estructura de tabla para la tabla `Amigos`
@@ -41,8 +37,18 @@ CREATE TABLE `Amigos` (
 --
 
 INSERT INTO `Amigos` (`DNI_usuario`, `DNI_amigo`) VALUES
-('53876055k', '789123456'),
-('53876055k', '987654321');
+('234567890', '345678901'),
+('53876055J', '345678901'),
+('234567890', '456789012'),
+('345678901', '456789012'),
+('53876056M', '53876060'),
+('345678901', '567890123'),
+('456789012', '567890123'),
+('456789012', '678901234'),
+('567890123', '678901234'),
+('53876056M', '789012345'),
+('53876056M', '890123456'),
+('53876056M', '901234567');
 
 -- --------------------------------------------------------
 
@@ -61,11 +67,17 @@ CREATE TABLE `Asiste` (
 --
 
 INSERT INTO `Asiste` (`DNI_usuario`, `nombre_evento`, `fecha_hora_evento`) VALUES
-('53876055k', 'Campaña de Concientización', '2024-11-15 09:00:00'),
-('24506634P', 'Charla sobre Reciclaje', '2024-06-15 14:30:00'),
-('53876055k', 'Competencia de Jardinería', '2025-02-20 17:30:00'),
-('123456789', 'Evento1', '2024-05-15 10:00:00'),
-('53876055k', 'Plantación de Árboles', '2024-07-05 18:00:00');
+('123456789', 'Evento1', '2024-05-16 08:00:00'),
+('53876056M', 'Evento1', '2024-05-16 08:00:00'),
+('012345678', 'Evento10', '2024-05-25 17:00:00'),
+('234567890', 'Evento2', '2024-05-17 09:00:00'),
+('345678901', 'Evento3', '2024-05-18 10:00:00'),
+('567890123', 'Evento5', '2024-05-20 12:00:00'),
+('53876056M', 'Evento6', '2024-05-21 13:00:00'),
+('678901234', 'Evento6', '2024-05-21 13:00:00'),
+('789012345', 'Evento7', '2024-05-22 14:00:00'),
+('890123456', 'Evento8', '2024-05-23 15:00:00'),
+('901234567', 'Evento9', '2024-05-24 16:00:00');
 
 -- --------------------------------------------------------
 
@@ -74,7 +86,6 @@ INSERT INTO `Asiste` (`DNI_usuario`, `nombre_evento`, `fecha_hora_evento`) VALUE
 --
 
 CREATE TABLE `Comentario` (
-  `id` int NOT NULL,
   `fecha_hora_publicacion` datetime NOT NULL,
   `DNI_usuario_publicacion` varchar(9) NOT NULL,
   `DNI_usuario_comentario` varchar(9) NOT NULL,
@@ -86,9 +97,18 @@ CREATE TABLE `Comentario` (
 -- Volcado de datos para la tabla `Comentario`
 --
 
-INSERT INTO `Comentario` (`id`, `fecha_hora_publicacion`, `DNI_usuario_publicacion`, `DNI_usuario_comentario`, `fecha_hora`, `contenido`) VALUES
-(36, '2024-05-22 17:51:09', '24506634P', '24506634P', '2024-05-22 17:52:10', 'danii: publicac9ion'),
-(37, '2024-05-22 17:51:09', '24506634P', '24506633L', '2024-05-22 17:52:57', 'algo: esto es un comentario con otro usuario ');
+INSERT INTO `Comentario` (`fecha_hora_publicacion`, `DNI_usuario_publicacion`, `DNI_usuario_comentario`, `fecha_hora`, `contenido`) VALUES
+('2024-05-16 08:00:00', '123456789', '234567890', '2024-05-16 08:30:00', 'Comentario 1'),
+('2024-05-17 09:00:00', '234567890', '345678901', '2024-05-17 09:30:00', 'Comentario 2'),
+('2024-05-18 10:00:00', '345678901', '456789012', '2024-05-18 10:30:00', 'Comentario 3'),
+('2024-05-19 11:00:00', '456789012', '567890123', '2024-05-19 11:30:00', 'Comentario 4'),
+('2024-05-20 12:00:00', '567890123', '678901234', '2024-05-20 12:30:00', 'Comentario 5'),
+('2024-05-21 13:00:00', '678901234', '789012345', '2024-05-21 13:30:00', 'Comentario 6'),
+('2024-05-22 14:00:00', '789012345', '890123456', '2024-05-22 14:30:00', 'Comentario 7'),
+('2024-05-23 15:00:00', '890123456', '901234567', '2024-05-23 15:30:00', 'Comentario 8'),
+('2024-05-24 16:00:00', '901234567', '012345678', '2024-05-24 16:30:00', 'Comentario 9'),
+('2024-05-24 16:31:18', '53876056M', '53876056M', '2024-05-24 16:31:28', 'Felipillo  el guay: briston'),
+('2024-05-25 17:00:00', '012345678', '123456789', '2024-05-25 17:30:00', 'Comentario 10');
 
 -- --------------------------------------------------------
 
@@ -106,9 +126,15 @@ CREATE TABLE `Desbloquea` (
 --
 
 INSERT INTO `Desbloquea` (`DNI_usuario`, `nombre_logro`) VALUES
-('53876055k', 'Logro1'),
-('24506634P', 'Logro2'),
-('53876055k', 'Logro2');
+('53876056M', 'Logro10'),
+('53876056M', 'Logro2'),
+('53876056M', 'Logro3'),
+('53876056M', 'Logro4'),
+('53876056M', 'Logro5'),
+('53876056M', 'Logro6'),
+('53876056M', 'Logro7'),
+('53876056M', 'Logro8'),
+('53876056M', 'Logro9');
 
 -- --------------------------------------------------------
 
@@ -121,7 +147,7 @@ CREATE TABLE `Evento` (
   `fecha_hora` datetime NOT NULL,
   `ubi` varchar(255) DEFAULT NULL,
   `descripcion` text,
-  `estado` varchar(50) DEFAULT NULL,
+  `estado` tinyint(1) DEFAULT NULL,
   `DNI_usuario` varchar(9) DEFAULT NULL,
   `puntos_asociados` int DEFAULT NULL,
   `imagen` varchar(255) DEFAULT NULL
@@ -132,28 +158,16 @@ CREATE TABLE `Evento` (
 --
 
 INSERT INTO `Evento` (`nombre`, `fecha_hora`, `ubi`, `descripcion`, `estado`, `DNI_usuario`, `puntos_asociados`, `imagen`) VALUES
-('Campaña de Concientización', '2024-11-15 09:00:00', 'Plaza Principal', 'Campaña de concientización sobre el cuidado del medio ambiente y la importancia de la sostenibilidad.', '1', '123456789', 4, NULL),
-('Charla sobre Reciclaje', '2024-06-15 14:30:00', 'Centro Cultural', 'Charla educativa sobre el reciclaje y su impacto ambiental.', '1', '123456789', 8, NULL),
-('cochecitoo', '2024-05-31 08:22:00', '333', '3333', '1', '53876055k', 3333, 'Assets/event_picture/prueba.jpg'),
-('Competencia de Jardinería', '2025-02-20 17:30:00', 'Plaza de la Ciudad', 'Competencia entre vecinos para ver quién tiene el jardín más sostenible.', '1', '123456789', 8, NULL),
-('dffcc', '2024-05-09 08:18:00', 'ddddd3ed', 'dddd', '0', '53876055k', 23, 'Assets/event_picture/ciclo.jpg'),
-('Evento1', '2024-05-15 10:00:00', 'Ubicacion2', 'Descripción del evento 1', '1', '123456789', 1, NULL),
-('Excursión Naturalista', '2024-10-05 18:00:00', 'Reserva Natural', 'Excursión guiada para observar la flora y fauna de la reserva natural.', '1', '123456789', 6, NULL),
-('Jornada de Reciclaje', '2025-01-10 14:00:00', 'Centro de Reciclaje', 'Jornada para fomentar el reciclaje y la separación de residuos.', '1', '123456789', 6, NULL),
-('Limpieza de playa', '2024-05-01 09:05:00', 'Playa de Pinedo', '', '1', '123456789', 50, NULL),
-('Limpieza de rio', '2024-05-11 09:05:00', 'Playa de Cullera', 'Hay que recoger todo para que se quede limpio', '1', '123456789', 50, NULL),
-('Limpieza Parque Central', '2024-05-20 10:00:00', 'Parque Central', 'Evento de limpieza comunitaria en el Parque Central.', '0', '123456789', 5, NULL),
-('Plantación de Árboles', '2024-07-05 18:00:00', 'Zona Verde', 'Actividad de reforestación en la Zona Verde de la ciudad.', '1', '123456789', 7, NULL),
-('Prueba nombre', '2024-05-02 12:36:00', 'Chile', 'Prueba nombre', '0', '53876055k', 45, 'Assets/event_picture/prueba.jpg'),
-('Prueba regogida basura ', '2024-05-19 14:46:00', 'Catarroja', 'afjlkdfjldfkljflkasjflkjdfkljdaklfjadsklfjalksflkasjflkdsjflkdj', '0', '24506634P', 200, 'Assets/event_picture/prueba.jpg'),
-('qwesdgbngf', '2024-05-31 13:26:00', 'chile', 'SADFGBDSA', '0', '53876055k', 666, NULL),
-('qwesdgbngfWEFGHGFDS', '2024-05-10 13:26:00', 'chile', 'SADFGBDSA', '1', '53876055k', 666, NULL),
-('recoger coches', '2024-05-16 08:51:00', 'España', NULL, '1', '123456789', 43, NULL),
-('Recogida de basura ', '2024-05-30 15:39:00', 'Playa el saler', 'Recogida de basuta en playa el saler ', '1', '24506634P', 200, 'Assets/event_picture/prueba.jpg'),
-('Recogida de Basura Playa', '2024-08-10 12:00:00', 'Playa Principal', 'Recogida de basura en la playa para mantener el ecosistema marino limpio.', '0', '123456789', 6, NULL),
-('rfsfcbbdfs', '2024-06-09 09:16:00', 'sfcsc', 'aedfvsfadfcx', '1', '53876055k', 788, NULL),
-('Taller de Compostaje', '2024-09-20 15:30:00', 'Granja Educativa', 'Taller práctico sobre cómo hacer compostaje en casa.', '1', '123456789', 5, NULL),
-('Taller de Energías Renovables', '2024-12-01 11:30:00', 'Centro Comunitario', 'Taller informativo sobre el uso de energías renovables en el hogar.', '1', '123456789', 7, NULL);
+('Evento1', '2024-05-16 08:00:00', 'Ubicación 1', 'Descripción del evento 1', 1, '123456789', 50, NULL),
+('Evento10', '2024-05-25 17:00:00', 'Ubicación 10', 'Descripción del evento 10', 0, '012345678', 140, NULL),
+('Evento2', '2024-05-17 09:00:00', 'Ubicación 2', 'Descripción del evento 2', 1, '234567890', 60, NULL),
+('Evento3', '2024-05-18 10:00:00', 'Ubicación 3', 'Descripción del evento 3', 0, '345678901', 70, NULL),
+('Evento5', '2024-05-20 12:00:00', 'Ubicación 5', 'Descripción del evento 5', 0, '567890123', 90, NULL),
+('Evento6', '2024-05-21 13:00:00', 'Ubicación 6', 'Descripción del evento 6', 1, '678901234', 100, NULL),
+('Evento7', '2024-05-22 14:00:00', 'Ubicación 7', 'Descripción del evento 7', 0, '789012345', 110, NULL),
+('Evento8', '2024-05-23 15:00:00', 'Ubicación 8', 'Descripción del evento 8', 1, '890123456', 120, NULL),
+('Evento9', '2024-05-24 16:00:00', 'Ubicación 9', 'Descripción del evento 9', 1, '901234567', 130, NULL),
+('Limpiar mi coche', '2024-05-11 18:37:00', 'Casitabbbb', 'bbbbb', 0, '53876056M', 9, 'Assets/img/albufera.jpg');
 
 -- --------------------------------------------------------
 
@@ -172,15 +186,15 @@ CREATE TABLE `Logros` (
 --
 
 INSERT INTO `Logros` (`nombre`, `puntos_necesarios`, `imagen`) VALUES
-('Logro1', 300, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro2', 200, 'Assets/logros/Echo-Heroe3.png'),
-('Logro3', 400, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro4', 500, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro5', 600, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro6', 700, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro7', 800, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro8', 900, 'Assets/logros/DefensorDeLaBiodiversidad8.png'),
-('Logro9', 1000, 'Assets/logros/DefensorDeLaBiodiversidad8.png');
+('Logro10', 1000, NULL),
+('Logro2', 200, NULL),
+('Logro3', 300, NULL),
+('Logro4', 400, NULL),
+('Logro5', 500, NULL),
+('Logro6', 600, NULL),
+('Logro7', 700, NULL),
+('Logro8', 800, NULL),
+('Logro9', 900, NULL);
 
 -- --------------------------------------------------------
 
@@ -192,7 +206,7 @@ CREATE TABLE `Publicacion` (
   `fecha_hora` datetime NOT NULL,
   `DNI_usuario` varchar(9) NOT NULL,
   `contenido` text,
-  `comentario_publicacion` text NOT NULL
+  `comentario_publicacion` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -200,14 +214,17 @@ CREATE TABLE `Publicacion` (
 --
 
 INSERT INTO `Publicacion` (`fecha_hora`, `DNI_usuario`, `contenido`, `comentario_publicacion`) VALUES
-('2024-05-22 17:51:09', '24506634P', 'Assets/imgPublicaciones/24506634P_DefensorDeLaBiodiversidad8.png', 'Esto es el comentario de una publicacion'),
-('2024-05-22 17:51:16', '24506634P', 'Assets/imgPublicaciones/24506634P_Echo-Heroe3.png', 'afafadfaf'),
-('2024-05-22 17:51:27', '24506634P', 'Assets/imgPublicaciones/24506634P_Eco-Activista7.png', 'comentario '),
-('2024-05-22 17:51:35', '24506634P', 'Assets/imgPublicaciones/24506634P_Eco-Innovador5.png', 'aaaa'),
-('2024-05-22 17:51:44', '24506634P', 'Assets/imgPublicaciones/24506634P_EmbajadorDelReciclaje9.png', 'aaa'),
-('2024-05-22 17:51:57', '24506634P', 'Assets/imgPublicaciones/24506634P_GuardianDelAgua6.png', 'esto es otro comentario de una publicaicon\r\n'),
-('2024-05-22 17:53:55', '24506633L', 'Assets/imgPublicaciones/24506633L_SembradorDeEsperanza2.png', 'publicacion subida con otro usuario '),
-('2024-05-22 18:06:19', '24506633L', 'Assets/imgPublicaciones/24506633L_GuardianDelAgua6.png', 'a');
+('2024-05-16 08:00:00', '123456789', 'Contenido de la publicación 1', NULL),
+('2024-05-17 09:00:00', '234567890', 'Contenido de la publicación 2', NULL),
+('2024-05-18 10:00:00', '345678901', 'Contenido de la publicación 3', NULL),
+('2024-05-19 11:00:00', '456789012', 'Contenido de la publicación 4', NULL),
+('2024-05-20 12:00:00', '567890123', 'Contenido de la publicación 5', NULL),
+('2024-05-21 13:00:00', '678901234', 'Contenido de la publicación 6', NULL),
+('2024-05-22 14:00:00', '789012345', 'Contenido de la publicación 7', NULL),
+('2024-05-23 15:00:00', '890123456', 'Contenido de la publicación 8', NULL),
+('2024-05-24 16:00:00', '901234567', 'Contenido de la publicación 9', NULL),
+('2024-05-24 16:31:18', '53876056M', 'Assets/imgPublicaciones/53876056M_Cara Brimstone.png', '655656'),
+('2024-05-25 17:00:00', '012345678', 'Contenido de la publicación 10', NULL);
 
 -- --------------------------------------------------------
 
@@ -222,58 +239,57 @@ CREATE TABLE `Usuario` (
   `ubi` varchar(255) DEFAULT NULL,
   `puntos` int DEFAULT NULL,
   `contrasena` varchar(255) DEFAULT NULL,
-  'img' varchar(255) DEFAULT NULL
+  `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `Usuario`
 --
 
-INSERT INTO `Usuario` (`DNI`, `username`, `mail`, `ubi`, `puntos`, `contrasena`) VALUES
-('123456789', 'usuario1', 'usuario1@example.com', 'Ubicacion1', 100, 'contrasena1'),
-('24506633L', 'algo', 'algo@gmail.com', 'catarroja', 100, '$2y$10$4GIHW.HH34G7Nijq.zbeIeObqXjX3Sb54tvtCoCVXPtSPBaT6xXY6'),
-('24506634P', 'danii', 'danii@gmail.com', 'catarroja', 608, '$2y$10$sZQFp12xphHS2JmT0KiHc..mXWIhJhpZslGYZZd97Rp9guaZeS62y'),
-('456789123', 'usuario3', 'usuario3@example.com', 'Ubicacion3', 200, 'contrasena3'),
-('53876055k', 'Felipe', 'fesalo@floridauni.es', 'valencia', 507, '$2y$10$2FD8Wz81kD7xen4ci6ukleMJuuiMxjXGSvZdMUQOUJcWwDl1JI8BS'),
-('789123456', 'usuario4', 'usuario4@example.com', 'Ubicacion4', 120, 'contrasena4'),
-('987654321', 'usuario2', 'usuario2@example.com', 'Ubicacion2', 150, 'contrasena2'),
-('99999999P', 'prueba', 'd@gmail.com', 'catarroja', 100, '$2y$10$OKwAgxhpr3L77GipnntTEOaAZPlj.FKOz2AAD/bZvY6Qp7Tp9DRJG');
+INSERT INTO `Usuario` (`DNI`, `username`, `mail`, `ubi`, `puntos`, `contrasena`, `img`) VALUES
+('012345678', 'usuario10', 'usuario10@example.com', 'Ubicación 10', 550, 'contraseña10', NULL),
+('123456789', 'usuario1', 'usuario1@example.com', 'Ubicación 1', 100, 'contraseña1', NULL),
+('234567890', 'usuario2', 'usuario2@example.com', 'Ubicación 2', 150, 'contraseña2', NULL),
+('345678901', 'usuario3', 'usuario3@example.com', 'Ubicación 3', 200, 'contraseña3', NULL),
+('456789012', 'usuario4', 'usuario4@example.com', 'Ubicación 4', 250, 'contraseña4', NULL),
+('53876055J', 'juanito', 'juan@pepero.com', 'Chile', 100, '123456', NULL),
+('53876056M', 'Felipillo  el guay', 'felipe@santamaria.com', 'Valencia', 1813, '$2y$10$iLpaNMNMp54z7KBayI7PFeB3JDOttIIqvqYYXSWX5OjU6n5nA89Wu', 'Assets/img/profile/reyna.png'),
+('53876060', 'joselete', 'joselte@joselete.com', 'Chile', 100, '$2y$10$yV7da1.K.kBJLgCdh7D8.e6UFtw2QuNmLwuka10TV5jtLl13F0Gaa', NULL),
+('567890123', 'usuario5', 'usuario5@example.com', 'Ubicación 5', 300, 'contraseña5', NULL),
+('678901234', 'usuario6', 'usuario6@example.com', 'Ubicación 6', 350, 'contraseña6', NULL),
+('789012345', 'usuario7', 'usuario7@example.com', 'Ubicación 7', 400, 'contraseña7', NULL),
+('890123456', 'usuario8', 'usuario8@example.com', 'Ubicación 8', 450, 'contraseña8', NULL),
+('901234567', 'usuario9', 'usuario9@example.com', 'Ubicación 9', 500, 'contraseña9', NULL);
 
 --
 -- Disparadores `Usuario`
 --
 DELIMITER $$
-CREATE TRIGGER `actualizar_puntos_trigger` AFTER UPDATE ON `Usuario` FOR EACH ROW BEGIN
-    DECLARE nombre_logro VARCHAR(255);
-    DECLARE puntos_umbral INT;
-    DECLARE logro_existente INT;
+CREATE TRIGGER `after_points_update` AFTER UPDATE ON `Usuario` FOR EACH ROW BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE logro_nombre VARCHAR(255);
+    DECLARE cur CURSOR FOR
+        SELECT nombre
+        FROM Logros
+        WHERE puntos_necesarios <= NEW.puntos;
 
-    SET puntos_umbral = 100;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 
-    WHILE puntos_umbral <= 1000 DO
-        IF NEW.puntos >= puntos_umbral AND OLD.puntos < puntos_umbral THEN
-            -- Obtén el nombre del logro correspondiente
-            SELECT nombre INTO nombre_logro
-            FROM Logros
-            WHERE puntos_necesarios = puntos_umbral
-            LIMIT 1;
+    OPEN cur;
 
-            -- Verifica si el logro ya ha sido desbloqueado
-            IF nombre_logro IS NOT NULL THEN
-                SELECT COUNT(*) INTO logro_existente
-                FROM Desbloquea
-                WHERE DNI_usuario = NEW.DNI AND nombre_logro = nombre_logro;
-
-                IF logro_existente = 0 THEN
-                    -- Inserta el logro en la tabla Desbloquea
-                    INSERT INTO Desbloquea (DNI_usuario, nombre_logro)
-                    VALUES (NEW.DNI, nombre_logro);
-                END IF;
-            END IF;
+    read_loop: LOOP
+        FETCH cur INTO logro_nombre;
+        IF done THEN
+            LEAVE read_loop;
         END IF;
 
-        SET puntos_umbral = puntos_umbral + 100;
-    END WHILE;
+        -- Verificar si el logro ya ha sido desbloqueado
+        IF NOT EXISTS (SELECT 1 FROM Desbloquea WHERE DNI_usuario = NEW.DNI AND nombre_logro = logro_nombre) THEN
+            INSERT INTO Desbloquea (DNI_usuario, nombre_logro) VALUES (NEW.DNI, logro_nombre);
+        END IF;
+    END LOOP;
+
+    CLOSE cur;
 END
 $$
 DELIMITER ;
@@ -300,10 +316,9 @@ ALTER TABLE `Asiste`
 -- Indices de la tabla `Comentario`
 --
 ALTER TABLE `Comentario`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`fecha_hora_publicacion`,`DNI_usuario_publicacion`,`DNI_usuario_comentario`,`fecha_hora`),
   ADD KEY `DNI_usuario_publicacion` (`DNI_usuario_publicacion`),
-  ADD KEY `DNI_usuario_comentario` (`DNI_usuario_comentario`),
-  ADD KEY `fecha_hora_publicacion` (`fecha_hora_publicacion`,`DNI_usuario_publicacion`);
+  ADD KEY `DNI_usuario_comentario` (`DNI_usuario_comentario`);
 
 --
 -- Indices de la tabla `Desbloquea`
@@ -339,16 +354,6 @@ ALTER TABLE `Usuario`
   ADD PRIMARY KEY (`DNI`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `Comentario`
---
-ALTER TABLE `Comentario`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
-
---
 -- Restricciones para tablas volcadas
 --
 
@@ -371,8 +376,7 @@ ALTER TABLE `Asiste`
 --
 ALTER TABLE `Comentario`
   ADD CONSTRAINT `Comentario_ibfk_1` FOREIGN KEY (`DNI_usuario_publicacion`) REFERENCES `Usuario` (`DNI`),
-  ADD CONSTRAINT `Comentario_ibfk_2` FOREIGN KEY (`DNI_usuario_comentario`) REFERENCES `Usuario` (`DNI`),
-  ADD CONSTRAINT `Comentario_ibfk_3` FOREIGN KEY (`fecha_hora_publicacion`,`DNI_usuario_publicacion`) REFERENCES `Publicacion` (`fecha_hora`, `DNI_usuario`);
+  ADD CONSTRAINT `Comentario_ibfk_2` FOREIGN KEY (`DNI_usuario_comentario`) REFERENCES `Usuario` (`DNI`);
 
 --
 -- Filtros para la tabla `Desbloquea`
