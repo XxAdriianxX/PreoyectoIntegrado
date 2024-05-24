@@ -87,6 +87,10 @@ $security = new Security();
         <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
+                <aside style="margin-top: 60px">
+                    <?= $connection->drawPoints() ?>
+                    <?= $connection->drawFriends() ?>
+                </aside>
             </div>
             <div class="col-8">
                 <section>

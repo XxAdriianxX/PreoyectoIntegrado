@@ -95,8 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="row">
             <div class="col-2">
-                <aside>
-                    <?= $connection->drawFriends(); ?>
+                <aside style="margin-top: 60px;">
+                    <?= $connection->drawPoints() ?>
+                    <?= $connection->drawFriends() ?>
                 </aside>
             </div>
             <div class="col-10">
@@ -113,13 +114,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <div class="mb-3">
                                                     <label for="eventName" class="form-label">
                                                         Nombre:</label>
-                                                    <input type="text" class="form-control mb-3" id="eventName" name="eventName" value="<?php $event->name ?>">
+                                                    <input type="text" class="form-control mb-3" id="eventName" name="eventName" value="<?= $event->name ?>">
                                                     <label for="points" class="form-label">
                                                         Puntos por asistir:</label>
                                                     <input type="number" class="form-control" id="points" name="points" value="<?= $event->points ?>">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 offset-2">
+                                            <div class="col-md-4 offset-md-2">
                                                 <div class="mb-3">
                                                     <label for="date" class="form-label">
                                                         Fecha:</label>
@@ -137,14 +138,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <textarea class="form-control" rows="3" id="description" name="description" placeholder="<?= $event->description ?>"></textarea>
                                                 <input type="file" name="imageFile" id="imageFile" value="">
                                             </div>
-                                            <div class="col-md-4 offste-2 align-self-end">
-                                                <button type="submit" class="btn border submit  rounded">Actualizar
-                                                    evento</button>
+                                            <div class="col-md-4 offset-md-2 align-self-end">
+                                                <button type="submit" class="btn border submit rounded">Actualizar evento</button>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
-
                                             </div>
                                         </div>
                                     </div>

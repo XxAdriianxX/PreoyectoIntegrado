@@ -89,58 +89,49 @@ if (count($_POST) > 0) {
         <!--  Script para cambiar entre temas claro y oscuro -->
         <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
-            <div class="col-2">
-                <aside style="margin-top: 60px">
+            <div class="col-md-2">
+                <aside style="margin-top: 60px;">
                     <?= $connection->drawPoints() ?>
                     <?= $connection->drawFriends() ?>
                 </aside>
             </div>
-            <div class="col-10">
+            <div class="col-md-8">
                 <section>
                     <article>
                         <div class="row">
-                            <div class="col-9 mb-5 mx-auto">
+                            <div class="col-md-10 mx-auto">
                                 <form method="post" enctype="multipart/form-data">
                                     <div class="form-group border custom-bg m-3 p-3 rounded">
                                         <h4>Crea un evento</h4>
                                         <p>Introduce la información solicitada</p>
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="eventName" class="form-label">
-                                                        Nombre:</label>
+                                                    <label for="eventName" class="form-label">Nombre:</label>
                                                     <input type="text" class="form-control mb-3" id="eventName" name="eventName" placeholder="Nombre único" required>
-                                                    <label for="points" class="form-label">
-                                                        Puntos por asistir:</label>
+                                                    <label for="points" class="form-label">Puntos por asistir:</label>
                                                     <input type="number" placeholder="50" class="form-control" id="points" name="points">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4 offset-2">
+                                            <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label for="date" class="form-label">
-                                                        Fecha:</label>
+                                                    <label for="date" class="form-label">Fecha:</label>
                                                     <input type="datetime-local" class="form-control mb-3" id="date" name="date" required>
-                                                    <label for="location" class="form-label">
-                                                        Ubicación:</label>
+                                                    <label for="location" class="form-label">Ubicación:</label>
                                                     <input type="text" class="form-control" id="location" name="location" placeholder="Ubicación del evento">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4">
-                                            <div class="col-md-6">
-                                                <label for="description" class="form-label">
-                                                    Descripción:</label>
+                                            <div class="col-md-12">
+                                                <label for="description" class="form-label">Descripción:</label>
                                                 <textarea class="form-control" rows="3" id="description" name="description" placeholder="Describe tu evento"></textarea>
                                                 <input type="file" name="imageFile" id="imageFile">
                                             </div>
-                                            <div class="col-md-4 offste-2 align-self-end">
-                                                <button type="submit" class="btn border submit  rounded">Crear
-                                                    evento</button>
-                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-3">
-
+                                            <div class="col-md-12 text-end">
+                                                <button type="submit" class="btn border submit rounded">Crear evento</button>
                                             </div>
                                         </div>
                                     </div>
@@ -150,7 +141,11 @@ if (count($_POST) > 0) {
                     </article>
                 </section>
             </div>
+            <div class="col-md-2">
+                <?= $connection->drawUserEventsSmall() ?>
+            </div>
         </div>
+
         <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">
