@@ -118,6 +118,53 @@ class PublicacionesUsurario extends Connection
             }
     }
 
+    public function cogerPublicacionesUsuario() {
+        $data = $this->getConn();
+        $DNI = $_SESSION["dni"];
+    
+        $stmt = $data->prepare("SELECT * FROM Publicacion WHERE DNI_usuario = ?");
+        $stmt->bind_param("s", $DNI); 
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $userPubli[] = $row;
+            }
+            return $userPubli;
+        }
+    }
+    
+    
+    public function mostrarPublicacionesUsuario() {
+        $datos = $this->cogerPublicacionesUsuario();
+        if ($datos && !empty($datos)) {
+            $html = '<table border="1">';
+            $html .= '<tr>';
+            $html .= '<td colspan="3" align="center"><h1>Tus publicaciones</h1></td>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            $html .= '<th>Comentario de la publicacion</th><th>Fecha y hora</th><th>Eliminar</th>';
+            $html .= '</tr>';
+    
+            foreach ($datos as $datosTabla) {
+                $html .= '<tr>';
+                $html .= '<td>' . $datosTabla["comentario_publicacion"] . '</td>';
+                $html .= '<td>' . $datosTabla['fecha_hora'] . '</td>';
+                $html .= '<td><a href="eliminar.php?contenido=' . $datosTabla['contenido'] . '&fecha_hora=' . $datosTabla['fecha_hora'] .'"><img src="Assets/img/basura.png" width="25"></a></td>';
+                $html .= '</tr>';
+            }
+            $html .= '</table>';
+            echo $html; 
+        } else {
+            echo "No tienes ninguna publicación";
+        }
+    }
+
+    
+    
+
+
 }
 
 

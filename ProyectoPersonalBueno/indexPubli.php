@@ -3,7 +3,6 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
-
 $security->checkLoggedIn();
 $imgUser = new PublicacionesUsurario();
 
@@ -99,7 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             <div class="col-8">
             <section class="main-content container">
                 <article class="text-center my-4 mx-auto">
-                    <button class="btn btn-primary btn-toggle-form enlarge-button" style="font-size: 20px;">Subir Publicación</button>
+                    <button class="btn btn-primary btn-toggle-upload-form enlarge-button">Subir Publicación</button>
+
                     <div id="insertPubli" style="display:none;">
                         <h1>Subir Publicación</h1>
                         <form action="" method="post" enctype="multipart/form-data">
@@ -113,7 +113,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                             </div>
                             <input type="submit" value="Subir imagen" name="submit" class="btn btn-primary">
                         </form>
-
+                        <br>
+                        <br>
+                        <h3>Eliminar Publicacion</h3>
+                        <div id="eliminarPubli">
+                            <?php $imgUser->mostrarPublicacionesUsuario(); ?>
+                        </div>
                     </div>
                 </article>
             <div class="row">
@@ -130,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         <?php echo $row['comentario_publicacion']; ?>
                             <h5 class="card-title">Comentarios</h5>
                             <!-- Botón para abrir/cerrar el formulario -->
-                            <button class="btn btn-primary btn-toggle-form">Comentar</button>
+                            <button class="btn btn-primary btn-toggle-comment-form">Comentar</button>
                             
                             <form action="" method="POST" class="form-comentario">
                                 <div class="form-group">
@@ -140,7 +145,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                                 </div>
                                 <button type="submit" class="btn btn-success btn-block" name="submit_comment">Publicar Comentario</button>
                             </form>
-                            
+                            <br>
+                            <br>
                             <!-- Botón para mostrar/ocultar comentarios -->
                             <button class="btn btn-primary btn-toggle-comments">Mostrar Comentarios</button>
                             
@@ -159,7 +165,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         </div>
                     </div>
                 </div>
-                
                 <?php } ?>
             </div>
         </section>

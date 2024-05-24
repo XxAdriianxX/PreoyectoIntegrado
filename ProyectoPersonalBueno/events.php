@@ -103,12 +103,16 @@ $security = new Security();
         body {
             background-color: #f8f9fa;
         }
-
-        aside {
-            height: 100%;
+        
+            aside {
+            height: 1120px;
             width: 100%;
-            background-image: url(Assets/img/fondo.jpg);
-        }
+            background-image: url(Assets/img/Foto2Aside.png);
+            background-size: cover; 
+            background-position: center; 
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            }
 
         a {
             text-decoration: none;
@@ -150,6 +154,14 @@ $security = new Security();
 
         .card-text {
             color: #343a40;
+        }
+
+        .container-fluid {
+            padding: 0;
+        }
+        
+        footer {
+            padding: 20px 0;
         }
     </style>
 </head>
