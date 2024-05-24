@@ -77,27 +77,25 @@ $security = new Security();
     <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
-                <aside>
-                    <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                            <span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
-                            <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                                    <?= $connection->drawFriends(); ?>
+                <aside style="margin-top: 60px">
+                    <?= $connection->drawPoints()?>
+                    <?= $connection->drawFriends()?>
                 </aside>
             </div>
             <!--  Script para mostrar o ocultar saldo-->
-            <script src="Assets/js/saldo.js"></script>
+            
             <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
-                            <h1 class="mb-4 mx-auto d-flex justify-content-center" style="width:95%;">EVENTOS PRÓXIMOS</h1>
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto" style="width:20%">Crear Evento +</a>
+                            <h2 class="mb-4 mx-auto d-flex justify-content-center" style="width:95%;">EVENTOS PRÓXIMOS</h2>
+                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto bg-success text-white" style="width:20%">Crear Evento +</a>
                         </div>
                         <div class="row">
                             <?= $connection->drawEventsList(); ?>
                         </div>
                         <div class="row">
-                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3" style="width:20%">Crear Evento +</a>
+                            <a href="addEvent.php" class="btn btn-light border border-dark rounded-pill mx-auto mb-3 bg-success text-white" style="width:20%">Crear Evento +</a>
                         </div>
                     </article>
                 </section>
@@ -155,6 +153,7 @@ $security = new Security();
     </div>
 </footer>
     </div>
+    <script src="Assets/js/saldo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

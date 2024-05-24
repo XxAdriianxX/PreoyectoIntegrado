@@ -1,16 +1,16 @@
 // saldo.js
 
-// Función para mostrar u ocultar saldo
+// Función para mostrar u ocultar la card
 function toggleSaldo() {
-    var saldo = document.getElementById("saldo");
-    saldo.classList.toggle("hidden");
-    // Alterna la visibilidad del saldo y cambia el ícono entre abierto y cerrado
+    var card = document.getElementById("saldo");
+    card.classList.toggle("hidden");
+    // Cambia el ícono del botón entre abierto y cerrado
     var toggleIcon = document.getElementById('toggle-icon');
-    if (saldo.classList.contains('hidden')) {
-        toggleIcon.classList.remove('bx-show');
-        toggleIcon.classList.add('bx-hide');
+    if (card.classList.contains('hidden')) {
+        toggleIcon.classList.remove('fa-eye-slash');
+        toggleIcon.classList.add('fa-eye');
     } else {
-        toggleIcon.classList.remove('bx-hide');
-        toggleIcon.classList.add('bx-show');
+        toggleIcon.classList.remove('fa-eye');
+        toggleIcon.classList.add('fa-eye-slash');
     }
 }

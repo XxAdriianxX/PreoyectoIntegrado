@@ -20,7 +20,7 @@ $security = new Security();
 <body>
 <div class="container-fluid">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark custom-bg mb-4">
+        <nav class="navbar navbar-expand-sm mb-4">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -78,19 +78,12 @@ $security = new Security();
     <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
-                <aside>
-                    <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                            <span
-                                class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
-                            <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                                    <?= $connection->drawFriends(); ?>
-                </aside>
             </div>
             <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
-                            <h1 class="mb-4 mx-auto d-flex justify-content-center">TUS LOGROS</h1>
+                            <h2 class="mb-4 mx-auto d-flex justify-content-center">TUS LOGROS</h2>
                             <div class="row">
                                 <div class="col-md-12 text-center logros-info">
                                     Logros desbloqueados: <strong><?= $connection->numGoals(); ?></strong> de 9
@@ -105,15 +98,6 @@ $security = new Security();
                 </section>
             </div>
             <div class="col-2">
-                <section>
-                    <article>
-                        <div class="card fondo " style="margin-top: 60px">
-                            <div class="card-body">
-                                <h2 class="text-dark">Tus eventos: </h2>
-                                <?= $connection->drawUserEventsSmall(); ?>
-                            </div>
-                    </article>
-                </section>
             </div>
         </div>
         <footer class="text-black">

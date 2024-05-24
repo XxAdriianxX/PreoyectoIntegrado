@@ -79,19 +79,12 @@ $security = new Security();
     <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
             <div class="col-2">
-                <aside>
-                    <h5 class=" text-light mx-auto text-center">Puntos:<h5>
-                            <span
-                                class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center"><?= $connection->getPoints(); ?></span>
-                            <h5 class=" text-light mx-auto text-center">Amigos:<h5>
-                                    <?= $connection->drawFriends($_SESSION['dni']); ?>
-                </aside>
             </div>
             <div class="col-8">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
-                            <h1 class="mb-4 mx-auto d-flex justify-content-center">TUS AMIGOS</h1>
+                            <h2 class="mb-4 mx-auto d-flex justify-content-center">TUS AMIGOS</h2>
                         </div>
                         <div class="row">
                             <?= $connection->cardFriends(); ?>

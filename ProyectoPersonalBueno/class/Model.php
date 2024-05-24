@@ -44,9 +44,9 @@ class Model extends Connection
             $isAttending = $this->verifyAttendance($event->name, $event->date);
             if ($event->active == '1') {
                 if ($isAttending) {
-                    $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Desapuntarse</a>';
+                    $table .= '<a href="notGoEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn border border-dark text-white bg-success">Desapuntarse</a>';
                 } else {
-                    $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn custom-button border border-dark">Apuntarse</a>';
+                    $table .= '<a href="goEvent.php?eventName=' . $event->name . '&eventDate=' . $event->date . '" class="btn border border-dark text-white bg-success">Apuntarse</a>';
                 }
             } else {
                 $table .= '<a href="#" class="btn custom-button border border-dark disabled">Apuntarse</a>';
@@ -249,14 +249,19 @@ class Model extends Connection
     }
 
     public function drawFriends()
-    {
-        $friends = $this->getAllFriends();
-        $table = '';
-        for ($i = 0; $i < count($friends); $i++) {
-            $table .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i]['username'] . '</span>';
-        }
-        return $table;
+{
+    $friends = $this->getAllFriends();
+    $card = '<div class="card">';
+    $card .= '<div class="card-body">';
+    $card .= '<h5 class="card-title">Amigos</h5>';
+    for ($i = 0; $i < count($friends); $i++) {
+        $card .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $friends[$i]['username'] . '</span>';
     }
+    $card .= '</div>'; 
+    $card .= '</div>'; 
+    return $card;
+}
+
 
     public function cardFriends()
     {
@@ -515,6 +520,25 @@ class Model extends Connection
         $result = $stmt->get_result()->fetch_assoc()['puntos'];
         return $result;
     }
+
+    public function drawPoints()
+    {
+        $points = $this->getPoints();
+        $button = '<div class="btn mb-3 border border-dark bg-light" id="toggle-button" onclick="toggleSaldo()"><i id="toggle-icon" class="fas fa-eye"></i></div>';
+        $card = '<div class="card" id="saldo">';
+        $card .= '<div class="card-body d-flex justify-content-between">';
+        $card .= '<h5 class="card-title">Puntos:</h5>';
+        $card .= ''; 
+        $card .= '</div>'; 
+        $card .= '<span class="custom-span badge rounded-pill border border-dark flex-grow-1 text-dark mb-2 d-flex justify-content-center">' . $points . '</span>';
+        $card .= '</div>'; 
+        return $button . $card;
+    }
+    
+
+
+
+
 
     public function mostrarUsuario()
     {
