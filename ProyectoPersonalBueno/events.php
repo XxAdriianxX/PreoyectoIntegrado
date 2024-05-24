@@ -15,6 +15,211 @@ $security = new Security();
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="./Assets/css/prueba.css">
     <title>Prueba Felipe</title>
+    <style>
+        .custom-bg {
+            background-color: #228B22;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .pill-bg {
+            background-color: rgba(217, 217, 217, .3);
+        }
+
+        .custom-button {
+            background-color: rgba(245, 249, 245, 0.7);
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        aside {
+            height: 100%;
+            width: 100%;
+            background-image: url(Assets/img/fondo.jpg);
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .custom-span {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .card {
+            color: black;
+            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img-bottom {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        .card-text {
+            color: #343a40;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .pill-bg {
+            background-color: rgba(217, 217, 217, .3);
+        }
+
+        .custom-button {
+            background-color: rgba(245, 249, 245, 0.7);
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        aside {
+            height: 100%;
+            width: 100%;
+            background-image: url(Assets/img/fondo.jpg);
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .custom-span {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .card {
+            color: black;
+            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        .card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img-bottom {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        .card-text {
+            color: #343a40;
+        }
+
+/* styles.css */
+
+body {
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.light-theme {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.dark-theme {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 60px;  /* Width adjusted to fit both icons and the button */
+}
+
+.theme-toggle-container i {
+    font-size: 20px;
+    position: absolute;
+}
+
+.theme-toggle-container .fa-sun {
+    left: 5px;
+    color: #f39c12;
+}
+
+.theme-toggle-container .fa-moon {
+    right: 5px;
+    color: #3498db;
+}
+
+.theme-toggle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+body.light-theme .theme-toggle {
+    transform: translateX(-15px);
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+body.dark-theme .theme-toggle {
+    transform: translateX(15px);
+    background-color: #000000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+
+
+</style>
 </head>
 <body>
     <div class="container-fluid">

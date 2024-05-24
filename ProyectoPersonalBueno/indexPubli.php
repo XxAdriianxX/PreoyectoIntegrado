@@ -3,7 +3,6 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
-
 $security->checkLoggedIn();
 $imgUser = new PublicacionesUsurario();
 
@@ -101,78 +100,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 </aside>
             </div>
             <div class="col-8">
-                <section class="main-content container">
-                    <article class="text-center my-4 mx-auto">
-                        <button class="btn btn-primary btn-toggle-form enlarge-button" style="font-size: 20px;">Subir
-                            Publicación</button>
-                        <div id="insertPubli" style="display:none;">
-                            <h1>Subir Publicación</h1>
-                            <form action="" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="imagen">Selecciona una imagen:</label>
-                                    <input type="file" class="form-control-file" name="imagen" id="imagen">
-                                    <br>
-                                    <label for="comentario_publi">Comentario de la Publicación</label>
-                                    <textarea class="form-control" name="comentario_publi" rows="3" required></textarea>
-                                    <br>
-                                </div>
-                                <input type="submit" value="Subir imagen" name="submit" class="btn btn-primary">
-                            </form>
+            <section class="main-content container">
+                <article class="text-center my-4 mx-auto">
+                    <button class="btn btn-primary btn-toggle-upload-form enlarge-button">Subir Publicación</button>
 
-                        </div>
-                    </article>
-                    <div class="row">
-                        <?php
-                        $result = mysqli_query($conn, 'SELECT contenido, fecha_hora, DNI_usuario, comentario_publicacion FROM Publicacion');
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $fecha_hora_publicacion = $row['fecha_hora'];
-                            $DNI_usuario_P = $row['DNI_usuario'];
-                            ?>
-                            <div class="col-md-4 text-center">
-                                <div class="card">
-                                    <img src="<?php echo $row['contenido']; ?>" class="card-img-top">
-                                    <div class="card-body">
-                                        <?php echo $row['comentario_publicacion']; ?>
-                                        <h5 class="card-title">Comentarios</h5>
-                                        <!-- Botón para abrir/cerrar el formulario -->
-                                        <button class="btn btn-primary btn-toggle-form">Comentar</button>
-
-                                        <form action="" method="POST" class="form-comentario">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="Comentario"
-                                                    placeholder="Ingresar Comentario" required>
-                                                <input type="hidden" name="fecha_hora_publicacion"
-                                                    value="<?php echo $fecha_hora_publicacion; ?>">
-                                                <input type="hidden" name="DNI_usuario_P"
-                                                    value="<?php echo $DNI_usuario_P; ?>">
-                                            </div>
-                                            <button type="submit" class="btn btn-success btn-block"
-                                                name="submit_comment">Publicar Comentario</button>
-                                        </form>
-
-                                        <!-- Botón para mostrar/ocultar comentarios -->
-                                        <button class="btn btn-primary btn-toggle-comments">Mostrar Comentarios</button>
-
-                                        <div class="comentarios">
-                                            <?php
-                                            $comentarios = $imgUser->mostrarComentarios($fecha_hora_publicacion, $DNI_usuario_P);
-                                            if (!empty($comentarios)) {
-                                                foreach ($comentarios as $comentario) {
-                                                    echo "<div class='comentario'>$comentario</div>";
-                                                }
-                                            } else {
-                                                echo "No hay comentarios disponibles.";
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div id="insertPubli" style="display:none;">
+                        <h1>Subir Publicación</h1>
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="imagen">Selecciona una imagen:</label>
+                                <input type="file" class="form-control-file" name="imagen" id="imagen">
+                                <br>
+                                <label for="comentario_publi">Comentario de la Publicación</label>
+                                <textarea class="form-control" name="comentario_publi" rows="3" required></textarea>
+                                <br>
                             </div>
-
-                        <?php } ?>
+                            <input type="submit" value="Subir imagen" name="submit" class="btn btn-primary">
+                        </form>
+                        <br>
+                        <br>
+                        <h3>Eliminar Publicacion</h3>
+                        <div id="eliminarPubli">
+                            <?php $imgUser->mostrarPublicacionesUsuario(); ?>
+                        </div>
                     </div>
-                </section>
+                </article>
+            <div class="row">
+                <?php
+                $result = mysqli_query($conn, 'SELECT contenido, fecha_hora, DNI_usuario, comentario_publicacion FROM Publicacion');
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $fecha_hora_publicacion = $row['fecha_hora'];
+                    $DNI_usuario_P = $row['DNI_usuario'];
+                ?>
+                <div class="col-md-4 text-center">
+                    <div class="card">
+                        <img src="<?php echo $row['contenido']; ?>" class="card-img-top">
+                        <div class="card-body">
+                        <?php echo $row['comentario_publicacion']; ?>
+                            <h5 class="card-title">Comentarios</h5>
+                            <!-- Botón para abrir/cerrar el formulario -->
+                            <button class="btn btn-primary btn-toggle-comment-form">Comentar</button>
+                            
+                            <form action="" method="POST" class="form-comentario">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="Comentario" placeholder="Ingresar Comentario" required>
+                                    <input type="hidden" name="fecha_hora_publicacion" value="<?php echo $fecha_hora_publicacion; ?>">
+                                    <input type="hidden" name="DNI_usuario_P" value="<?php echo $DNI_usuario_P; ?>">
+                                </div>
+                                <button type="submit" class="btn btn-success btn-block" name="submit_comment">Publicar Comentario</button>
+                            </form>
+                            <br>
+                            <br>
+                            <!-- Botón para mostrar/ocultar comentarios -->
+                            <button class="btn btn-primary btn-toggle-comments">Mostrar Comentarios</button>
+                            
+                            <div class="comentarios">
+                                <?php
+                                    $comentarios = $imgUser->mostrarComentarios($fecha_hora_publicacion, $DNI_usuario_P);
+                                    if (!empty($comentarios)) {
+                                        foreach ($comentarios as $comentario) {
+                                            echo "<div class='comentario'>$comentario</div>";
+                                        }
+                                    } else {
+                                        echo "No hay comentarios disponibles.";
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php } ?>
             </div>
+        </section>
+        </div>
         </div>
         <footer class="custom-bg text-black">
             <div class="row">
