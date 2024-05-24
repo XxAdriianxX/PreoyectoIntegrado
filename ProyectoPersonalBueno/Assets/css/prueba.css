@@ -88,3 +88,19 @@ body.dark-theme .theme-toggle {
     max-height: 0;
     opacity: 0;
 }
+
+/* Estilos para el logo */
+.logo img {
+    max-width: 100px;
+    transition: filter 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+/* Estilos para el tema claro */
+.tema-claro .logo img {
+    filter: invert(0); /* Mantener el color original del logo */
+}
+
+/* Estilos para el tema oscuro */
+.tema-oscuro .logo img {
+    filter: invert(0.9) sepia(1) saturate(5) hue-rotate(90deg) brightness(80%) contrast(120%);
+}

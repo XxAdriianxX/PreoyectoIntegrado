@@ -258,17 +258,21 @@ body.dark-theme .theme-toggle {
                         </li>
                     </ul>
                     <span class="me-5">Hola, <?= htmlspecialchars($_SESSION['username']); ?></span>
+                    <!-- Botón de usuario -->
                     <a href="profile.php" class="btn-floating btn-sm  me-5" style="font-size: 23px;">
                         <i class="fas fa-user"></i>
                     </a>
+                    <!-- Botón para generar código QR -->
                     <a href="generarQr.php" class="btn-floating btn-sm text-black me-5" style="font-size: 23px;">
                         <i class="fas fa-qrcode"></i>
                     </a>
+                    <!-- Botón para cambiar entre temas claro y oscuro -->
                     <div class="theme-toggle-container me-5">
                         <i class="fas fa-sun"></i>
                         <button id="theme-toggle" class="theme-toggle"></button>
                         <i class="fas fa-moon"></i>
                     </div>
+                    <!-- Botón para salir -->
                     <a href="logout.php" class="btn-floating btn-sm text-black" style="font-size: 23px;">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
