@@ -1,8 +1,5 @@
 <?php
-
-require_once 'conexion.php';
-
-class GestorCorreo extends Conexion{
+class GestorCorreo extends Connection{
     private $destinatario;
 
     public function __construct($destinatario) {

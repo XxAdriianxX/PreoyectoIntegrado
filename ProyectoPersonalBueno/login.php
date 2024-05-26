@@ -3,19 +3,6 @@ require_once "autoloader.php";
 $security = new Security();
 $loginMessage = $security->doLogin();
 
-/* if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["mail"]) && isset($_POST["userPassword"])) {
-        $correo = $_POST["mail"];
-        $contrasena = $_POST["userPassword"];
-        $login_result = $security->login($correo, $contrasena);
-        if ($login_result === true) {
-            header('Location: events.php');
-            exit();  
-        } else {
-            echo $login_result;
-        }
-    }
-} */
 ?>
 <!DOCTYPE html>
 <html>

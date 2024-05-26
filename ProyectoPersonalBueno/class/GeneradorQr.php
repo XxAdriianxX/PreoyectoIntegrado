@@ -1,7 +1,6 @@
 <?php
 require_once 'Assets/vendor/phpQrCode/qrlib.php';
 require_once 'Connection.php';
-
 class GeneradorQR {
     private $conexion;
 

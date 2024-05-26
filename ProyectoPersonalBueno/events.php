@@ -1,6 +1,5 @@
 <?php
 require_once "autoloader.php";
-/* session_start();  */ // Inicia la sesión en la página de inicio
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();

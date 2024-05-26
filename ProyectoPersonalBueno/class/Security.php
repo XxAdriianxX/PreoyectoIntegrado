@@ -138,19 +138,16 @@ class Security extends Connection
 
     public function changeInfo($data)
 {
-    // Check if the input data is valid
     if (count($data) > 0) {
-        // Extract user data from the input array
         $name = $data["username"];
         $mail = $data["email"];
         $ubi = $data["ubi"];
 
-        // Update session variables
+       
         $_SESSION['username'] = $name;
         $_SESSION['mail'] = $mail;
         $_SESSION['ubi'] = $ubi;
 
-        // Get the current image path from the database
         $dni = $_SESSION['dni'];
         $query = "SELECT img FROM Usuario WHERE DNI = ?";
         $stmt = $this->conn->prepare($query);
@@ -165,9 +162,9 @@ class Security extends Connection
         $stmt->close();
 
         $targetDir = "Assets/img/profile/";
-        $imagePath = $currentImagePath; // Initialize image path with the current image path
+        $imagePath = $currentImagePath; 
 
-        // Check if a file is uploaded
+        
         if (!empty($_FILES["imageFile"]["name"])) {
             $targetFile = $targetDir . basename($_FILES["imageFile"]["name"]);
             $uploadOk = 1;
@@ -200,19 +197,16 @@ class Security extends Connection
             }
         }
 
-        // Construct the SQL query
+        
         $query = "UPDATE Usuario SET username = ?, mail = ?, ubi = ?, img = ? WHERE DNI = ?";
         $stmt = $this->conn->prepare($query);
 
-        // Check if the statement was prepared successfully
         if ($stmt === false) {
             die("Error en el statement: " . $this->conn->error);
         }
 
-        // Bind parameters to the SQL query
         $stmt->bind_param("sssss", $name, $mail, $ubi, $imagePath, $dni);
 
-        // Execute the query and handle potential errors
         if ($stmt->execute()) {
             header("Location: profile.php");
             exit();
@@ -220,7 +214,6 @@ class Security extends Connection
             echo "Error: " . $stmt->error;
         }
 
-        // Close the statement
         $stmt->close();
     }
 }
