@@ -2,7 +2,7 @@
 class Security extends Connection
 {
     private $loginPage = "login.php";
-    private $homePage = "events.php";
+    private $homePage = "indexPubli.php";
     public function __construct()
     {
         parent::__construct();
