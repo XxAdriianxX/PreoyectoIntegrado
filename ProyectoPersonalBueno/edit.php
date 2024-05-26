@@ -6,7 +6,9 @@ $conn = $security->getConn();
 $mail = $security->getUserData();
 $hola = $security->getUser($mail);
 $imagen = $security->getImage($mail);
-
+if (!isset($_SESSION['mail'])) {
+    header('location: login.php');
+}
 // Mover la llamada a changeInfo después de verificar que el formulario ha sido enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task = $security->changeInfo($_POST, $_FILES);
@@ -112,11 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div class="col-lg-2 col-md-6 ms-5">
                                 <section>
                                     <article>
-                                        <div class="card" style="margin-top: 60px">
-                                            <div class="card-body">
-                                                <h2 class="text-dark">Tus eventos: </h2>
-                                                <?= $user->drawUserEventsSmall(); ?>
-                                            </div>
+                                        <div class="" style="margin-top: 60px">
+                                            <?= $user->drawUserEventsSmall(); ?>
                                         </div>
                                     </article>
                                 </section>

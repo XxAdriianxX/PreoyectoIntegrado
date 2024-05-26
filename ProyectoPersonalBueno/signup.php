@@ -1,14 +1,3 @@
-<?php
-require_once "autoloader.php";
-
-$security = new Security();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $security->doSingUp($_POST); 
-}
-
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,26 +8,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body{
-            background-image: url("Assets/img/arbol.jpg");
+            background-image: url("Assets/img/corazon.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             height: 100vh; /*Hace que ocupe el 100% de la pantalla*/
+            margin: 0; /* Para asegurar que no haya espacios en blanco alrededor */
+            padding: 0; /* Para asegurar que no haya espacios en blanco alrededor */
         }
 
-        header {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-            margin-bottom: 40px;
+        .title-container {
+            background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 20px 0; /* Espaciado interno */
+        }
+
+        header h1 {
+            margin: 0; /* Para eliminar cualquier margen predeterminado */
+        }
+
+        .content-container {
+            margin-top: 100px; /* Ajuste para que el contenido no se superponga con el título */
         }
 
     </style>
 </head>
 <body>
-<header><h1>ECOBUDDY</h1></header>
+<div class="title-container">
+    <header><h1>ECOBUDDY</h1></header>
+</div>
 <nav></nav>
-<section>
+<section class="content-container">
      <article>
         <div class="container">
             <div class="row justify-content-center">

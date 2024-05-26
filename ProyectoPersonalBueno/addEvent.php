@@ -3,6 +3,9 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
+if (!isset($_SESSION['mail'])) {
+    header('location: login.php');
+}
 if (count($_POST) > 0) {
     $connection->addEvent($_POST);
 }
@@ -17,13 +20,13 @@ if (count($_POST) > 0) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="Assets/css/prueba.css">
-    <title>Añadir Evento Prueba Felipe</title>
+    <title>Añadir Evento Felipe</title>
 </head>
 
 <body>
     <div class="container-fluid">
         <header>
-            <nav class="navbar navbar-expand-sm mb-4">
+            <nav class="navbar navbar-expand-md mb-4">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -85,17 +88,18 @@ if (count($_POST) > 0) {
                     </div>
                 </div>
             </nav>
+
         </header>
         <!--  Script para cambiar entre temas claro y oscuro -->
         <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-12">
                 <aside style="margin-top: 60px;">
                     <?= $connection->drawPoints() ?>
                     <?= $connection->drawFriends() ?>
                 </aside>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-12">
                 <section>
                     <article>
                         <div class="row">
@@ -141,11 +145,12 @@ if (count($_POST) > 0) {
                     </article>
                 </section>
             </div>
-            <div class="col-md-2">
-                <?= $connection->drawUserEventsSmall() ?>
+            <div class="col-md-2 col-sm-12">
+                <div class="" style="margin-top: 60px">
+                    <?= $connection->drawUserEventsSmall(); ?>
+                </div>
             </div>
         </div>
-
         <footer class="custom-bg text-black">
             <div class="row">
                 <div class="col-md-4">

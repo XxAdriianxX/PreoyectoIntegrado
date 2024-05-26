@@ -1,6 +1,5 @@
 <?php
 require_once "autoloader.php";
-/* session_start();  */ // Inicia la sesión en la página de inicio
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
@@ -23,7 +22,7 @@ $security = new Security();
 <body>
     <div class="container-fluid">
         <header>
-        <nav class="navbar navbar-expand-sm mb-4">
+            <nav class="navbar navbar-expand-md mb-4">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -87,13 +86,13 @@ $security = new Security();
             </nav>
         </header>
         <div class="row">
-            <div class="col-2">
-                <aside>
+            <div class="col-md-2 col-sm-12">
+                <aside style="margin-top: 60px;">
                     <?= $connection->drawPoints(); ?>
                     <?= $connection->drawFriends(); ?>
                 </aside>
             </div>
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
@@ -105,14 +104,11 @@ $security = new Security();
                     </article>
                 </section>
             </div>
-            <div class="col-2">
+            <div class="col-md-2 col-sm-12">
                 <section>
                     <article>
-                        <div class="card fondo" style="margin-top: 60px">
-                            <div class="card-body">
-                                <h2 class="text-dark text-center">Tus eventos: </h2>
-                                <?= $connection->drawUserEventsSmall(); ?>
-                            </div>
+                        <div class="" style="margin-top: 60px">
+                            <?= $connection->drawUserEventsSmall(); ?>
                         </div>
                     </article>
                 </section>

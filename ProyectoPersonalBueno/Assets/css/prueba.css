@@ -1,5 +1,8 @@
-/* Estilos para el cambio de tema claro/oscuro */
 body {
+    background-image: url("Assets/img/fondo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -62,177 +65,7 @@ body.dark-theme .theme-toggle {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Estilos para el saldo */
-.saldo-container {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.saldo-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.saldo {
-    transition: max-height 0.3s, opacity 0.3s;
-    max-height: 200px;
-    opacity: 1;
-    overflow: hidden;
-}
-
-.saldo.hidden {
-    max-height: 0;
-    opacity: 0;
-}
-
-/* Estilos para el logo */
-header img {
-    max-width: 100px;
-    transition: filter 0.3s ease; /* Transición suave para el cambio de color */
-}
-
-.light-theme header img {
-    filter: invert(0); /* Mantener el color original del logo en modo claro */
-}
-
-.dark-theme header img {
-    filter: invert(0.9) sepia(1) saturate(5) hue-rotate(90deg) brightness(80%) contrast(120%);
-}
-
-footer img {
-    max-width: 150px;
-    transition: filter 0.3s ease; /* Transición suave para el cambio de color */
-}
-
-.light-theme footer img {
-    filter: invert(0); /* Mantener el color original del logo en modo claro */
-}
-
-.dark-theme footer img {
-    filter: invert(0.9) sepia(1) saturate(5) hue-rotate(90deg) brightness(80%) contrast(120%);
-}
-
-/* Otros estilos generales */
-
-h1 {
-    color: #343a40;
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-}
-
-.pill-bg {
-    background-color: rgba(217, 217, 217, .3);
-}
-
-.custom-button {
-    background-color: rgba(245, 249, 245, 0.7);
-}
-
-body {
-    background-color: #f8f9fa;
-}
-
-
-
-a {
-    text-decoration: none;
-    color: white;
-}
-
-.custom-span {
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
-.card {
-    color: black;
-    background-color: #fff;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    transition: box-shadow 0.3s ease-in-out;
-    margin-bottom: 20px;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out;
-}
-
-.card:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-10px);
-}
-
-.card-img-bottom {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #343a40;
-}
-
-.card-text {
-    color: #343a40;
-}
-
-.card-img-top {
-    border-radius: 10px 10px 0 0; 
-}
-
-.form-group {
-    margin-bottom: 10px; 
-}
-
-.form-comentario,
-.comentarios {
-    display: none;
-}
-
-.comentario {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.enlarge-button {
-    font-size: 24px;
-    padding: 12px 24px;
-    border-radius: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
-    background-color: transparent;
-    border: 2px solid #007bff; 
-    color: #007bff; 
-    display: block;
-    margin: 0 auto 20px auto; 
-}
-
-#insertPubli {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    margin-top: 20px;
-}
-
-.container-fluid {
-    padding: 0;
-}
-
-footer {
-    padding: 20px 0;
-}
-
-h2 {
-    text-align: center;
-}
+/* Resto de tus estilos */
 
 /* Navbar */
 .navbar {
@@ -344,3 +177,4 @@ footer .social-icons .btn-floating {
 .hidden {
     display: none;
 }
+

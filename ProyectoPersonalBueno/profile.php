@@ -5,6 +5,9 @@ $security = new Security();
 $conn = $security->getConn();
 $mail = $security->getUserData();
 $imagen = $security->getImage($mail);
+if (!isset($_SESSION['mail'])) {
+    header('location: login.php');
+}
 ?>
 <!doctype html>
 <html lang="es">

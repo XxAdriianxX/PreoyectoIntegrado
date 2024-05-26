@@ -5,6 +5,9 @@ $conn = $connection->getConn();
 $security = new Security();
 $security->checkLoggedIn();
 $imgUser = new PublicacionesUsurario();
+if (!isset($_SESSION['mail'])) {
+    header('location: login.php');
+}
 
 //Es necesario porque si no al recargar al pagina se van añadiendo cards y comentarios 
 //Se encarga de redirigir a la misma pagina una vez se ha insertado un comentario o una publicacion
@@ -100,13 +103,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         <!--  Script para cambiar entre temas claro y oscuro -->
         <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2 col-sm-12">
                 <aside style="margin-top: 60px">
                     <?= $connection->drawPoints() ?>
                     <?= $connection->drawFriends() ?>
                 </aside>
             </div>
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 <section class="main-content container">
                     <article class="text-center my-4 mx-auto">
                         <button class="btn btn-primary btn-toggle-upload-form enlarge-button">Subir Publicación</button>

@@ -3,6 +3,9 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
+if (!isset($_SESSION['mail'])) {
+    header('location: login.php');
+}
 ?>
 <!doctype html>
 <html lang="es">
@@ -85,9 +88,9 @@ $security = new Security();
         <!--  Script para cambiar entre temas claro y oscuro -->
         <script src="Assets/js/ClaroOscuro.js"></script>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2 col-sm-12">
             </div>
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 <section>
                     <article>
                         <div class="row mx-auto mb-3">
@@ -105,7 +108,7 @@ $security = new Security();
                     </article>
                 </section>
             </div>
-            <div class="col-2">
+            <div class="col-md-2 col-sm-12">
             </div>
         </div>
         <footer class="text-black">

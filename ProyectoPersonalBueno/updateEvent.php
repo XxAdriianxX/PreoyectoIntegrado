@@ -3,6 +3,9 @@ require_once "autoloader.php";
 $connection = new Model();
 $conn = $connection->getConn();
 $security = new Security();
+if (!isset($_SESSION['mail'])) {
+    header('location: login.php');
+}
 $eventName = isset($_GET['eventName']) ? $_GET['eventName'] : null;
 $eventDate = isset($_GET['eventDate']) ? $_GET['eventDate'] : null;
 $eventDate = DateTime::createFromFormat('Y-m-d H:i:s', $eventDate)->format('Y-m-d H:i:s');
@@ -94,13 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <script src="Assets/js/ClaroOscuro.js"></script>
 
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2 col-sm-12">
                 <aside style="margin-top: 60px;">
                     <?= $connection->drawPoints() ?>
                     <?= $connection->drawFriends() ?>
                 </aside>
             </div>
-            <div class="col-10">
+            <div class="col-md-10 col-sm-12">
                 <section>
                     <article>
                         <div class="row">
